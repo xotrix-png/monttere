@@ -10,46 +10,39 @@
   color: #f3f6f7;
 }
 
-/* Media host: clips cover-scaled photo/titles only */
-.hero__media {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  z-index: 0;
-}
-
-/* Chrome host: never crops nav/logo/CTA */
-.hero__chrome {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.hero__chrome a,
-.hero__chrome button {
-  pointer-events: auto;
-}
-
-.hero__artboard,
-.hero__chrome-stage {
+/* UI stage: Figma 1920×1080 coordinates, scaled by JS (width-based, left-anchored) */
+.hero__stage {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 1;
   width: 1920px;
   height: 1080px;
+  overflow: visible;
   transform-origin: top left;
 }
 
-.hero__artboard {
-  overflow: hidden;
+/* Header pinned to viewport top (JS sets --nav-shift when stage is centered) */
+.hero__blur--nav,
+.hero__nav-link,
+.hero__logo {
+  translate: 0 var(--nav-shift, 0px);
 }
 
-.hero__chrome-stage {
-  overflow: visible;
+/* Full-bleed background — independent of the stage, always covers */
+.hero__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
 }
 
-.hero__photo,
+/* Masked copy on the stage; JS sizes it to the viewport box so it matches .hero__photo */
 .hero__photo-fg {
   position: absolute;
   left: 0;
@@ -296,28 +289,12 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
-
-  .hero__media,
-  .hero__chrome {
-    position: relative;
-    inset: auto;
-    width: 100%;
     height: 100vh;
     height: 100dvh;
     min-height: 640px;
   }
 
-  .hero__chrome {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero__artboard,
-  .hero__chrome-stage {
+  .hero__stage {
     position: absolute;
     left: 0;
     top: 0;
