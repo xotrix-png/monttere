@@ -3,8 +3,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: 56.25vw; /* fallback; JS sets 1080 * (vw / 1920) */
   overflow: hidden;
   background: #071a29;
   color: #f3f6f7;
@@ -22,27 +21,21 @@
   transform-origin: top left;
 }
 
-/* Header pinned to viewport top (JS sets --nav-shift when stage is centered) */
-.hero__blur--nav,
-.hero__nav-link,
-.hero__logo {
-  translate: 0 var(--nav-shift, 0px);
-}
-
-/* Full-bleed background — independent of the stage, always covers */
+/* Background photo on the stage at Figma (0,0), 1920×1080 */
 .hero__photo {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
   max-width: none;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   pointer-events: none;
   user-select: none;
 }
 
-/* Masked copy on the stage; JS sizes it to the viewport box so it matches .hero__photo */
+/* Masked copy: same photo, same stage position, static mask */
 .hero__photo-fg {
   position: absolute;
   left: 0;
@@ -51,7 +44,7 @@
   height: 1080px;
   max-width: none;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   pointer-events: none;
   user-select: none;
 }
