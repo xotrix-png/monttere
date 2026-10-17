@@ -8,49 +8,62 @@ import "./Hero.css";
 const STAGE_W = 1920;
 const STAGE_H = 1080;
 
+function placeStage(el, scale, left, top) {
+  if (!el) return;
+  el.style.transform = `scale(${scale})`;
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
+}
+
 export default function Hero() {
-  const frameRef = useRef(null);
-  const stageRef = useRef(null);
+  const heroRef = useRef(null);
+  const artboardRef = useRef(null);
+  const chromeStageRef = useRef(null);
 
   useLayoutEffect(() => {
-    const frame = frameRef.current;
-    const stage = stageRef.current;
-    if (!frame || !stage) return;
+    const hero = heroRef.current;
+    const artboard = artboardRef.current;
+    const chromeStage = chromeStageRef.current;
+    if (!hero || !artboard || !chromeStage) return;
 
     const syncScale = () => {
       if (window.matchMedia("(max-width: 768px)").matches) {
-        stage.style.transform = "";
-        stage.style.left = "";
-        stage.style.top = "";
+        placeStage(artboard, 1, 0, 0);
+        placeStage(chromeStage, 1, 0, 0);
+        artboard.style.transform = "";
+        chromeStage.style.transform = "";
+        artboard.style.left = "";
+        artboard.style.top = "";
+        chromeStage.style.left = "";
+        chromeStage.style.top = "";
         return;
       }
 
-      const vw = frame.clientWidth;
-      const vh = frame.clientHeight;
-      // Figma artboard → full-bleed viewport (cover). Letterboxing is not the site.
-      let scale = Math.max(vw / STAGE_W, vh / STAGE_H);
+      const vw = hero.clientWidth;
+      const vh = hero.clientHeight;
 
-      // Keep nav (y≈24) and CTA bottom (y≈968) on-screen when cover would crop them.
-      const navY = 24;
-      const ctaBottomY = 968;
-      const uiSpan = ctaBottomY - navY;
-      const maxScaleForUi = vh / uiSpan;
-      if (scale > maxScaleForUi) scale = maxScaleForUi;
+      // Media: cover viewport — no side letterbars; crop only photo edges.
+      const cover = Math.max(vw / STAGE_W, vh / STAGE_H);
+      placeStage(
+        artboard,
+        cover,
+        (vw - STAGE_W * cover) / 2,
+        (vh - STAGE_H * cover) / 2
+      );
 
-      let left = (vw - STAGE_W * scale) / 2;
-      let top = (vh - STAGE_H * scale) / 2;
-      const minTop = -navY * scale;
-      const maxTop = vh - ctaBottomY * scale;
-      top = Math.min(Math.max(top, minTop), maxTop);
-
-      stage.style.transform = `scale(${scale})`;
-      stage.style.left = `${left}px`;
-      stage.style.top = `${top}px`;
+      // Chrome (nav / logo / CTA): fit inside viewport — never clipped.
+      const fit = Math.min(vw / STAGE_W, vh / STAGE_H);
+      placeStage(
+        chromeStage,
+        fit,
+        (vw - STAGE_W * fit) / 2,
+        (vh - STAGE_H * fit) / 2
+      );
     };
 
     syncScale();
     const ro = new ResizeObserver(syncScale);
-    ro.observe(frame);
+    ro.observe(hero);
     window.addEventListener("resize", syncScale);
     return () => {
       ro.disconnect();
@@ -59,9 +72,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="hero" aria-label="MONTÉRRE hero">
-      <div className="hero__frame" ref={frameRef}>
-        <div className="hero__stage" ref={stageRef}>
+    <section className="hero" ref={heroRef} aria-label="MONTÉRRE hero">
+      {/* Layer A: photo + mask + titles — shared cover geometry */}
+      <div className="hero__media">
+        <div className="hero__artboard" ref={artboardRef}>
           <img
             className="hero__photo"
             src={photo}
@@ -70,39 +84,13 @@ export default function Hero() {
             height={1080}
           />
 
-          <div className="hero__blur hero__blur--nav" aria-hidden="true" />
           <div className="hero__blur hero__blur--intro" aria-hidden="true" />
-
-          <a
-            className="hero__nav-link hero__nav-link--membership"
-            href="#membership"
-          >
-            MEMBERSHIP
-          </a>
-          <a className="hero__nav-link hero__nav-link--stables" href="#stables">
-            STABLES
-          </a>
-          <a className="hero__nav-link hero__nav-link--estate" href="#estate">
-            ESTATE
-          </a>
-          <a className="hero__nav-link hero__nav-link--contact" href="#contact">
-            CONTACT
-          </a>
-
-          <img
-            className="hero__logo"
-            src={logo}
-            alt="MONTÉRRE"
-            width={89}
-            height={121}
-          />
 
           <h1 className="hero__titles">
             <span className="hero__title-monterre">MONTÉRRE</span>
             <span className="visually-hidden">EQUESTRIAN</span>
           </h1>
 
-          {/* Masked FG above MONTÉRRE; EQUESTRIAN paints after it */}
           <img
             className="hero__photo-fg"
             src={photo}
@@ -135,6 +123,37 @@ export default function Hero() {
           </div>
 
           <p className="hero__script">Est. 1928 — Heritage &amp; Refinement</p>
+        </div>
+      </div>
+
+      {/* Layer B: chrome — fit scale so header/CTA stay on-screen */}
+      <div className="hero__chrome">
+        <div className="hero__chrome-stage" ref={chromeStageRef}>
+          <div className="hero__blur hero__blur--nav" aria-hidden="true" />
+
+          <a
+            className="hero__nav-link hero__nav-link--membership"
+            href="#membership"
+          >
+            MEMBERSHIP
+          </a>
+          <a className="hero__nav-link hero__nav-link--stables" href="#stables">
+            STABLES
+          </a>
+          <a className="hero__nav-link hero__nav-link--estate" href="#estate">
+            ESTATE
+          </a>
+          <a className="hero__nav-link hero__nav-link--contact" href="#contact">
+            CONTACT
+          </a>
+
+          <img
+            className="hero__logo"
+            src={logo}
+            alt="MONTÉRRE"
+            width={89}
+            height={121}
+          />
 
           <button className="hero__cta" type="button">
             <span>REQUEST MEMBERSHIP</span>
