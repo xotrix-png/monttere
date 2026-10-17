@@ -1,58 +1,83 @@
-/* Figma frame: 1920 × 1080. Coordinates are from the top-left of that frame. */
+/*
+  MONTÉRRE hero — fluid, full-bleed, one viewport tall.
+
+  Units used below
+  ----------------
+  --s   one *photo* pixel on screen. The photo (hero-photo-wide.jpg,
+        2320×1081: the original 1920×1081 shot + 200px of extra sky/grass
+        on each side) is cover-fitted to the hero, so --s = scene width / 2320.
+  --t   wordmark size (MONTÉRRE font-size). Follows the photo (287px per
+        1920 of original photo, like the Figma) but never wider than the
+        viewport allows.
+  --u   UI unit for nav/CTA: 1px of the 1920×1080 design, scaled by the
+        smaller of width/height so chrome never outgrows the screen.
+
+  All positions in "photo pixels" below are coordinates in the 2320-wide
+  photo (Figma x + 200).
+*/
 
 .hero {
   position: relative;
   width: 100%;
-  /* Exactly one screen: nav, title and CTA are all above the fold */
   height: 100vh;
   height: 100dvh;
+  min-height: 520px;
   overflow: hidden;
   background: #071a29;
   color: #f3f6f7;
+  container-type: size;
+  container-name: hero;
+
+  /* ——— Photo scene: cover fit ——— */
+  --sw: max(100cqw, 100cqh * 2320 / 1081);
+  --sh: calc(var(--sw) * 1081 / 2320);
+  --s: calc(var(--sw) / 2320);
+
+  /* Horizontal focal framing: centred; on narrower windows shift so the
+     horse's tail (x≈1990) stays in — but the woman (x≈700 … 990) always
+     keeps room for the intro copy on her left (priority over the tail).
+     Clamped so the photo always covers edge to edge. */
+  --sx-c: calc((100cqw - var(--sw)) / 2);
+  --sx-want: max(
+    calc(var(--gutter) + 1.6 * var(--t) - 800 * var(--s)),
+    min(var(--sx-c), calc(100cqw - 1990 * var(--s)))
+  );
+  --sx: clamp(calc(100cqw - var(--sw)), var(--sx-want), 0px);
+
+  /* Vertical: bottom-anchored. Any surplus height is empty sky, so that is
+     what gets cropped; the boots (y≈1050) are never cut. */
+  --sy: calc(100cqh - var(--sh));
+
+  /* ——— Gutters & UI unit ——— */
+  --gutter: max(20px, 4cqw);
+  --u: min(100cqw / 1920, 100cqh / 1080);
+
+  /* ——— Wordmark group ———
+     Group spans 5.7464em (MONTÉRRE … end of EQUESTRIAN), centred on photo
+     x=1159, y=643 (exactly the Figma placement), clamped into the gutters. */
+  --t: min(
+    calc(287.142 * var(--s)),
+    calc((100cqw - 2 * var(--gutter)) / 5.7464)
+  );
+  --gw: calc(5.7464 * var(--t));
+  --gx: clamp(
+    var(--gutter),
+    calc(var(--sx) + 1159 * var(--s) - var(--gw) / 2),
+    calc(100cqw - var(--gutter) - var(--gw))
+  );
+  --gy: calc(var(--sy) + 643.4 * var(--s) - 0.5231 * var(--t));
 }
 
-/*
-  Stage: Figma 1920×1080 coordinates. JS applies
-  translate(left, top) scale(max(vw/1920, vh/1080)) — COVER, centred
-  horizontally, bottom-aligned (surplus sky crops off the top, boots stay).
-  Photo, masked FG and MONTÉRRE share this one transform, so the overlap
-  stays pixel-aligned.
-*/
-.hero__stage {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  width: 1920px;
-  height: 1080px;
-  overflow: visible;
-  transform-origin: top left;
-}
-
-/* Background photo on the stage at Figma (0,0), 1920×1080 */
-.hero__photo {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1920px;
-  height: 1080px;
-  max-width: none;
-  object-fit: cover;
-  object-position: center top;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Masked copy: same photo, same stage position, static mask */
+/* ——— Photo + masked foreground: identical geometry ——— */
+.hero__photo,
 .hero__photo-fg {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 1920px;
-  height: 1080px;
+  left: var(--sx);
+  top: var(--sy);
+  width: var(--sw);
+  height: var(--sh);
   max-width: none;
-  object-fit: cover;
-  object-position: center top;
+  display: block;
   pointer-events: none;
   user-select: none;
 }
@@ -61,187 +86,184 @@
   z-index: 0;
 }
 
-/*
-  Figma Mask group (6:84): Vector 1 silhouette as alpha mask.
-  Photo sits above MONTÉRRE / EQUESTRIAN so subjects occlude type.
-  mask-position adjusted for photo at (0,0); Figma photo was at (1,1).
-*/
+/* Figma mask (Vector 1 silhouette) at photo (738.29, 333.31),
+   size 1164.77 × 652.54 photo px */
 .hero__photo-fg {
   z-index: 3;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-size: 1164.772px 652.536px;
-  mask-size: 1164.772px 652.536px;
-  -webkit-mask-position: 538.29px 333.314px;
-  mask-position: 538.29px 333.314px;
+  -webkit-mask-size: calc(1164.772 * var(--s)) calc(652.536 * var(--s));
+  mask-size: calc(1164.772 * var(--s)) calc(652.536 * var(--s));
+  -webkit-mask-position: calc(738.29 * var(--s)) calc(333.314 * var(--s));
+  mask-position: calc(738.29 * var(--s)) calc(333.314 * var(--s));
   -webkit-mask-mode: alpha;
   mask-mode: alpha;
 }
 
-/* Top bar: nav links + logo in Figma coords, scaled by width, pinned to top */
-.hero__top {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  width: 1920px;
-  height: 160px;
-  margin: 0;
-  padding: 0;
-  transform-origin: top left;
-  pointer-events: none;
-}
-
-.hero__top .hero__nav-link {
-  pointer-events: auto;
-}
-
-/* Soft panels under nav / intro — Figma Rectangle 1 & 2 */
+/* ——— Soft panels (Figma Rectangle 1 & 2) ——— */
 .hero__blur {
   position: absolute;
   z-index: 1;
   pointer-events: none;
   background: #6c7c80;
-  filter: blur(100px);
   opacity: 0.9;
 }
 
 .hero__blur--nav {
-  left: 0.09px;
-  top: 1px;
-  width: 1920px;
-  height: 106.885px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(107 * var(--u));
+  filter: blur(calc(100 * var(--u)));
 }
 
 .hero__blur--intro {
-  left: 236.14px;
-  top: 431.75px;
-  width: 412.173px;
-  height: 108.252px;
+  left: 0.35568em;
+  top: -0.23703em;
+  width: 1.43543em;
+  height: 0.377em;
+  filter: blur(0.34826em);
+}
+
+/* ——— Nav ——— */
+.hero__nav {
+  position: absolute;
+  z-index: 7;
+  top: calc(23.66 * var(--u));
+  left: calc(var(--gx) + 0.0243 * var(--t));
+  width: calc(var(--gw) - 0.0243 * var(--t));
+  --logo-h: max(56px, calc(121.49 * var(--u)));
+  height: var(--logo-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 24px;
+  --nav-fs: max(12px, calc(20 * var(--u)));
+}
+
+.hero__nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+}
+
+.hero__nav-group--right {
+  justify-content: flex-end;
 }
 
 .hero__nav-link {
-  position: absolute;
-  z-index: 7;
-  margin: 0;
-  padding: 0;
   color: #f3f6f7;
   text-decoration: none;
   font-family: "Inter Tight", sans-serif;
   font-weight: 500;
-  font-size: 20px;
-  letter-spacing: 0;
+  font-size: var(--nav-fs);
   line-height: 1;
   white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+/* Figma spacing: STABLES starts 289px after MEMBERSHIP,
+   CONTACT starts 223px after ESTATE (at 1920 wide) */
+.hero__nav-link--stables {
+  margin-left: calc(var(--nav-fs) * 8.35);
+}
+
+.hero__nav-link--contact {
+  margin-left: calc(var(--nav-fs) * 7.9);
+  font-weight: 400;
 }
 
 .hero__nav-link:hover {
   opacity: 0.72;
 }
 
-.hero__nav-link:focus-visible {
+.hero__nav-link:focus-visible,
+.hero__logo-link:focus-visible,
+.hero__cta:focus-visible {
   outline: 1px solid #f3f6f7;
   outline-offset: 4px;
 }
 
-.hero__nav-link--membership {
-  left: 141px;
-  top: 72.4px;
-}
-
-.hero__nav-link--stables {
-  left: 430px;
-  top: 72.4px;
-}
-
-.hero__nav-link--estate {
-  left: 1471.66px;
-  top: 72.4px;
-}
-
-.hero__nav-link--contact {
-  left: 1694.66px;
-  top: 72.4px;
-  font-weight: 400;
+.hero__logo-link {
+  display: block;
 }
 
 .hero__logo {
-  position: absolute;
-  z-index: 7;
-  left: 915.39px;
-  top: 23.66px;
-  width: 89.313px;
-  height: 121.488px;
+  display: block;
+  height: var(--logo-h);
+  width: auto;
   max-width: none;
   object-fit: contain;
-  pointer-events: none;
+}
+
+/* ——— Wordmark group (em = --t) ——— */
+.hero__wordmark {
+  position: absolute;
+  /* no z-index: children interleave with the masked photo */
+  left: var(--gx);
+  top: var(--gy);
+  width: var(--gw);
+  height: 0;
+  font-size: var(--t);
 }
 
 .hero__intro {
   position: absolute;
   z-index: 6;
-  left: 141px;
-  top: 412.81px;
-  margin: 0;
+  left: 0.0243em;
+  bottom: 0.101em;
+  width: max-content;
+  max-width: calc(100cqw - var(--gx) - var(--gutter));
 }
 
-.hero__eyebrow {
-  margin: 0;
-  font-family: "Inter Tight", sans-serif;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: #f3f6f7;
-}
-
+.hero__eyebrow,
 .hero__lead {
   margin: 0;
   font-family: "Inter Tight", sans-serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: 0;
+  font-size: max(13px, 0.08358em);
+  line-height: 1.2083;
   color: #f3f6f7;
+}
+
+.hero__eyebrow {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hero__lead {
+  font-weight: 400;
 }
 
 .hero__titles {
   margin: 0;
   padding: 0;
-  font-size: 0;
+  font-size: inherit;
   font-weight: inherit;
 }
 
 .hero__title-monterre {
   position: absolute;
   z-index: 2;
-  left: 134.01px;
-  top: 499.81px;
-  margin: 0;
-  padding: 0;
+  left: 0;
+  top: 0;
   font-family: "Voga", serif;
   font-weight: 500;
-  font-size: 287.142px;
-  letter-spacing: 0;
+  font-size: 1em;
   line-height: normal;
   text-transform: uppercase;
   color: #f3f6f7;
   white-space: nowrap;
-  overflow: visible;
 }
 
 .hero__title-equestrian {
   position: absolute;
-  /* In front of horse FG (z:3); MONTÉRRE stays behind at z:2 */
   z-index: 5;
-  left: 1130.96px;
-  top: 549.23px;
-  width: 653.071px;
-  height: 170.21px;
+  left: 3.472em;
+  top: 0.17211em;
+  width: 2.27438em;
+  height: 0.59277em;
   max-width: none;
-  margin: 0;
-  padding: 0;
   display: block;
   object-fit: contain;
   pointer-events: none;
@@ -251,42 +273,45 @@
 .hero__script {
   position: absolute;
   z-index: 6;
-  left: 1223.03px;
-  top: 746.81px;
+  left: calc(3.79262 * var(--t));
+  top: calc(0.8602 * var(--t));
   margin: 0;
   font-family: "Nicoletta Script", cursive;
   font-weight: 400;
-  font-size: 56px;
-  letter-spacing: 0;
+  font-size: calc(0.19502 * var(--t));
   line-height: 1.2;
   color: #f3f6f7;
   white-space: nowrap;
-  overflow: visible;
 }
 
+/* ——— CTA: bottom centre of the viewport ——— */
 .hero__cta {
   position: absolute;
   z-index: 7;
-  left: 806.44px;
-  top: 908.14px;
-  width: 307.195px;
-  height: 59.076px;
+  left: 50%;
+  bottom: max(24px, calc(113 * var(--u)));
+  transform: translateX(-50%);
+  width: max(232px, calc(307.195 * var(--u)));
+  height: max(44px, calc(59.076 * var(--u)));
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 0 30px;
-  border: 0;
-  border-radius: 4.217px;
+  gap: max(9px, calc(12 * var(--u)));
+  padding: 0 16px;
+  border-radius: max(3px, calc(4.217 * var(--u)));
   background: #f3f6f7;
   color: #071a29;
+  text-decoration: none;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: 20px;
-  letter-spacing: 0;
+  font-size: max(14px, calc(20 * var(--u)));
   line-height: 1;
-  cursor: pointer;
+  white-space: nowrap;
   transition: background-color 0.25s ease;
+}
+
+.hero__cta:hover {
+  background: #e8ecee;
 }
 
 .hero__cta-arrow {
@@ -295,123 +320,83 @@
   transform: translateY(0.5px);
 }
 
-.hero__cta:hover {
-  background: #e8ecee;
+.hero__cta-arrow svg {
+  width: 0.7em;
+  height: auto;
 }
 
-.hero__cta:focus-visible {
-  outline: 1px solid #f3f6f7;
-  outline-offset: 4px;
-}
-
-/* —— Narrow viewports: reflow, do not rely on stage scale alone —— */
-
+/* ——— Phones / narrow tablets: same scene system, stacked wordmark ——— */
 @media (max-width: 768px) {
   .hero {
-    height: 100vh;
-    height: 100dvh;
-    min-height: 640px;
+    min-height: 560px;
+    --gutter: 20px;
+    /* frame the woman + horse's head */
+    --sx-want: max(
+      calc(-640 * var(--s)),
+      min(var(--sx-c), calc(100cqw - 1250 * var(--s)))
+    );
+    /* MONTÉRRE alone spans 3.25em; EQUESTRIAN drops below it */
+    --t: min(
+      calc(287.142 * var(--s)),
+      calc((100cqw - 2 * var(--gutter)) / 3.26)
+    );
+    --gw: calc(3.26 * var(--t));
+    --gx: var(--gutter);
+    --gy: calc(var(--sy) + 560 * var(--s) - 0.5231 * var(--t));
   }
 
-  .hero__stage,
-  .hero__top {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transform: none;
+  .hero__blur--nav {
+    height: 90px;
+    filter: blur(60px);
   }
 
-  .hero__photo,
-  .hero__photo-fg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 42% center;
-  }
-
-  .hero__photo-fg,
-  .hero__blur {
+  .hero__blur--intro {
     display: none;
   }
 
-  .hero__nav-link--membership {
-    left: 20px;
-    top: 28px;
-    font-size: 11px;
+  .hero__nav {
+    top: 16px;
+    left: var(--gutter);
+    width: calc(100cqw - 2 * var(--gutter));
+    --logo-h: 52px;
+    column-gap: 12px;
+    --nav-fs: 11px;
   }
 
-  .hero__nav-link--stables {
-    left: auto;
-    right: 20px;
-    top: 28px;
-    font-size: 11px;
+  .hero__nav-link--stables,
+  .hero__nav-link--estate {
+    display: none;
   }
 
-  .hero__nav-link--estate,
   .hero__nav-link--contact {
-    display: none;
-  }
-
-  .hero__logo {
-    left: 50%;
-    top: 18px;
-    width: 56px;
-    height: 42px;
-    transform: translateX(-50%);
+    margin-left: 0;
   }
 
   .hero__intro {
-    left: 20px;
-    right: 20px;
-    top: auto;
-    bottom: 42%;
-  }
-
-  .hero__eyebrow,
-  .hero__lead {
-    font-size: 13px;
-    line-height: 1.35;
-  }
-
-  .hero__title-monterre {
-    left: 20px;
-    right: 20px;
-    top: auto;
-    bottom: 28%;
-    font-size: clamp(42px, 14vw, 72px);
-    line-height: 0.9;
-    white-space: normal;
+    bottom: 0.14em;
+    max-width: calc(100cqw - 2 * var(--gutter));
+    width: auto;
   }
 
   .hero__title-equestrian {
-    left: 20px;
-    right: auto;
-    top: auto;
-    bottom: 20%;
-    width: min(653px, calc(100% - 40px));
-    height: auto;
-    aspect-ratio: 653.071 / 170.21;
-    object-fit: contain;
+    left: auto;
+    right: 0;
+    top: 1.02em;
+    width: 1.9em;
+    height: 0.495em;
   }
 
   .hero__script {
-    left: 20px;
-    right: 20px;
-    top: auto;
-    bottom: 14%;
-    font-size: 22px;
-    white-space: normal;
+    left: auto;
+    right: 0;
+    top: calc(1.6 * var(--t));
+    font-size: max(16px, calc(0.17 * var(--t)));
   }
 
   .hero__cta {
-    left: 50%;
-    top: auto;
     bottom: 28px;
     width: min(306px, calc(100% - 40px));
-    height: 52px;
+    height: 50px;
     font-size: 14px;
-    transform: translateX(-50%);
   }
 }
