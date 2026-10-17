@@ -1,0 +1,391 @@
+/* Figma frame: 1920 × 1080. Coordinates are from the top-left of that frame. */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #071a29;
+  color: #f3f6f7;
+}
+
+/* Viewport-sized stage host — artboard (1920×1080) is scaled to cover it */
+.hero__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero__stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: top left;
+}
+
+.hero__photo,
+.hero__photo-fg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__photo {
+  z-index: 0;
+}
+
+/*
+  Figma Mask group (6:84): Vector 1 silhouette as alpha mask.
+  Photo sits above MONTÉRRE / EQUESTRIAN so subjects occlude type.
+  mask-position adjusted for photo at (0,0); Figma photo was at (1,1).
+*/
+.hero__photo-fg {
+  z-index: 3;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 1164.772px 652.536px;
+  mask-size: 1164.772px 652.536px;
+  -webkit-mask-position: 538.29px 333.314px;
+  mask-position: 538.29px 333.314px;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+}
+
+/* Soft panels under nav / intro — Figma Rectangle 1 & 2 */
+.hero__blur {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background: #6c7c80;
+  filter: blur(100px);
+  opacity: 0.9;
+}
+
+.hero__blur--nav {
+  left: 0.09px;
+  top: 1px;
+  width: 1920px;
+  height: 106.885px;
+}
+
+.hero__blur--intro {
+  left: 236.14px;
+  top: 431.75px;
+  width: 412.173px;
+  height: 108.252px;
+}
+
+.hero__nav-link {
+  position: absolute;
+  z-index: 7;
+  margin: 0;
+  padding: 0;
+  color: #f3f6f7;
+  text-decoration: none;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.hero__nav-link:hover {
+  opacity: 0.72;
+}
+
+.hero__nav-link:focus-visible {
+  outline: 1px solid #f3f6f7;
+  outline-offset: 4px;
+}
+
+.hero__nav-link--membership {
+  left: 141px;
+  top: 72.4px;
+}
+
+.hero__nav-link--stables {
+  left: 430px;
+  top: 72.4px;
+}
+
+.hero__nav-link--estate {
+  left: 1471.66px;
+  top: 72.4px;
+}
+
+.hero__nav-link--contact {
+  left: 1694.66px;
+  top: 72.4px;
+  font-weight: 400;
+}
+
+.hero__logo {
+  position: absolute;
+  z-index: 7;
+  left: 915.39px;
+  top: 23.66px;
+  width: 89.313px;
+  height: 121.488px;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.hero__intro {
+  position: absolute;
+  z-index: 6;
+  left: 141px;
+  top: 412.81px;
+  margin: 0;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #f3f6f7;
+}
+
+.hero__lead {
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: 0;
+  color: #f3f6f7;
+}
+
+.hero__titles {
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  font-weight: inherit;
+}
+
+.hero__title-monterre {
+  position: absolute;
+  z-index: 2;
+  left: 134.01px;
+  top: 499.81px;
+  margin: 0;
+  padding: 0;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: 287.142px;
+  letter-spacing: 0;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.hero__title-equestrian {
+  position: absolute;
+  /* In front of horse FG (z:3); MONTÉRRE stays behind at z:2 */
+  z-index: 5;
+  left: 1130.96px;
+  top: 549.23px;
+  width: 653.071px;
+  height: 170.21px;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__script {
+  position: absolute;
+  z-index: 6;
+  left: 1223.03px;
+  top: 746.81px;
+  margin: 0;
+  font-family: "Nicoletta Script", cursive;
+  font-weight: 400;
+  font-size: 56px;
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: #f3f6f7;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.hero__cta {
+  position: absolute;
+  z-index: 7;
+  left: 806.44px;
+  top: 908.14px;
+  width: 307.195px;
+  height: 59.076px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 30px;
+  border: 0;
+  border-radius: 4.217px;
+  background: #f3f6f7;
+  color: #071a29;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.hero__cta-arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  transform: translateY(0.5px);
+}
+
+.hero__cta:hover {
+  background: #e8ecee;
+}
+
+.hero__cta:focus-visible {
+  outline: 1px solid #f3f6f7;
+  outline-offset: 4px;
+}
+
+/* —— Narrow viewports: reflow, do not rely on stage scale alone —— */
+
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .hero__frame {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 640px;
+  }
+
+  .hero__stage {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    overflow: hidden;
+  }
+
+  .hero__photo,
+  .hero__photo-fg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 42% center;
+  }
+
+  .hero__photo-fg,
+  .hero__blur {
+    display: none;
+  }
+
+  .hero__nav-link--membership {
+    left: 20px;
+    top: 28px;
+    font-size: 11px;
+  }
+
+  .hero__nav-link--stables {
+    left: auto;
+    right: 20px;
+    top: 28px;
+    font-size: 11px;
+  }
+
+  .hero__nav-link--estate,
+  .hero__nav-link--contact {
+    display: none;
+  }
+
+  .hero__logo {
+    left: 50%;
+    top: 18px;
+    width: 56px;
+    height: 42px;
+    transform: translateX(-50%);
+  }
+
+  .hero__intro {
+    left: 20px;
+    right: 20px;
+    top: auto;
+    bottom: 42%;
+  }
+
+  .hero__eyebrow,
+  .hero__lead {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .hero__title-monterre {
+    left: 20px;
+    right: 20px;
+    top: auto;
+    bottom: 28%;
+    font-size: clamp(42px, 14vw, 72px);
+    line-height: 0.9;
+    white-space: normal;
+  }
+
+  .hero__title-equestrian {
+    left: 20px;
+    right: auto;
+    top: auto;
+    bottom: 20%;
+    width: min(653px, calc(100% - 40px));
+    height: auto;
+    aspect-ratio: 653.071 / 170.21;
+    object-fit: contain;
+  }
+
+  .hero__script {
+    left: 20px;
+    right: 20px;
+    top: auto;
+    bottom: 14%;
+    font-size: 22px;
+    white-space: normal;
+  }
+
+  .hero__cta {
+    left: 50%;
+    top: auto;
+    bottom: 28px;
+    width: min(306px, calc(100% - 40px));
+    height: 52px;
+    font-size: 14px;
+    transform: translateX(-50%);
+  }
+}
