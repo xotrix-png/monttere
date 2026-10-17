@@ -3,13 +3,21 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 56.25vw; /* fallback; JS sets 1080 * (vw / 1920) */
+  /* Exactly one screen: nav, title and CTA are all above the fold */
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #071a29;
   color: #f3f6f7;
 }
 
-/* UI stage: Figma 1920×1080 coordinates, scaled by JS (width-based, left-anchored) */
+/*
+  Stage: Figma 1920×1080 coordinates. JS applies
+  translate(left, top) scale(max(vw/1920, vh/1080)) — COVER, centred
+  horizontally, bottom-aligned (surplus sky crops off the top, boots stay).
+  Photo, masked FG and MONTÉRRE share this one transform, so the overlap
+  stays pixel-aligned.
+*/
 .hero__stage {
   position: absolute;
   left: 0;
@@ -68,6 +76,24 @@
   mask-position: 538.29px 333.314px;
   -webkit-mask-mode: alpha;
   mask-mode: alpha;
+}
+
+/* Top bar: nav links + logo in Figma coords, scaled by width, pinned to top */
+.hero__top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 1920px;
+  height: 160px;
+  margin: 0;
+  padding: 0;
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.hero__top .hero__nav-link {
+  pointer-events: auto;
 }
 
 /* Soft panels under nav / intro — Figma Rectangle 1 & 2 */
@@ -287,7 +313,8 @@
     min-height: 640px;
   }
 
-  .hero__stage {
+  .hero__stage,
+  .hero__top {
     position: absolute;
     left: 0;
     top: 0;
