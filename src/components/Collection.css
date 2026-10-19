@@ -1,0 +1,182 @@
+/*
+  Collection block — Figma Frame 8 (235:10), 1920 × 1159.
+
+  --u = 1 design px scaled to the section width (Figma Scale).
+  Section height follows aspect-ratio so the whole frame scales
+  with viewport width — no side gutters, no horizontal scroll.
+
+  Layers (z): bg 0 → smoke 1 → SE 2 → horse 3 → HOR 4 → labels 5
+*/
+
+.collection {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 1159;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #f3f6f7;
+  container-type: inline-size;
+  container-name: collection;
+
+  --u: calc(100cqw / 1920);
+}
+
+/*
+  Background "лошадь с фоном" — native 2586×1159.
+  Figma crop: left −17.8% of 1920 (= −341.76), width 134.67% (= 2586).
+  Placed at exact native size so it registers with the cutout horse.
+*/
+.collection__bg {
+  position: absolute;
+  z-index: 0;
+  left: calc(-341.76 * var(--u));
+  top: 0;
+  width: calc(2586 * var(--u));
+  height: calc(1159 * var(--u));
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Figma: mix-blend-color-dodge, opacity 30% */
+.collection__smoke {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  mix-blend-mode: color-dodge;
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* SE — behind the horse. x:1237.21 y:300.09 w:548.26 h:501.87 */
+.collection__se {
+  position: absolute;
+  z-index: 2;
+  left: calc(1237.21 * var(--u));
+  top: calc(300.09 * var(--u));
+  width: calc(548.26 * var(--u));
+  height: calc(501.866 * var(--u));
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/*
+  Cutout horse — native 2000×1070, stacked on the bg horse.
+  Figma frame (25:296): x≈0 y:89.09 w:1780.14 h:1069.74
+  Image inside frame: left −12.35% (= −219.85), so bitmap origin
+  sits at x:−219.85. Vertical: top of bitmap = frame top = 89.09
+  (1159 − 1070 = 89) — same registration as the bg composite.
+*/
+.collection__horse {
+  position: absolute;
+  z-index: 3;
+  left: calc(-219.85 * var(--u));
+  top: calc(89.09 * var(--u));
+  width: calc(2000 * var(--u));
+  height: calc(1070 * var(--u));
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* HOR — in front of the horse. x:142.66 y:300.09 w:1055.14 h:501.87 */
+.collection__hor {
+  position: absolute;
+  z-index: 4;
+  left: calc(142.66 * var(--u));
+  top: calc(300.09 * var(--u));
+  width: calc(1055.142 * var(--u));
+  height: calc(501.866 * var(--u));
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Heritage & Refinement — x:141 y:210.72, Inter Tight Regular 32 */
+.collection__heritage {
+  position: absolute;
+  z-index: 5;
+  left: calc(141 * var(--u));
+  top: calc(210.72 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(32 * var(--u));
+  line-height: normal;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* 02 — x:1693.16 y:100, Inter Tight Italic 20 uppercase */
+.collection__index {
+  position: absolute;
+  z-index: 5;
+  left: calc(1693.16 * var(--u));
+  top: calc(100 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* THE COLLECTION — x:1624.66 y:129, Inter Tight Italic 20 uppercase */
+.collection__label {
+  position: absolute;
+  z-index: 5;
+  left: calc(1624.66 * var(--u));
+  top: calc(129 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* Scroll + arrow — text x:1727.1 y:948.96 / arrow x:1749.5 y:1014.45 */
+.collection__scroll {
+  position: absolute;
+  z-index: 5;
+  left: calc(1727.1 * var(--u));
+  top: calc(948.96 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(12 * var(--u));
+}
+
+.collection__scroll-text {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(24 * var(--u));
+  line-height: normal;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+.collection__scroll-arrow {
+  display: block;
+  width: calc(12.202 * var(--u));
+  height: calc(87.221 * var(--u));
+  max-width: none;
+}

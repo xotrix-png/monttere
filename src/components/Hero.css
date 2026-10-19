@@ -3,17 +3,16 @@
 
   Units used below
   ----------------
-  --s   one *photo* pixel on screen. The photo (hero-photo-wide.jpg,
-        2320×1081: the original 1920×1081 shot + 200px of extra sky/grass
-        on each side) is cover-fitted to the hero, so --s = scene width / 2320.
+  --s   one *photo* pixel on screen. The photo (hero-photo.png,
+        1920×1081 original) is cover-fitted to the hero, so
+        --s = scene width / 1920.
   --t   wordmark size (MONTÉRRE font-size). Follows the photo (287px per
         1920 of original photo, like the Figma) but never wider than the
         viewport allows.
   --u   UI unit for nav/CTA: 1px of the 1920×1080 design, scaled by the
         smaller of width/height so chrome never outgrows the screen.
 
-  All positions in "photo pixels" below are coordinates in the 2320-wide
-  photo (Figma x + 200).
+  All positions in "photo pixels" below are Figma / original-photo coords.
 */
 
 .hero {
@@ -29,18 +28,18 @@
   container-name: hero;
 
   /* ——— Photo scene: cover fit ——— */
-  --sw: max(100cqw, 100cqh * 2320 / 1081);
-  --sh: calc(var(--sw) * 1081 / 2320);
-  --s: calc(var(--sw) / 2320);
+  --sw: max(100cqw, 100cqh * 1920 / 1081);
+  --sh: calc(var(--sw) * 1081 / 1920);
+  --s: calc(var(--sw) / 1920);
 
   /* Horizontal focal framing: centred; on narrower windows shift so the
-     horse's tail (x≈1990) stays in — but the woman (x≈700 … 990) always
+     horse's tail (x≈1790) stays in — but the woman (x≈500 … 790) always
      keeps room for the intro copy on her left (priority over the tail).
      Clamped so the photo always covers edge to edge. */
   --sx-c: calc((100cqw - var(--sw)) / 2);
   --sx-want: max(
-    calc(var(--gutter) + 1.6 * var(--t) - 800 * var(--s)),
-    min(var(--sx-c), calc(100cqw - 1990 * var(--s)))
+    calc(var(--gutter) + 1.6 * var(--t) - 600 * var(--s)),
+    min(var(--sx-c), calc(100cqw - 1790 * var(--s)))
   );
   --sx: clamp(calc(100cqw - var(--sw)), var(--sx-want), 0px);
 
@@ -50,11 +49,14 @@
 
   /* ——— Gutters & UI unit ——— */
   --gutter: max(20px, 4cqw);
+  /* Figma Scale by width; clamp only if viewport is shorter than 16:9 */
   --u: min(100cqw / 1920, 100cqh / 1080);
 
   /* ——— Wordmark group ———
-     Group spans 5.7464em (MONTÉRRE … end of EQUESTRIAN), centred on photo
-     x=1159, y=643 (exactly the Figma placement), clamped into the gutters. */
+     Anchored to Figma MONTÉRRE origin (6:85): x=134.01, y=499.81.
+     +20 design-px vertical nudge for the airiness in the reference
+     (MONTÉRRE / EQUESTRIAN / Est. move together; intro stays at Figma y).
+     Group width = MONTÉRRE→end of EQUESTRIAN = 1650.02 → 5.7464em. */
   --t: min(
     calc(287.142 * var(--s)),
     calc((100cqw - 2 * var(--gutter)) / 5.7464)
@@ -62,10 +64,10 @@
   --gw: calc(5.7464 * var(--t));
   --gx: clamp(
     var(--gutter),
-    calc(var(--sx) + 1159 * var(--s) - var(--gw) / 2),
+    calc(var(--sx) + 134.01 * var(--s)),
     calc(100cqw - var(--gutter) - var(--gw))
   );
-  --gy: calc(var(--sy) + 643.4 * var(--s) - 0.5231 * var(--t));
+  --gy: calc(var(--sy) + 519.81 * var(--s)); /* Figma 499.81 + 20 */
 }
 
 /* ——— Photo + masked foreground: identical geometry ——— */
@@ -86,7 +88,7 @@
   z-index: 0;
 }
 
-/* Figma mask (Vector 1 silhouette) at photo (738.29, 333.31),
+/* Figma mask (Vector 1 silhouette) at photo (538.29, 333.31),
    size 1164.77 × 652.54 photo px */
 .hero__photo-fg {
   z-index: 3;
@@ -94,8 +96,8 @@
   mask-repeat: no-repeat;
   -webkit-mask-size: calc(1164.772 * var(--s)) calc(652.536 * var(--s));
   mask-size: calc(1164.772 * var(--s)) calc(652.536 * var(--s));
-  -webkit-mask-position: calc(738.29 * var(--s)) calc(333.314 * var(--s));
-  mask-position: calc(738.29 * var(--s)) calc(333.314 * var(--s));
+  -webkit-mask-position: calc(538.29 * var(--s)) calc(333.314 * var(--s));
+  mask-position: calc(538.29 * var(--s)) calc(333.314 * var(--s));
   -webkit-mask-mode: alpha;
   mask-mode: alpha;
 }
@@ -117,12 +119,14 @@
   filter: blur(calc(100 * var(--u)));
 }
 
+/* Figma Rectangle 2 — x:236.14 y:431.75 w:412.17 h:108.25, blur ~100
+   Offsets relative to Figma MONTÉRRE origin (134.01, 499.81). */
 .hero__blur--intro {
-  left: 0.35568em;
-  top: -0.23703em;
-  width: 1.43543em;
-  height: 0.377em;
-  filter: blur(0.34826em);
+  left: calc((236.14 - 134.01) / 287.142 * 1em);
+  top: calc((431.75 - 499.81) / 287.142 * 1em);
+  width: calc(412.17 / 287.142 * 1em);
+  height: calc(108.25 / 287.142 * 1em);
+  filter: blur(calc(100 / 287.142 * 1em));
 }
 
 /* ——— Nav ——— */
@@ -208,11 +212,18 @@
   font-size: var(--t);
 }
 
+/*
+  Intro copy — Figma 6:184
+  x:141 y:412.81 w:442 h:87, 24px Inter Tight.
+  Offsets relative to Figma MONTÉRRE (134.01, 499.81); whole group
+  is shifted +20px via --gy, so spacing inside the cluster stays exact.
+*/
 .hero__intro {
   position: absolute;
   z-index: 6;
-  left: 0.0243em;
-  bottom: 0.101em;
+  left: calc((141 - 134.01) / 287.142 * 1em);
+  top: calc((412.81 - 499.81) / 287.142 * 1em);
+  bottom: auto;
   width: max-content;
   max-width: calc(100cqw - var(--gx) - var(--gutter));
 }
@@ -221,7 +232,7 @@
 .hero__lead {
   margin: 0;
   font-family: "Inter Tight", sans-serif;
-  font-size: max(13px, 0.08358em);
+  font-size: max(13px, calc(24 / 287.142 * 1em));
   line-height: 1.2083;
   color: #f3f6f7;
 }
@@ -256,13 +267,14 @@
   white-space: nowrap;
 }
 
+/* Figma 6:213 equestrian — x:1130.96 y:549.23 w:653.07 h:170.21 */
 .hero__title-equestrian {
   position: absolute;
   z-index: 5;
-  left: 3.472em;
-  top: 0.17211em;
-  width: 2.27438em;
-  height: 0.59277em;
+  left: calc((1130.96 - 134.01) / 287.142 * 1em);
+  top: calc((549.23 - 499.81) / 287.142 * 1em);
+  width: calc(653.07 / 287.142 * 1em);
+  height: calc(170.21 / 287.142 * 1em);
   max-width: none;
   display: block;
   object-fit: contain;
@@ -270,16 +282,19 @@
   user-select: none;
 }
 
+/* Figma 86:3 Est. — x:1223.03 y:746.81, 56px Nicoletta Script
+   Use var(--t), not 1em: this rule sets its own font-size, so em
+   would resolve against 56px and collapse the offsets. */
 .hero__script {
   position: absolute;
   z-index: 6;
-  left: calc(3.79262 * var(--t));
-  top: calc(0.8602 * var(--t));
+  left: calc((1223.03 - 134.01) / 287.142 * var(--t));
+  top: calc((746.81 - 499.81) / 287.142 * var(--t));
   margin: 0;
   font-family: "Nicoletta Script", cursive;
   font-weight: 400;
-  font-size: calc(0.19502 * var(--t));
-  line-height: 1.2;
+  font-size: calc(56 / 287.142 * var(--t));
+  line-height: normal;
   color: #f3f6f7;
   white-space: nowrap;
 }
@@ -332,17 +347,17 @@
     --gutter: 20px;
     /* frame the woman + horse's head */
     --sx-want: max(
-      calc(-640 * var(--s)),
-      min(var(--sx-c), calc(100cqw - 1250 * var(--s)))
+      calc(-440 * var(--s)),
+      min(var(--sx-c), calc(100cqw - 1050 * var(--s)))
     );
-    /* MONTÉRRE alone spans 3.25em; EQUESTRIAN drops below it */
+    /* MONTÉRRE alone spans ~3.3em; EQUESTRIAN drops below it */
     --t: min(
       calc(287.142 * var(--s)),
       calc((100cqw - 2 * var(--gutter)) / 3.26)
     );
     --gw: calc(3.26 * var(--t));
     --gx: var(--gutter);
-    --gy: calc(var(--sy) + 560 * var(--s) - 0.5231 * var(--t));
+    --gy: calc(var(--sy) + 519.81 * var(--s));
   }
 
   .hero__blur--nav {
@@ -373,7 +388,6 @@
   }
 
   .hero__intro {
-    bottom: 0.14em;
     max-width: calc(100cqw - 2 * var(--gutter));
     width: auto;
   }
@@ -390,7 +404,7 @@
     left: auto;
     right: 0;
     top: calc(1.6 * var(--t));
-    font-size: max(16px, calc(0.17 * var(--t)));
+    font-size: max(16px, calc(56 / 287.142 * var(--t)));
   }
 
   .hero__cta {

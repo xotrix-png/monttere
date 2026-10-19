@@ -1,0 +1,25 @@
+<svg width="1056" height="502" viewBox="0 0 1056 502" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_n_26_350)">
+<path d="M185.943 6.97035H321.175V13.9407H287.367V487.925H321.175V494.895H185.943V487.925H219.751V254.418H101.424V487.925H135.231V494.895H0V487.925H33.8078V13.9407H0V6.97035H135.231V13.9407H101.424V247.448H219.751V13.9407H185.943V6.97035Z" fill="#F3F6F7"/>
+<path d="M591.155 390.34V111.526C591.155 53.6718 565.799 6.97035 523.54 6.97035C481.28 6.97035 455.924 53.6718 455.924 111.526V390.34C455.924 448.194 481.28 494.895 523.54 494.895C565.799 494.895 591.155 448.194 591.155 390.34ZM388.308 390.34V111.526C388.308 50.1866 444.936 0 523.54 0C602.143 0 658.771 50.1866 658.771 111.526V390.34C658.771 451.679 602.143 501.866 523.54 501.866C444.936 501.866 388.308 451.679 388.308 390.34Z" fill="#F3F6F7"/>
+<path d="M860.747 257.903H826.939V487.925H860.747V494.895H725.515V487.925H759.323V13.9407H725.515V6.97035H860.747C952.028 6.97035 1012.88 57.1569 1012.88 118.496V146.378C1012.88 197.958 968.932 241.871 901.316 254.418C968.932 266.965 1012.88 310.878 1012.88 362.459V456.558C1012.88 469.802 1020.49 480.258 1029.79 480.258C1039.08 480.258 1046.69 469.802 1046.69 456.558H1055.14C1055.14 481.652 1030.63 501.866 1000.2 501.866C969.777 501.866 945.266 481.652 945.266 456.558V362.459C945.266 304.605 907.232 257.903 860.747 257.903ZM860.747 13.9407H826.939V250.933H860.747C907.232 250.933 945.266 204.231 945.266 146.378V118.496C945.266 60.6421 907.232 13.9407 860.747 13.9407Z" fill="#F3F6F7"/>
+</g>
+<defs>
+<filter id="filter0_n_26_350" x="0" y="0" width="1055.14" height="501.866" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="10 10" stitchTiles="stitch" numOctaves="3" result="noise" seed="6761" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="coloredNoise1">
+<feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "/>
+</feComponentTransfer>
+<feComposite operator="in" in2="shape" in="coloredNoise1" result="noise1Clipped" />
+<feFlood flood-color="rgba(18, 22, 25, 0.18)" result="color1Flood" />
+<feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
+<feMerge result="effect1_noise_26_350">
+<feMergeNode in="shape" />
+<feMergeNode in="color1" />
+</feMerge>
+</filter>
+</defs>
+</svg>

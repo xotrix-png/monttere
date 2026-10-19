@@ -1,4 +1,4 @@
-import photo from "../assets/images/hero-photo-wide.jpg";
+import photo from "../assets/images/hero-photo.png";
 import logo from "../assets/images/logo.png";
 import heroMask from "../assets/images/hero-mask.svg";
 import equestrianMark from "../equestrian.svg";
@@ -19,7 +19,7 @@ export default function Hero() {
         className="hero__photo"
         src={photo}
         alt="A woman standing with a grey horse in an open field"
-        width={2320}
+        width={1920}
         height={1081}
         fetchPriority="high"
         decoding="async"
@@ -88,7 +88,7 @@ export default function Hero() {
         src={photo}
         alt=""
         aria-hidden="true"
-        width={2320}
+        width={1920}
         height={1081}
         style={{
           WebkitMaskImage: `url(${heroMask})`,
