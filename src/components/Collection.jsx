@@ -16,7 +16,7 @@ import "./Collection.css";
  */
 export default function Collection() {
   return (
-    <section className="collection" id="stables" aria-label="THE COLLECTION">
+    <section className="collection" aria-label="THE COLLECTION">
       <img
         className="collection__bg"
         src={bg}

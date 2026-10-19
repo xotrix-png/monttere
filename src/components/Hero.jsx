@@ -38,7 +38,14 @@ export default function Hero() {
         </div>
 
         <a className="hero__logo-link" href="#top" aria-label="MONTÉRRE — home">
-          <img className="hero__logo" src={logo} alt="" width={89} height={121} />
+          <span
+            className="hero__logo"
+            style={{
+              WebkitMaskImage: `url(${logo})`,
+              maskImage: `url(${logo})`,
+            }}
+            aria-hidden="true"
+          />
         </a>
 
         <div className="hero__nav-group hero__nav-group--right">
