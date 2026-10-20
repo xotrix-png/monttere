@@ -17,23 +17,30 @@ import "./Gallery.css";
 gsap.registerPlugin(ScrollTrigger);
 
 /*
-  ─── Scroll / magnet knobs (подкрутить здесь) ───
-  SCRUB          — «вязкость» скролла: больше = спокойнее/инерционнее (сек.)
-  SNAP_THRESHOLD — магнит только если ближе чем эта доля карточки (0–0.5)
-  SNAP_DELAY     — пауза после остановки скролла, прежде чем магнит дотянет
-  SNAP_DUR_MIN/MAX — длительность мягкого дотягивания (сек.)
-  NAV_EXIT_END   — доля перехода, к которой навигация уже скрыта
-  NAV_ENTER_START — доля перехода, с которой навигация снова появляется
-  NAV_SLIDE_PX   — насколько в px (от 1920) навигация уезжает вбок
+  ─── Scroll knobs ───
+  Timeline: hold → move → hold → move … (карточка стоит, скролл «впустую»,
+  потом снова едет). Без snap — ничего само не дотягивает до края.
+
+  SCRUB          — лёгкое сглаживание (сек.)
+  MOVE_W / HOLD_W — относительные доли: движение vs пауза на слайде
+  SCROLL_UNIT    — сколько vh вертикали на 1 единицу таймлайна (> = менее чувствительно)
+  NAV_EXIT_END     — к этой доле перехода пункты уже полностью скрыты
+  NAV_ENTER_START  — с этой доли новый блок: выезд слева → вправо + мягкий fade-in
+  NAV_ENTER_FROM   — стартовый сдвиг в долях ширины (~середина слайда → позиция справа)
 */
-const SCRUB = 1.15;
-const SNAP_THRESHOLD = 0.2;
-const SNAP_DELAY = 0.14;
-const SNAP_DUR_MIN = 0.28;
-const SNAP_DUR_MAX = 0.65;
-const NAV_EXIT_END = 0.38;
-const NAV_ENTER_START = 0.62;
-const NAV_SLIDE_PX = 72;
+const SCRUB = 0.4;
+const MOVE_W = 1;
+const HOLD_W = 0.55;
+/** Idle on Isabelle (card stands) before fur starts crawling up */
+const EXIT_HOLD_W = 0.5;
+/** Scrub: fur crawls onto Isabelle until Figma rest (375px overlap) */
+const FUR_REVEAL_W = 1.6;
+/** Hold settled fur on Isabelle before Philosophy scrolls in */
+const FUR_SETTLE_W = 0.7;
+const SCROLL_UNIT = 1.7;
+const NAV_EXIT_END = 0.14;
+const NAV_ENTER_START = 0.64;
+const NAV_ENTER_FROM = 0.18;
 
 const HORSES = [
   {
@@ -137,21 +144,54 @@ const HORSES = [
 /** Collection + 6 horses */
 const SLIDE_COUNT = 1 + HORSES.length;
 const LAST = SLIDE_COUNT - 1;
-const easeIO = gsap.parseEase("power2.inOut");
+const easeExit = gsap.parseEase("power2.in");
+const easeEnterPos = gsap.parseEase("power1.out");
+/** Stay faint until late so early frames don’t sit on the title */
+const easeEnterAlpha = gsap.parseEase("power2.in");
 
-function softSnap(progress) {
-  const pos = progress * LAST;
-  const nearest = Math.round(pos);
-  if (Math.abs(pos - nearest) <= SNAP_THRESHOLD) {
-    return nearest / LAST;
+/** hold → move → … → hold(Isabelle) → fur reveal (still on last slide) */
+const SCROLL_SEGMENTS = (() => {
+  const segs = [{ type: "hold", slide: 0, w: HOLD_W }];
+  for (let i = 0; i < LAST; i++) {
+    segs.push({ type: "move", from: i, to: i + 1, w: MOVE_W });
+    const holdW = i === LAST - 1 ? EXIT_HOLD_W : HOLD_W;
+    segs.push({ type: "hold", slide: i + 1, w: holdW });
   }
-  return progress;
+  segs.push({ type: "hold", slide: LAST, w: FUR_REVEAL_W });
+  segs.push({ type: "hold", slide: LAST, w: FUR_SETTLE_W });
+  return segs;
+})();
+const SCROLL_TOTAL_W = SCROLL_SEGMENTS.reduce((s, seg) => s + seg.w, 0);
+
+function progressToPos(progress) {
+  let t = Math.min(1, Math.max(0, progress)) * SCROLL_TOTAL_W;
+  for (const seg of SCROLL_SEGMENTS) {
+    if (t <= seg.w) {
+      if (seg.type === "hold") return seg.slide;
+      return seg.from + (t / seg.w) * (seg.to - seg.from);
+    }
+    t -= seg.w;
+  }
+  return LAST;
+}
+
+/** Progress at the middle of a slide’s hold (for nav clicks). */
+function slideToProgress(slideIndex) {
+  let acc = 0;
+  for (const seg of SCROLL_SEGMENTS) {
+    if (seg.type === "hold" && seg.slide === slideIndex) {
+      return (acc + seg.w * 0.5) / SCROLL_TOTAL_W;
+    }
+    acc += seg.w;
+  }
+  return slideIndex / LAST;
 }
 
 export default function Gallery() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const navRef = useRef(null);
+  const furRef = useRef(null);
   const tweenRef = useRef(null);
   const activeRef = useRef(0);
 
@@ -159,7 +199,8 @@ export default function Gallery() {
     const section = sectionRef.current;
     const track = trackRef.current;
     const nav = navRef.current;
-    if (!section || !track || !nav) return;
+    const fur = furRef.current;
+    if (!section || !track || !nav || !fur) return;
 
     const getSlideWidth = () =>
       track.children[0]?.getBoundingClientRect().width || window.innerWidth;
@@ -178,19 +219,29 @@ export default function Gallery() {
 
     const navBase = { yPercent: -50 };
 
-    const applyNavMotion = (progress, direction) => {
-      const pos = progress * LAST;
-      const u = window.innerWidth / 1920;
-      const slidePx = NAV_SLIDE_PX * u;
-      // forward scroll → exit to the right (+)
-      const dir = direction < 0 ? -1 : 1;
+    const applyNavMotion = (pos) => {
+      // Enter from the left (~mid-slide) → slide right into rest (x: 0).
+      const travel = getSlideWidth() * NAV_ENTER_FROM;
+      const enterX = -travel;
 
-      // Outside horse cards (Collection or past end): hide
-      if (pos < 0.97 || pos > LAST + 0.02) {
+      // Past last slide: hide
+      if (pos > LAST + 0.02) {
         gsap.set(nav, {
           ...navBase,
           autoAlpha: 0,
-          x: dir * slidePx * 0.35,
+          x: enterX * 0.35,
+          pointerEvents: "none",
+        });
+        return;
+      }
+
+      // Collection + early Collection→Arabella: hide until the same enter window
+      // as horse→horse (was pos < 0.97, which skipped Arabella’s slide-in).
+      if (pos < NAV_ENTER_START) {
+        gsap.set(nav, {
+          ...navBase,
+          autoAlpha: 0,
+          x: enterX,
           pointerEvents: "none",
         });
         return;
@@ -212,39 +263,37 @@ export default function Gallery() {
         return;
       }
 
-      // Collection (0) → Arabella (1): enter only in the second half
-      if (from === 0) {
-        if (local < NAV_ENTER_START) {
-          gsap.set(nav, {
-            ...navBase,
-            autoAlpha: 0,
-            x: dir * slidePx,
-            pointerEvents: "none",
-          });
-          return;
-        }
-        setNavActive(0);
-        const t = easeIO((local - NAV_ENTER_START) / (1 - NAV_ENTER_START));
+      const showEnter = (horseIdx, tRaw) => {
+        setNavActive(horseIdx);
+        const t = easeEnterPos(tRaw);
+        const a = easeEnterAlpha(tRaw);
         gsap.set(nav, {
           ...navBase,
-          autoAlpha: t,
-          x: dir * slidePx * (1 - t),
-          pointerEvents: t > 0.85 ? "auto" : "none",
+          autoAlpha: a,
+          x: enterX * (1 - t),
+          pointerEvents: a > 0.85 ? "auto" : "none",
         });
+      };
+
+      const enterT = (local - NAV_ENTER_START) / (1 - NAV_ENTER_START);
+
+      // Collection (0) → Arabella (1): same late left→right enter as other cards
+      if (from === 0) {
+        showEnter(0, enterT);
         return;
       }
 
-      // Horse → horse
+      // Horse → horse: vanish early, then enter from left → right
       const horseFrom = from - 1;
       const horseTo = Math.min(HORSES.length - 1, from);
 
       if (local <= NAV_EXIT_END) {
         setNavActive(horseFrom);
-        const t = easeIO(local / NAV_EXIT_END);
+        const t = easeExit(local / NAV_EXIT_END);
         gsap.set(nav, {
           ...navBase,
           autoAlpha: 1 - t,
-          x: dir * slidePx * t,
+          x: enterX * 0.2 * t,
           pointerEvents: "none",
         });
         return;
@@ -255,57 +304,62 @@ export default function Gallery() {
         gsap.set(nav, {
           ...navBase,
           autoAlpha: 0,
-          x: dir * slidePx,
+          x: enterX,
           pointerEvents: "none",
         });
         return;
       }
 
-      setNavActive(horseTo);
-      const t = easeIO((local - NAV_ENTER_START) / (1 - NAV_ENTER_START));
-      gsap.set(nav, {
-        ...navBase,
-        autoAlpha: t,
-        x: dir * slidePx * (1 - t),
-        pointerEvents: t > 0.85 ? "auto" : "none",
-      });
+      showEnter(horseTo, enterT);
     };
 
     gsap.set(nav, { ...navBase, autoAlpha: 0, x: 0 });
+    gsap.set(track, { x: 0 });
+    // Fur starts fully below the viewport — rises only after Isabelle hold.
+    gsap.set(fur, { yPercent: 100 });
 
-    const tween = gsap.to(track, {
-      x: () => -(SLIDE_COUNT - 1) * getSlideWidth(),
-      ease: "none",
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: () => `+=${(SLIDE_COUNT - 1) * window.innerHeight}`,
+        end: () =>
+          `+=${SCROLL_TOTAL_W * window.innerHeight * SCROLL_UNIT}`,
         pin: true,
         scrub: SCRUB,
-        snap: {
-          snapTo: softSnap,
-          duration: { min: SNAP_DUR_MIN, max: SNAP_DUR_MAX },
-          delay: SNAP_DELAY,
-          ease: "power2.out",
-          inertia: true,
-        },
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          applyNavMotion(self.progress, self.direction);
+          applyNavMotion(progressToPos(self.progress), self.direction);
         },
         onRefresh: (self) => {
-          applyNavMotion(self.progress, 1);
+          applyNavMotion(progressToPos(self.progress), 1);
         },
       },
     });
 
-    tweenRef.current = tween;
+    // Pause on Collection, then each move lands into a hold (empty scroll).
+    tl.to({}, { duration: HOLD_W });
+    for (let i = 0; i < LAST; i++) {
+      const target = i + 1;
+      tl.to(track, {
+        x: () => -target * getSlideWidth(),
+        duration: MOVE_W,
+        ease: "none",
+      });
+      tl.to({}, { duration: i === LAST - 1 ? EXIT_HOLD_W : HOLD_W });
+    }
+
+    // After Isabelle stands: «шерсть переход» rises into Figma place (98:29),
+    // then a short settle so the transition is visible before unpin.
+    tl.to(fur, { yPercent: 0, duration: FUR_REVEAL_W, ease: "none" });
+    tl.to({}, { duration: FUR_SETTLE_W });
+
+    tweenRef.current = tl;
     ScrollTrigger.refresh();
 
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+      tl.scrollTrigger?.kill();
+      tl.kill();
       tweenRef.current = null;
     };
   }, []);
@@ -313,7 +367,7 @@ export default function Gallery() {
   const goTo = (slideIndex) => {
     const st = tweenRef.current?.scrollTrigger;
     if (!st) return;
-    const progress = slideIndex / LAST;
+    const progress = slideToProgress(slideIndex);
     const y = st.start + (st.end - st.start) * progress;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
@@ -423,20 +477,25 @@ export default function Gallery() {
             ))}
           </nav>
         </div>
-      </section>
 
-      <div className="gallery-outro" aria-hidden="true">
-        <div className="gallery-fur">
+        {/*
+          Figma 98:29 «шерстьь переход»: 1920×536, overlaps Isabelle by 375px,
+          hangs 161px into Philosophy. Crawls up after EXIT_HOLD, then settles.
+        */}
+        <div className="gallery__fur" ref={furRef} aria-hidden="true">
+          {/* Figma foot fill: PNG is transparent y≈480–536; soil under, cap over fringe */}
+          <div className="gallery__fur-soil" />
           <img
-            className="gallery-fur__img"
+            className="gallery__fur-img"
             src={furTransition}
             alt=""
             width={1920}
-            height={761}
+            height={536}
             decoding="async"
           />
+          <div className="gallery__fur-cap" />
         </div>
-      </div>
+      </section>
     </>
   );
 }

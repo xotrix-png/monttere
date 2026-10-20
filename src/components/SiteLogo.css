@@ -1,0 +1,61 @@
+/* Quiet fixed brand mark — home affordance without competing with the scene */
+.site-logo {
+  --u: min(100vw / 1920, 100dvh / 1080);
+  position: fixed;
+  z-index: 60;
+  top: max(10px, calc(23.66 * var(--u)));
+  left: 50%;
+  translate: -50% 0;
+  display: block;
+  height: var(--logo-h);
+  --logo-h: max(48px, calc(110 * var(--u)));
+  opacity: 0.82;
+  transition:
+    opacity 0.45s ease,
+    height 0.45s ease,
+    filter 0.45s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-logo--away {
+  --logo-h: max(36px, calc(64 * var(--u)));
+  opacity: 0.55;
+  /* Readable on both dark gallery and light Philosophy */
+  mix-blend-mode: difference;
+}
+
+.site-logo:hover,
+.site-logo:focus-visible {
+  opacity: 0.92;
+}
+
+.site-logo:focus-visible {
+  outline: 1px solid rgba(243, 246, 247, 0.65);
+  outline-offset: 6px;
+}
+
+.site-logo__mark {
+  display: block;
+  height: 100%;
+  aspect-ratio: 89 / 121;
+  width: auto;
+  background-color: #f3f6f7;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+}
+
+@media (max-width: 720px) {
+  .site-logo {
+    --logo-h: 44px;
+  }
+
+  .site-logo--away {
+    --logo-h: 34px;
+  }
+}

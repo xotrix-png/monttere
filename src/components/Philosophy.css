@@ -1,0 +1,190 @@
+/*
+  THE PHILOSOPHY — Figma content origin y:8836.075, frame 1920×1555.
+  Fur crawls on the gallery pin; gallery padding-bottom (161·u) bridges into here.
+  --u = 1 Figma px scaled to section width (same Scale pattern as Collection).
+*/
+
+.philosophy {
+  position: relative;
+  width: 100%;
+  background: #f3f6f7;
+  color: #222b2f;
+  /* Tuck under fur hang — must overlap; html/body is #071a29 (dark “дырка”) */
+  margin-top: calc(-161 * (100vw / 1920) - 24px);
+  z-index: 2;
+  background: #f3f6f7;
+}
+
+.philosophy__frame {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  aspect-ratio: 1920 / 1555;
+  container-type: inline-size;
+  container-name: philosophy;
+  --u: calc(100cqw / 1920);
+}
+
+/* 03 — x:1692.66 y:116.55 (8952.63−8836.075), Inter Tight Italic 20 */
+.philosophy__index {
+  position: absolute;
+  left: calc(1692.66 * var(--u));
+  top: calc(116.55 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* THE PHILOSOPHY — x:1624.66 y:150.55 (8986.63−8836.075) */
+.philosophy__label {
+  position: absolute;
+  left: calc(1624.66 * var(--u));
+  top: calc(150.55 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.philosophy__title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* THE / ART / OF — y:403.6 (9239.68−8836.075), Voga Medium 201.419 */
+.philosophy__title-line {
+  position: absolute;
+  left: 0;
+  top: calc(403.6 * var(--u));
+  width: 100%;
+  height: calc(201.419 * var(--u));
+}
+
+.philosophy__word {
+  position: absolute;
+  top: 0;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(201.419 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.philosophy__word--the {
+  left: calc(141 * var(--u));
+}
+
+.philosophy__word--art {
+  left: calc(429.51 * var(--u));
+}
+
+.philosophy__word--of {
+  left: calc(717.34 * var(--u));
+}
+
+/* HORSEMANSHIP — x:131.19 y:590.6, Voga Medium 350.113, box 1662×301.256 */
+.philosophy__horsemanship {
+  position: absolute;
+  left: calc(131.19 * var(--u));
+  top: calc(590.6 * var(--u));
+  width: calc(1662 * var(--u));
+  height: calc(301.256 * var(--u));
+  display: block;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(350.113 * var(--u));
+  line-height: 0.86;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* Private membership — x:1510.09 y:512.6, Inter Tight Regular 32, w:275 */
+.philosophy__aside {
+  position: absolute;
+  left: calc(1510.09 * var(--u));
+  top: calc(512.6 * var(--u));
+  width: calc(275 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(32 * var(--u));
+  line-height: normal;
+  text-align: right;
+  color: #222b2f;
+}
+
+/* THE BOND — x:141 y:1013.33, Inter Tight Medium 32 */
+.philosophy__bond {
+  position: absolute;
+  left: calc(141 * var(--u));
+  top: calc(1013.33 * var(--u));
+}
+
+.philosophy__bond-title {
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: calc(32 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* Body — y:1064.7, Inter Tight Regular 32 */
+.philosophy__bond-body {
+  margin: calc(12.37 * var(--u)) 0 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(32 * var(--u));
+  line-height: normal;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* Scroll — text x:1727.66 y:1142.7 / arrow x:1750.06 y:1207.26 */
+.philosophy__scroll {
+  position: absolute;
+  left: calc(1727.66 * var(--u));
+  top: calc(1142.7 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(57 * var(--u));
+}
+
+.philosophy__scroll-text {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(24 * var(--u));
+  line-height: normal;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.philosophy__scroll-arrow {
+  display: block;
+  margin-top: calc(35.56 * var(--u));
+  width: calc(12.202 * var(--u));
+  height: calc(321.013 * var(--u));
+  max-width: none;
+}

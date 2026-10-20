@@ -1,5 +1,4 @@
 import photo from "../assets/images/hero-photo.png";
-import logo from "../assets/images/logo.png";
 import heroMask from "../assets/images/hero-mask.svg";
 import equestrianMark from "../equestrian.svg";
 import "./Hero.css";
@@ -37,16 +36,10 @@ export default function Hero() {
           </a>
         </div>
 
-        <a className="hero__logo-link" href="#top" aria-label="MONTÉRRE — home">
-          <span
-            className="hero__logo"
-            style={{
-              WebkitMaskImage: `url(${logo})`,
-              maskImage: `url(${logo})`,
-            }}
-            aria-hidden="true"
-          />
-        </a>
+        {/* Spacer keeps nav grid; fixed SiteLogo is the real home control */}
+        <span className="hero__logo-link hero__logo-link--spacer" aria-hidden="true">
+          <span className="hero__logo" />
+        </span>
 
         <div className="hero__nav-group hero__nav-group--right">
           <a className="hero__nav-link hero__nav-link--estate" href="#estate">
