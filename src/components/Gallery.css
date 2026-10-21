@@ -463,5 +463,32 @@
   max-width: none;
   object-fit: fill;
   clip-path: inset(0 0 calc(58 / 536 * 100%) 0);
+  /*
+    Right side of the source is already near-opaque at the top of the file,
+    so the bitmap edge reads as a hard line over Isabelle’s coat.
+    Keep the left/center wisps; dissolve only the upper-right shelf.
+  */
+  -webkit-mask-image:
+    linear-gradient(to right, #000 0%, #000 58%, transparent 78%),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 4%,
+      rgba(0, 0, 0, 0.45) 14%,
+      #000 34%,
+      #000 100%
+    );
+  -webkit-mask-composite: source-over;
+  mask-image:
+    linear-gradient(to right, #000 0%, #000 58%, transparent 78%),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 4%,
+      rgba(0, 0, 0, 0.45) 14%,
+      #000 34%,
+      #000 100%
+    );
+  mask-composite: add;
 }
 

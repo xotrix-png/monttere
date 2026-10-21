@@ -1,0 +1,280 @@
+/*
+  THE ESTATE — Figma doors y:10394.498 (1920×1480.806),
+  fur 256:2 y:9974.307 (1920×793.657) overlapping the foot of Philosophy.
+  Philosophy frame ends at 8836.075+1555 = 10391.075, so the fur
+  hangs 416.768 design px back into that section.
+  --u = 1 Figma px at the viewport width.
+*/
+
+.estate {
+  --u: calc(100vw / 1920);
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  background: #0a0a0a;
+  color: #f3f6f7;
+}
+
+.estate__doors {
+  position: relative;
+  height: calc(1480.806 * var(--u));
+  overflow: visible;
+}
+
+.estate__doors-img {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Source PNG: solid #F3F6F7 from y≈276, wisps downward. Top of the file is empty. */
+.estate__fur {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: calc(-416.768 * var(--u));
+  width: 100%;
+  height: calc(793.657 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* 04 — x:1723.42 y:10709.96, Inter Tight Italic 20, #F2F5F7 */
+.estate__index {
+  position: absolute;
+  z-index: 3;
+  left: calc(1723.42 * var(--u));
+  top: calc(315.46 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f2f5f7;
+  white-space: nowrap;
+}
+
+/* THE ESTATE — x:1675.66 y:10743.96 */
+.estate__label {
+  position: absolute;
+  z-index: 3;
+  left: calc(1675.66 * var(--u));
+  top: calc(349.46 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f2f5f7;
+  white-space: nowrap;
+}
+
+.estate__lockup {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  margin: 0;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* SPACE — x:141 y:10798.52, Voga Medium 472.844 */
+.estate__space {
+  position: absolute;
+  left: calc(141 * var(--u));
+  top: calc(404.02 * var(--u));
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(472.844 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* WITH — x:1031.88 y:11204.52, Voga Medium 473.789 */
+.estate__with {
+  position: absolute;
+  left: calc(1031.88 * var(--u));
+  top: calc(810.02 * var(--u));
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(473.789 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* PURPOSE — x:141.68 y:11438.52, Voga Medium 201.419 */
+.estate__purpose {
+  position: absolute;
+  left: calc(141.68 * var(--u));
+  top: calc(1044.02 * var(--u));
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(201.419 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+/* Heritage & Refinement — x:1445.66 y:11153.52, Nicoletta Script 56 */
+.estate__script {
+  position: absolute;
+  z-index: 3;
+  left: calc(1445.66 * var(--u));
+  top: calc(759.02 * var(--u));
+  margin: 0;
+  font-family: "Nicoletta Script", cursive;
+  font-weight: 400;
+  font-size: calc(56 * var(--u));
+  line-height: normal;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+.estate__panel {
+  position: relative;
+  height: calc(var(--panel-h) * var(--u));
+  overflow: hidden;
+}
+
+.estate__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Figma rectangles 110:154–156: black, 50%, blur 125 */
+.estate__veil {
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--veil-left) * var(--u));
+  top: 0;
+  width: calc(var(--veil-w) * var(--u));
+  height: 100%;
+  background: #000;
+  opacity: 0.5;
+  filter: blur(calc(125 * var(--u)));
+  pointer-events: none;
+}
+
+.estate__kicker {
+  position: absolute;
+  z-index: 2;
+  left: calc(141 * var(--u));
+  top: calc(var(--y) * var(--u));
+  display: flex;
+  align-items: flex-start;
+  gap: calc(15.023 * var(--u));
+  margin: 0;
+  height: calc(29 * var(--u));
+}
+
+.estate__kicker-line {
+  flex-shrink: 0;
+  width: calc(37.314 * var(--u));
+  height: 1px;
+  margin-top: calc(15.547 * var(--u));
+  background: #fff;
+}
+
+.estate__kicker-text {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: calc(24 * var(--u));
+  line-height: calc(29 * var(--u));
+  text-transform: uppercase;
+  color: #fff;
+  white-space: pre;
+}
+
+.estate__panel-title {
+  position: absolute;
+  z-index: 2;
+  left: calc(141 * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  margin: 0;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(160 * var(--u));
+  line-height: calc(164 * var(--u));
+  text-transform: uppercase;
+  color: #f3f6f7;
+}
+
+.estate__body {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: calc(24 * var(--u));
+  line-height: 1.2083;
+  color: #fff;
+}
+
+.estate__rule {
+  position: absolute;
+  z-index: 2;
+  left: calc(142.662 * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: 1px;
+  background: #f3f6f7;
+}
+
+.estate__cta {
+  position: absolute;
+  z-index: 2;
+  left: calc(141 * var(--u));
+  top: calc(var(--y) * var(--u));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 * var(--u));
+  width: calc(188.673 * var(--u));
+  height: calc(59.076 * var(--u));
+  padding: 0;
+  border-radius: calc(4.217 * var(--u));
+  background: #f3f6f7;
+  color: #222b2f;
+  text-decoration: none;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(20 * var(--u));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.estate__cta:hover {
+  background: #e8ecee;
+}
+
+.estate__cta-arrow {
+  display: block;
+  flex-shrink: 0;
+  width: calc(20.665 * var(--u));
+  height: calc(20.665 * var(--u));
+  max-width: none;
+}
