@@ -4,15 +4,23 @@
   --u = 1 Figma px scaled to section width (same Scale pattern as Collection).
 */
 
+/*
+  Wrap has no z-index so Philosophy (2), Estate fur (3), and Scroll slot (5)
+  share one stacking context — soft fur over the light foot, arrow on top.
+*/
+.philosophy-wrap {
+  position: relative;
+  display: flow-root;
+}
+
 .philosophy {
   position: relative;
+  z-index: 2;
   width: 100%;
   background: #f3f6f7;
   color: #222b2f;
   /* Tuck under fur hang — must overlap; html/body is #071a29 (dark “дырка”) */
   margin-top: calc(-161 * (100vw / 1920) - 24px);
-  z-index: 2;
-  background: #f3f6f7;
 }
 
 .philosophy__frame {
@@ -159,6 +167,22 @@
   line-height: normal;
   color: #222b2f;
   white-space: nowrap;
+}
+
+/*
+  Same box as .philosophy__frame, aligned to the section border box
+  (accounts for the negative margin-top). Above Estate (z-index 3).
+*/
+.philosophy__scroll-slot {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  top: calc(-161 * (100vw / 1920) - 24px);
+  width: 100%;
+  aspect-ratio: 1920 / 1555;
+  container-type: inline-size;
+  pointer-events: none;
+  --u: calc(100cqw / 1920);
 }
 
 /* Scroll — text x:1727.66 y:1142.7 / arrow x:1750.06 y:1207.26 */

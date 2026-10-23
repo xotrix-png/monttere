@@ -6,43 +6,50 @@ import "./Philosophy.css";
   Fur transition lives on the gallery pin (Images/шерсть переход.png → Figma 98:29).
   Content frame origin y:8836.075 (Isabelle end), size 1920×1555
   (matches Images/3 блок THE PHILOSOPHY.png).
+
+  Scroll sits in a sibling slot (z-index 5) so Estate fur (z-index 3) can
+  soft-blend over the Philosophy foot while the arrow stays on top.
 */
 export default function Philosophy() {
   return (
-    <section
-      className="philosophy"
-      id="philosophy"
-      aria-label="03 THE PHILOSOPHY"
-    >
-      <div className="philosophy__frame">
-        <p className="philosophy__index">03</p>
-        <p className="philosophy__label">THE PHILOSOPHY</p>
+    <div className="philosophy-wrap">
+      <section
+        className="philosophy"
+        id="philosophy"
+        aria-label="03 THE PHILOSOPHY"
+      >
+        <div className="philosophy__frame">
+          <p className="philosophy__index">03</p>
+          <p className="philosophy__label">THE PHILOSOPHY</p>
 
-        <h2 className="philosophy__title">
-          <span className="philosophy__title-line">
-            <span className="philosophy__word philosophy__word--the">THE</span>
-            <span className="philosophy__word philosophy__word--art">ART</span>
-            <span className="philosophy__word philosophy__word--of">OF</span>
-          </span>
-          <span className="philosophy__horsemanship">HORSEMANSHIP</span>
-        </h2>
+          <h2 className="philosophy__title">
+            <span className="philosophy__title-line">
+              <span className="philosophy__word philosophy__word--the">THE</span>
+              <span className="philosophy__word philosophy__word--art">ART</span>
+              <span className="philosophy__word philosophy__word--of">OF</span>
+            </span>
+            <span className="philosophy__horsemanship">HORSEMANSHIP</span>
+          </h2>
 
-        <p className="philosophy__aside">
-          Private membership
-          <br />
-          By appointment
-        </p>
-
-        <div className="philosophy__bond">
-          <h3 className="philosophy__bond-title">THE BOND</h3>
-          <p className="philosophy__bond-body">
-            Before movement comes understanding
+          <p className="philosophy__aside">
+            Private membership
             <br />
-            Before mastery comes trust
+            By appointment
           </p>
-        </div>
 
-        <div className="philosophy__scroll" aria-hidden="true">
+          <div className="philosophy__bond">
+            <h3 className="philosophy__bond-title">THE BOND</h3>
+            <p className="philosophy__bond-body">
+              Before movement comes understanding
+              <br />
+              Before mastery comes trust
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="philosophy__scroll-slot" aria-hidden="true">
+        <div className="philosophy__scroll">
           <span className="philosophy__scroll-text">Scroll</span>
           <img
             className="philosophy__scroll-arrow"
@@ -53,6 +60,6 @@ export default function Philosophy() {
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }

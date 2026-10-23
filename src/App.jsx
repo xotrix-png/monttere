@@ -2,6 +2,7 @@ import Hero from "./components/Hero.jsx";
 import Gallery from "./components/Gallery.jsx";
 import Philosophy from "./components/Philosophy.jsx";
 import Estate from "./components/Estate.jsx";
+import Quiet from "./components/Quiet.jsx";
 import SiteLogo from "./components/SiteLogo.jsx";
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <Gallery />
       <Philosophy />
       <Estate />
+      <Quiet />
     </main>
   );
 }

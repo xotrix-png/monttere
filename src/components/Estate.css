@@ -1,8 +1,7 @@
 /*
-  THE ESTATE — Figma doors y:10394.498 (1920×1480.806),
-  fur 256:2 y:9974.307 (1920×793.657) overlapping the foot of Philosophy.
-  Philosophy frame ends at 8836.075+1555 = 10391.075, so the fur
-  hangs 416.768 design px back into that section.
+  THE ESTATE — Figma smoke-bg-4k 275:122 y:10315.275 (2078.835×1559.126),
+  doors Group 65 277:126 hinged at screen edges,
+  fur 256:2 y:9974.307 (1920×793.657) overlapping Philosophy.
   --u = 1 Figma px at the viewport width.
 */
 
@@ -15,29 +14,90 @@
   color: #f3f6f7;
 }
 
+/*
+  Stage origin = smoke-bg top (y:10315.275). Leaves hinge at viewport
+  left/right edges (door-left-hd / door-right-hd).
+*/
 .estate__doors {
   position: relative;
-  height: calc(1480.806 * var(--u));
+  z-index: 2;
+  height: calc(1559.126 * var(--u));
   overflow: visible;
 }
 
-.estate__doors-img {
+/* 3D stage — smoke bg + two leaves hinged on the outer screen edges */
+.estate__doors-stage {
   position: absolute;
   z-index: 0;
   inset: 0;
+  perspective: calc(2400 * var(--u));
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+  overflow: visible;
+  background: #080c10;
+}
+
+.estate__doors-bg {
+  position: absolute;
+  left: calc(-39.418 * var(--u));
+  top: 0;
+  width: calc(2078.835 * var(--u));
+  height: calc(1559.126 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.estate__doors-leaf {
+  position: absolute;
+  z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+  background: none;
+}
+
+/*
+  Figma Group 65. Bottoms sit on the stage edge (1559.126),
+  so the closed doors end with the block, as in the mock.
+  A few pixels may cross onto the next photo only while a leaf is swung open.
+*/
+.estate__doors-leaf--left {
+  left: calc(-4.149 * var(--u));
+  top: calc(172.952 * var(--u));
+  width: calc(525.624 * var(--u));
+  height: calc(1386.174 * var(--u));
+  transform-origin: 0% 50%;
+}
+
+.estate__doors-leaf--right {
+  left: calc(1449.245 * var(--u));
+  top: calc(106.664 * var(--u));
+  width: calc(457.175 * var(--u));
+  height: calc(1452.462 * var(--u));
+  transform-origin: 100% 50%;
+}
+
+.estate__doors-leaf-img {
+  display: block;
   width: 100%;
   height: 100%;
   max-width: none;
-  object-fit: cover;
-  object-position: center;
+  object-fit: fill;
+  pointer-events: none;
+  background: transparent;
 }
 
-/* Source PNG: solid #F3F6F7 from y≈276, wisps downward. Top of the file is empty. */
+/*
+  Source «шерсть переход 2»: transparent top, solid #F3F6F7 from y≈280,
+  wisps downward onto the doors. Overlaps Philosophy foot (z-index 2);
+  Scroll slot sits above this layer (z-index 5).
+  Fur y:9974.307 vs stage y:10315.275 → top -340.968.
+*/
 .estate__fur {
   position: absolute;
   z-index: 2;
   left: 0;
-  top: calc(-416.768 * var(--u));
+  top: calc(-340.968 * var(--u));
   width: 100%;
   height: calc(793.657 * var(--u));
   max-width: none;
@@ -45,12 +105,12 @@
   pointer-events: none;
 }
 
-/* 04 — x:1723.42 y:10709.96, Inter Tight Italic 20, #F2F5F7 */
+/* 04 — x:1723.42 y:10709.96 → stage-relative top 394.688 */
 .estate__index {
   position: absolute;
   z-index: 3;
   left: calc(1723.42 * var(--u));
-  top: calc(315.46 * var(--u));
+  top: calc(394.688 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
@@ -62,12 +122,12 @@
   white-space: nowrap;
 }
 
-/* THE ESTATE — x:1675.66 y:10743.96 */
+/* THE ESTATE — x:1675.66 y:10743.96 → top 428.688 */
 .estate__label {
   position: absolute;
   z-index: 3;
   left: calc(1675.66 * var(--u));
-  top: calc(349.46 * var(--u));
+  top: calc(428.688 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
@@ -88,11 +148,11 @@
   pointer-events: none;
 }
 
-/* SPACE — x:141 y:10798.52, Voga Medium 472.844 */
+/* SPACE — x:141 y:10798.52 → top 483.241 */
 .estate__space {
   position: absolute;
   left: calc(141 * var(--u));
-  top: calc(404.02 * var(--u));
+  top: calc(483.241 * var(--u));
   font-family: "Voga", serif;
   font-weight: 500;
   font-size: calc(472.844 * var(--u));
@@ -102,11 +162,11 @@
   white-space: nowrap;
 }
 
-/* WITH — x:1031.88 y:11204.52, Voga Medium 473.789 */
+/* WITH — x:1031.88 y:11204.52 → top 889.241 */
 .estate__with {
   position: absolute;
   left: calc(1031.88 * var(--u));
-  top: calc(810.02 * var(--u));
+  top: calc(889.241 * var(--u));
   font-family: "Voga", serif;
   font-weight: 500;
   font-size: calc(473.789 * var(--u));
@@ -116,11 +176,11 @@
   white-space: nowrap;
 }
 
-/* PURPOSE — x:141.68 y:11438.52, Voga Medium 201.419 */
+/* PURPOSE — x:141.68 y:11438.52 → top 1123.241 */
 .estate__purpose {
   position: absolute;
   left: calc(141.68 * var(--u));
-  top: calc(1044.02 * var(--u));
+  top: calc(1123.241 * var(--u));
   font-family: "Voga", serif;
   font-weight: 500;
   font-size: calc(201.419 * var(--u));
@@ -130,12 +190,12 @@
   white-space: nowrap;
 }
 
-/* Heritage & Refinement — x:1445.66 y:11153.52, Nicoletta Script 56 */
+/* Heritage & Refinement — x:1445.66 y:11153.52 → top 838.241 */
 .estate__script {
   position: absolute;
   z-index: 3;
   left: calc(1445.66 * var(--u));
-  top: calc(759.02 * var(--u));
+  top: calc(838.241 * var(--u));
   margin: 0;
   font-family: "Nicoletta Script", cursive;
   font-weight: 400;
@@ -147,6 +207,7 @@
 
 .estate__panel {
   position: relative;
+  z-index: 1;
   height: calc(var(--panel-h) * var(--u));
   overflow: hidden;
 }
@@ -168,7 +229,7 @@
   left: calc(var(--veil-left) * var(--u));
   top: 0;
   width: calc(var(--veil-w) * var(--u));
-  height: 100%;
+  height: var(--veil-h, 100%);
   background: #000;
   opacity: 0.5;
   filter: blur(calc(125 * var(--u)));
