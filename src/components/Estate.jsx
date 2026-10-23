@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import furTransition2 from "../assets/images/fur-transition-2.png";
 import doorsBg from "../assets/images/doors-bg.png";
-import doorsLeafLeft from "../assets/images/doors-leaf-left.png";
-import doorsLeafRight from "../assets/images/doors-leaf-right.png";
+import doorPhotoUrl from "../assets/images/doors-leaf-left.png";
+import doorModelUrl from "../../3D/Door/saloon_door.glb?url";
 import stablesImg from "../assets/images/estate-stables.png";
 import arenaImg from "../assets/images/estate-arena.png";
 import paddocksImg from "../assets/images/estate-paddocks.png";
@@ -18,13 +20,13 @@ gsap.registerPlugin(ScrollTrigger);
 /*
   After Philosophy (frame ends y:10391.075).
   Fur: Figma 256:2 «шерсть переход 2», y:9974.307, 1920×793.657.
-  Doors: Group 65, enlarged leaves hinged at the screen edges.
-  Scroll: the page keeps moving; leaves scrub from open → closed.
+  Doors: one saloon leaf, hinged at the screen edges.
+  The right leaf is that model mirrored, same height and angle.
+  Scroll: the page keeps moving and both leaves swing open.
   Panels: 90:395, 106:3, 107:7, 107:10. No sky transition.
 */
-/** Open pose. Scroll scrubs both leaves back to rotateY 0. */
-const DOOR_OPEN_LEFT = 58;
-const DOOR_OPEN_RIGHT = 52;
+/** Both leaves reach this angle, swung toward the camera. */
+const DOOR_OPEN = 38;
 const DOOR_SCRUB = 0.85;
 
 const PANELS = [
@@ -102,23 +104,200 @@ const PANELS = [
   },
 ];
 
+function loadDoorTexture(url) {
+  const photo = new THREE.Texture();
+  photo.colorSpace = THREE.SRGBColorSpace;
+  photo.flipY = false;
+  photo.anisotropy = 8;
+  const image = new Image();
+  image.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(image, 0, 0);
+    // The photo keeps a gray-black cutout around the leaf. Replace only
+    // those pixels, so the foot reads as the same wood as the rail.
+    const cutoutAt = (data, i) => {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const black = r < 10 && g < 10 && b < 10;
+      const paper = r > 165 && Math.abs(r - g) < 14 && Math.abs(r - b) < 14;
+      return black || paper;
+    };
+    const full = ctx.getImageData(0, 0, image.width, image.height);
+    const src = new Uint8ClampedArray(full.data);
+    const w = image.width;
+    let left = 0;
+    let right = (w - 120) * 4;
+    for (let y = 0; y < image.height; y += 1) {
+      const row = y * w * 4;
+      for (let x = 48; x < 420; x += 1) {
+        if (!cutoutAt(src, row + x * 4)) {
+          left = row + x * 4;
+          break;
+        }
+      }
+      for (let x = w - 48; x > w - 420; x -= 1) {
+        if (!cutoutAt(src, row + x * 4)) {
+          right = row + x * 4;
+          break;
+        }
+      }
+      for (let x = 0; x < w; x += 1) {
+        const d = row + x * 4;
+        if (!cutoutAt(src, d)) continue;
+        const s = x < w / 2 ? left : right;
+        full.data[d] = src[s];
+        full.data[d + 1] = src[s + 1];
+        full.data[d + 2] = src[s + 2];
+        full.data[d + 3] = 255;
+      }
+    }
+    ctx.putImageData(full, 0, 0);
+    photo.generateMipmaps = false;
+    photo.minFilter = THREE.LinearFilter;
+    photo.magFilter = THREE.LinearFilter;
+    photo.image = canvas;
+    photo.needsUpdate = true;
+  };
+  image.src = url;
+  return photo;
+}
+
+function prepareLeaf(root, photo) {
+  root.traverse((node) => {
+    if (!node.isMesh) return;
+    const materials = Array.isArray(node.material) ? node.material : [node.material];
+    materials.forEach((material) => {
+      material.side = THREE.DoubleSide;
+      material.envMapIntensity = 0;
+      if (!material.map) return;
+      photo.wrapS = THREE.ClampToEdgeWrapping;
+      photo.wrapT = THREE.ClampToEdgeWrapping;
+      material.map = photo;
+      material.color.set(0xffffff);
+      material.metalness = 0;
+      material.roughness = 0.92;
+    });
+  });
+}
+
+function mirrorLeaf(source) {
+  const clone = source.clone(true);
+  clone.traverse((node) => {
+    if (!node.isMesh) return;
+    node.geometry = node.geometry.clone();
+    node.geometry.scale(-1, 1, 1);
+  });
+  return clone;
+}
+
 export default function Estate() {
   const doorsRef = useRef(null);
-  const leftRef = useRef(null);
-  const rightRef = useRef(null);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const stage = doorsRef.current;
-    const left = leftRef.current;
-    const right = rightRef.current;
-    if (!stage || !left || !right) return;
+    const canvas = canvasRef.current;
+    if (!stage || !canvas) return;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      premultipliedAlpha: false,
+    });
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 1, 20000);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.12));
+    const key = new THREE.DirectionalLight(0xfff6ee, 0.2);
+    key.position.set(0, 0.4, 1);
+    const fill = new THREE.DirectionalLight(0xd5dde6, 0.12);
+    fill.position.set(0, 0.05, 0.8);
+    scene.add(key, fill);
+
+    const photo = loadDoorTexture(doorPhotoUrl);
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    let leftPivot = null;
+    let rightPivot = null;
+    let metrics = null;
+    const pose = { open: 0 };
 
     /*
-      Arrive open. Scrolling down moves the page and slowly closes the leaves.
-      Left hinge on the left edge → negative Y; right hinge on the right edge → positive Y.
+      Page scrolls through. Both leaves start shut and swing open
+      toward the camera by the same angle. Negative Y on the left
+      and positive Y on the mirrored right both bring the free edge
+      forward, so the tops stay level.
     */
-    gsap.set(left, { transformOrigin: "0% 50%", force3D: true });
-    gsap.set(right, { transformOrigin: "100% 50%", force3D: true });
+    const applyPose = () => {
+      const angle = THREE.MathUtils.degToRad(DOOR_OPEN * pose.open);
+      if (leftPivot) leftPivot.rotation.y = -angle;
+      if (rightPivot) rightPivot.rotation.y = angle;
+    };
+
+    const layout = () => {
+      const width = stage.clientWidth;
+      const stageH = stage.clientHeight;
+      const canvasH = canvas.clientHeight;
+      if (!width || !stageH || !canvasH) return;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+      renderer.setSize(width, canvasH, false);
+      const distance = width * (2400 / 1920);
+      const overlap = Math.max(0, canvasH - stageH);
+      const camY = (stageH - overlap) / 2;
+      camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(canvasH / 2 / distance));
+      camera.aspect = width / canvasH;
+      camera.position.set(width * 0.5, camY, distance);
+      camera.lookAt(width * 0.5, camY, 0);
+      camera.near = 1;
+      camera.far = distance * 8;
+      camera.updateProjectionMatrix();
+      if (!metrics || !leftPivot || !rightPivot) return;
+      const unit = width / 1920;
+      /*
+        Hinge foot sits 12px above the photo. The open free corner
+        still laps the picture, short of the "01 STABLES" line at 82.
+        The right hinge is pulled out to the frame edge.
+      */
+      const scale = (1364 * unit) / metrics.height;
+      const y = 12 * unit - metrics.minY * scale;
+      const z = 8 * unit;
+      const edge = (width * 0.5) * (z / distance);
+      leftPivot.scale.set(scale, scale, scale);
+      leftPivot.position.set(edge + 6 * unit, y, z);
+      rightPivot.scale.set(scale, scale, scale);
+      rightPivot.position.set(width - edge + 78 * unit, y, z);
+    };
+
+    let alive = true;
+    new GLTFLoader().load(`${doorModelUrl}?v=foot4`, (gltf) => {
+      if (!alive) return;
+      const source = gltf.scene.getObjectByName("HingePivot");
+      source.position.set(0, 0, 0);
+      source.rotation.set(0, 0, 0);
+      source.scale.set(1, 1, 1);
+      source.updateWorldMatrix(true, true);
+      prepareLeaf(source, photo);
+      const box = new THREE.Box3().setFromObject(source);
+      metrics = {
+        height: box.max.y - box.min.y,
+        minY: box.min.y,
+      };
+      leftPivot = source;
+      rightPivot = mirrorLeaf(source);
+      root.add(leftPivot, rightPivot);
+      applyPose();
+      layout();
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -129,24 +308,42 @@ export default function Estate() {
         invalidateOnRefresh: true,
       },
     });
-
     tl.fromTo(
-      left,
-      { rotateY: -DOOR_OPEN_LEFT },
-      { rotateY: 0, ease: "none", duration: 1 },
-      0,
-    ).fromTo(
-      right,
-      { rotateY: DOOR_OPEN_RIGHT },
-      { rotateY: 0, ease: "none", duration: 1 },
+      pose,
+      { open: 0 },
+      { open: 1, ease: "none", duration: 1, onUpdate: applyPose },
       0,
     );
 
+    const resize = () => {
+      layout();
+    };
+    const observer = new ResizeObserver(resize);
+    observer.observe(stage);
+    layout();
+
+    let frame = 0;
+    const tick = () => {
+      frame = requestAnimationFrame(tick);
+      renderer.render(scene, camera);
+    };
+    tick();
     ScrollTrigger.refresh();
 
     return () => {
+      alive = false;
+      cancelAnimationFrame(frame);
+      observer.disconnect();
       tl.scrollTrigger?.kill();
       tl.kill();
+      photo.dispose();
+      renderer.dispose();
+      scene.traverse((node) => {
+        if (!node.isMesh) return;
+        node.geometry?.dispose();
+        const materials = Array.isArray(node.material) ? node.material : [node.material];
+        materials.forEach((material) => material?.dispose());
+      });
     };
   }, []);
 
@@ -162,34 +359,11 @@ export default function Estate() {
             height={1560}
             decoding="async"
           />
-          <div
-            className="estate__doors-leaf estate__doors-leaf--left"
-            ref={leftRef}
-          >
-            <img
-              className="estate__doors-leaf-img"
-              src={doorsLeafLeft}
-              alt=""
-              width={526}
-              height={1386}
-              decoding="async"
-              draggable={false}
-            />
-          </div>
-          <div
-            className="estate__doors-leaf estate__doors-leaf--right"
-            ref={rightRef}
-          >
-            <img
-              className="estate__doors-leaf-img"
-              src={doorsLeafRight}
-              alt=""
-              width={457}
-              height={1452}
-              decoding="async"
-              draggable={false}
-            />
-          </div>
+          <canvas
+            ref={canvasRef}
+            className="estate__doors-canvas"
+            aria-hidden="true"
+          />
         </div>
 
         <img
