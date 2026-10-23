@@ -1,5 +1,11 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import furTransition2 from "../assets/images/fur-transition-2.png";
-import doorsSaloon from "../assets/images/doors-saloon.png";
+import doorsBg from "../assets/images/doors-bg.png";
+import doorsLeafLeft from "../assets/images/doors-leaf-left.png";
+import doorsLeafRight from "../assets/images/doors-leaf-right.png";
 import stablesImg from "../assets/images/estate-stables.png";
 import arenaImg from "../assets/images/estate-arena.png";
 import paddocksImg from "../assets/images/estate-paddocks.png";
@@ -7,18 +13,25 @@ import clubhouseImg from "../assets/images/estate-clubhouse.png";
 import arrowNe from "../assets/images/gallery-arrow-ne.svg";
 import "./Estate.css";
 
+gsap.registerPlugin(ScrollTrigger);
+
 /*
   After Philosophy (frame ends y:10391.075).
   Fur: Figma 256:2 «шерсть переход 2», y:9974.307, 1920×793.657.
-  Doors: Figma 98:2 «двери-салун», y:10394.498, 1920×1480.806.
+  Doors: Group 65, enlarged leaves hinged at the screen edges.
+  Scroll: the page keeps moving; leaves scrub from open → closed.
   Panels: 90:395, 106:3, 107:7, 107:10. No sky transition.
-  Offsets below are from each panel's top.
 */
+/** Open pose. Scroll scrubs both leaves back to rotateY 0. */
+const DOOR_OPEN_LEFT = 58;
+const DOOR_OPEN_RIGHT = 52;
+const DOOR_SCRUB = 0.85;
+
 const PANELS = [
   {
     id: "stables",
     image: stablesImg,
-    height: 852.108,
+    height: 852,
     veil: { left: 0, width: 673.68 },
     kicker: "01   STABLES",
     kickerTop: 81.888,
@@ -36,7 +49,7 @@ const PANELS = [
   {
     id: "arena",
     image: arenaImg,
-    height: 852.192,
+    height: 852,
     veil: { left: -14.334, width: 688.014 },
     kicker: "02  ARENA",
     kickerTop: 100.001,
@@ -54,7 +67,7 @@ const PANELS = [
   {
     id: "paddocks",
     image: paddocksImg,
-    height: 852.804,
+    height: 853,
     veil: { left: -14.334, width: 688.014 },
     kicker: "03 PADDOCKS",
     kickerTop: 100.002,
@@ -72,35 +85,113 @@ const PANELS = [
   {
     id: "clubhouse",
     image: clubhouseImg,
-    height: 1035.658,
-    veil: null,
+    height: 1036,
+    veil: { left: 0, width: 673.68, height: 852.981 },
     kicker: "04  CLUBHOUSE",
-    kickerTop: 107.198,
+    kickerTop: 109.02,
     title: "A QUIETER RHYTHM",
-    titleTop: 174.859,
+    titleTop: 176.68,
     titleWidth: 532.68,
     body: "A private space for club members to gather, unwind and share the day",
-    bodyTop: 527.479,
+    bodyTop: 529.3,
     bodyX: 142.662,
     bodyWidth: 489.446,
-    ruleTop: 635.48,
+    ruleTop: 637.302,
     ruleWidth: 186.181,
-    buttonTop: 685.479,
+    buttonTop: 687.301,
   },
 ];
 
 export default function Estate() {
+  const doorsRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  useEffect(() => {
+    const stage = doorsRef.current;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    if (!stage || !left || !right) return;
+
+    /*
+      Arrive open. Scrolling down moves the page and slowly closes the leaves.
+      Left hinge on the left edge → negative Y; right hinge on the right edge → positive Y.
+    */
+    gsap.set(left, { transformOrigin: "0% 50%", force3D: true });
+    gsap.set(right, { transformOrigin: "100% 50%", force3D: true });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stage,
+        start: "top 75%",
+        end: "bottom top",
+        scrub: DOOR_SCRUB,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    tl.fromTo(
+      left,
+      { rotateY: -DOOR_OPEN_LEFT },
+      { rotateY: 0, ease: "none", duration: 1 },
+      0,
+    ).fromTo(
+      right,
+      { rotateY: DOOR_OPEN_RIGHT },
+      { rotateY: 0, ease: "none", duration: 1 },
+      0,
+    );
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
+
   return (
     <section className="estate" id="estate" aria-label="04 THE ESTATE">
-      <div className="estate__doors">
-        <img
-          className="estate__doors-img"
-          src={doorsSaloon}
-          alt=""
-          width={3840}
-          height={2962}
-          decoding="async"
-        />
+      <div className="estate__doors" ref={doorsRef}>
+        <div className="estate__doors-stage" aria-hidden="true">
+          <img
+            className="estate__doors-bg"
+            src={doorsBg}
+            alt=""
+            width={1920}
+            height={1560}
+            decoding="async"
+          />
+          <div
+            className="estate__doors-leaf estate__doors-leaf--left"
+            ref={leftRef}
+          >
+            <img
+              className="estate__doors-leaf-img"
+              src={doorsLeafLeft}
+              alt=""
+              width={526}
+              height={1386}
+              decoding="async"
+              draggable={false}
+            />
+          </div>
+          <div
+            className="estate__doors-leaf estate__doors-leaf--right"
+            ref={rightRef}
+          >
+            <img
+              className="estate__doors-leaf-img"
+              src={doorsLeafRight}
+              alt=""
+              width={457}
+              height={1452}
+              decoding="async"
+              draggable={false}
+            />
+          </div>
+        </div>
+
         <img
           className="estate__fur"
           src={furTransition2}
@@ -143,6 +234,9 @@ export default function Estate() {
               style={{
                 "--veil-left": panel.veil.left,
                 "--veil-w": panel.veil.width,
+                ...(panel.veil.height != null
+                  ? { "--veil-h": `calc(${panel.veil.height} * var(--u))` }
+                  : null),
               }}
               aria-hidden="true"
             />

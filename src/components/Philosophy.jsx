@@ -41,17 +41,17 @@ export default function Philosophy() {
             Before mastery comes trust
           </p>
         </div>
+      </div>
 
-        <div className="philosophy__scroll" aria-hidden="true">
-          <span className="philosophy__scroll-text">Scroll</span>
-          <img
-            className="philosophy__scroll-arrow"
-            src={scrollArrow}
-            alt=""
-            width={14}
-            height={322}
-          />
-        </div>
+      <div className="philosophy__scroll" aria-hidden="true">
+        <span className="philosophy__scroll-text">Scroll</span>
+        <img
+          className="philosophy__scroll-arrow"
+          src={scrollArrow}
+          alt=""
+          width={14}
+          height={322}
+        />
       </div>
     </section>
   );

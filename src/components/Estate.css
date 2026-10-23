@@ -15,24 +15,94 @@
   color: #f3f6f7;
 }
 
+/*
+  Stage is smoke-bg-4k (275:122), 1559.126 tall.
+  Enlarged leaves: door-left-hd 276:124, door-right-hd 277:125,
+  placed in the 1920 frame (x from the screen edge).
+*/
 .estate__doors {
   position: relative;
-  height: calc(1480.806 * var(--u));
+  z-index: 2;
+  height: calc(1559.126 * var(--u));
   overflow: visible;
 }
 
-.estate__doors-img {
+/* 3D stage — bg + two hinged leaves. No pin: the page scrolls through. */
+.estate__doors-stage {
   position: absolute;
   z-index: 0;
+  inset: 0;
+  perspective: calc(2400 * var(--u));
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+  overflow: visible;
+  background: #080c10;
+}
+
+.estate__doors-bg {
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   max-width: none;
   object-fit: cover;
   object-position: center;
+  pointer-events: none;
 }
 
-/* Source PNG: solid #F3F6F7 from y≈276, wisps downward. Top of the file is empty. */
+.estate__doors-leaf {
+  position: absolute;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/*
+  Figma Group 65, tops relative to smoke-bg y:10315.275.
+  Left hinge on the screen edge, right hinge on the leaf's outer edge.
+*/
+.estate__doors-leaf--left {
+  left: calc(-4.149 * var(--u));
+  top: calc(179.179 * var(--u));
+  width: calc(525.624 * var(--u));
+  height: calc(1386.174 * var(--u));
+  transform-origin: 0% 50%;
+}
+
+.estate__doors-leaf--right {
+  left: calc(1449.245 * var(--u));
+  top: calc(118.946 * var(--u));
+  width: calc(457.175 * var(--u));
+  height: calc(1452.462 * var(--u));
+  transform-origin: 100% 50%;
+}
+
+.estate__doors-leaf-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  filter: drop-shadow(0 0 calc(28 * var(--u)) rgba(0, 0, 0, 0.55));
+}
+
+/* Dark inner face when a leaf swings past edge-on */
+.estate__doors-leaf::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #120f0d 0%, #1a1512 45%, #0c0a09 100%);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+/*
+  Source «шерсть переход 2»: transparent top, solid #F3F6F7 from y≈280,
+  wisps downward onto the doors. Overlaps Philosophy foot (z-index 2);
+  Scroll slot sits above this layer (z-index 5).
+*/
 .estate__fur {
   position: absolute;
   z-index: 2;
@@ -147,6 +217,7 @@
 
 .estate__panel {
   position: relative;
+  z-index: 1;
   height: calc(var(--panel-h) * var(--u));
   overflow: hidden;
 }
@@ -168,7 +239,7 @@
   left: calc(var(--veil-left) * var(--u));
   top: 0;
   width: calc(var(--veil-w) * var(--u));
-  height: 100%;
+  height: var(--veil-h, 100%);
   background: #000;
   opacity: 0.5;
   filter: blur(calc(125 * var(--u)));

@@ -1,0 +1,172 @@
+/*
+  After Clubhouse. Both skies are #F3F6F7 where they turn solid.
+  «небо переход» 1920×1095: cloud edge near png y 320, pulled up
+  so it sits on the lower deck, under the VIEW HORSE button.
+  «небо переход 2» 1920×1147: Figma 300:3, y:16649.539.
+  --u = 1 Figma px at the viewport width.
+*/
+
+.quiet {
+  --u: calc(100vw / 1920);
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: calc(2332 * var(--u));
+  background: #f3f6f7;
+  color: #222b2f;
+  overflow: visible;
+}
+
+.quiet__sky {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: calc(-530 * var(--u));
+  width: 100%;
+  height: calc(1095 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* Figma y:16649.539 − clubhouse end 15464.685 */
+.quiet__sky--next {
+  top: calc(1184.854 * var(--u));
+  height: calc(1147 * var(--u));
+}
+
+/* 05 — x:1744.16 y:15744.93 */
+.quiet__index {
+  position: absolute;
+  z-index: 2;
+  left: calc(1744.16 * var(--u));
+  top: calc(280.241 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* Chto-to — x:1698.66 y:15778.93 */
+.quiet__label {
+  position: absolute;
+  z-index: 2;
+  left: calc(1698.66 * var(--u));
+  top: calc(314.241 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.quiet__title {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* THE QUIET — x:141 y:15864.58, Voga Medium 521.899 */
+.quiet__quiet {
+  position: absolute;
+  left: calc(141 * var(--u));
+  top: calc(399.892 * var(--u));
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(521.899 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+/* BETWEEN — x:1220.04 y:16355.42, Voga Medium 200 */
+.quiet__between {
+  position: absolute;
+  left: calc(1220.039 * var(--u));
+  top: calc(890.74 * var(--u));
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(200 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.quiet__line {
+  position: absolute;
+  z-index: 2;
+  left: calc(141 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(32 * var(--u));
+  line-height: normal;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.quiet__line--still {
+  top: calc(974.739 * var(--u));
+}
+
+.quiet__line--instinct {
+  top: calc(1023.739 * var(--u));
+}
+
+/* Style and Grace — x:1554.66 y:16648.72, Nicoletta Script 56 */
+.quiet__script {
+  position: absolute;
+  z-index: 2;
+  left: calc(1554.664 * var(--u));
+  top: calc(1184.032 * var(--u));
+  margin: 0;
+  font-family: "Nicoletta Script", cursive;
+  font-weight: 400;
+  font-size: calc(56 * var(--u));
+  line-height: normal;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* Scroll — x:141 y:16675.06; arrow x:163.4 y:16820.32 */
+.quiet__scroll {
+  position: absolute;
+  z-index: 3;
+  left: calc(141 * var(--u));
+  top: calc(1210.376 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(57 * var(--u));
+  pointer-events: none;
+}
+
+.quiet__scroll-text {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(24 * var(--u));
+  line-height: normal;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.quiet__scroll-arrow {
+  display: block;
+  margin-top: calc(116.26 * var(--u));
+  width: calc(12.202 * var(--u));
+  height: calc(321.013 * var(--u));
+  max-width: none;
+}

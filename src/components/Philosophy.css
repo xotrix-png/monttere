@@ -9,15 +9,14 @@
   width: 100%;
   background: #f3f6f7;
   color: #222b2f;
-  /* Tuck under fur hang — must overlap; html/body is #071a29 (dark “дырка”) */
+  /* Tuck under fur hang — must overlap; html/body is #071a29 (dark “дырка”).
+     No z-index here: a stacking context would trap the scroll arrow under the estate fur. */
   margin-top: calc(-161 * (100vw / 1920) - 24px);
-  z-index: 2;
-  background: #f3f6f7;
+  --u: calc(100vw / 1920);
 }
 
 .philosophy__frame {
   position: relative;
-  z-index: 3;
   width: 100%;
   aspect-ratio: 1920 / 1555;
   container-type: inline-size;
@@ -164,12 +163,14 @@
 /* Scroll — text x:1727.66 y:1142.7 / arrow x:1750.06 y:1207.26 */
 .philosophy__scroll {
   position: absolute;
+  z-index: 5;
   left: calc(1727.66 * var(--u));
   top: calc(1142.7 * var(--u));
   display: flex;
   flex-direction: column;
   align-items: center;
   width: calc(57 * var(--u));
+  pointer-events: none;
 }
 
 .philosophy__scroll-text {
