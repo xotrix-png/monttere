@@ -8,10 +8,10 @@ import furTransition2 from "../assets/images/fur-transition-2.png";
 import doorsBg from "../assets/images/doors-bg.png";
 import doorPhotoUrl from "../assets/images/doors-leaf-left.png";
 import doorModelUrl from "../../3D/Door/saloon_door.glb?url";
-import stablesImg from "../assets/images/estate-stables.png";
+import stablesVideo from "../assets/videos/stable-loop.mp4";
 import arenaImg from "../assets/images/estate-arena.png";
-import paddocksImg from "../assets/images/estate-paddocks.png";
-import clubhouseImg from "../assets/images/estate-clubhouse.png";
+import paddocksVideo from "../assets/videos/pasture-loop.mp4";
+import clubhouseVideo from "../assets/videos/terrace-loop.mp4";
 import arrowNe from "../assets/images/gallery-arrow-ne.svg";
 import "./Estate.css";
 
@@ -32,7 +32,7 @@ const DOOR_SCRUB = 0.85;
 const PANELS = [
   {
     id: "stables",
-    image: stablesImg,
+    video: stablesVideo,
     height: 852,
     veil: { left: 0, width: 673.68 },
     kicker: "01   STABLES",
@@ -68,7 +68,7 @@ const PANELS = [
   },
   {
     id: "paddocks",
-    image: paddocksImg,
+    video: paddocksVideo,
     height: 853,
     veil: { left: -14.334, width: 688.014 },
     kicker: "03 PADDOCKS",
@@ -86,7 +86,7 @@ const PANELS = [
   },
   {
     id: "clubhouse",
-    image: clubhouseImg,
+    video: clubhouseVideo,
     height: 1036,
     veil: { left: 0, width: 673.68, height: 852.981 },
     kicker: "04  CLUBHOUSE",
@@ -394,14 +394,27 @@ export default function Estate() {
           style={{ "--panel-h": panel.height }}
           aria-label={panel.kicker.replace(/\s+/g, " ").trim()}
         >
-          <img
-            className="estate__photo"
-            src={panel.image}
-            alt=""
-            width={1920}
-            height={Math.round(panel.height)}
-            decoding="async"
-          />
+          {panel.video ? (
+            <video
+              className="estate__photo"
+              src={panel.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+            />
+          ) : (
+            <img
+              className="estate__photo"
+              src={panel.image}
+              alt=""
+              width={1920}
+              height={Math.round(panel.height)}
+              decoding="async"
+            />
+          )}
           {panel.veil ? (
             <div
               className="estate__veil"

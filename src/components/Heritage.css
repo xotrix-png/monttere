@@ -1,0 +1,165 @@
+/*
+  After Passage (ends at Figma y:20407.685). Background continues #181e1f.
+  White contacts block starts at Figma y:24243.
+  --u = 1 Figma px at the viewport width.
+*/
+
+.heritage {
+  --u: calc(100vw / 1920);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(3820.6 * var(--u));
+  background: #181e1f;
+  color: #f3f6f7;
+}
+
+.heritage__index {
+  position: absolute;
+  right: calc(142 * var(--u));
+  top: calc(152 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: 1.2;
+  text-align: right;
+  text-transform: uppercase;
+  color: #f3f6f7;
+}
+
+.heritage__index span {
+  display: block;
+}
+
+.heritage__title {
+  position: absolute;
+  left: calc(137 * var(--u));
+  top: calc(283 * var(--u));
+  margin: 0;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(403 * var(--u));
+  line-height: calc(415 * var(--u));
+  text-transform: uppercase;
+  color: #f3f6f7;
+}
+
+.heritage__title span {
+  display: block;
+  white-space: nowrap;
+}
+
+.heritage__title span:last-child {
+  letter-spacing: calc(-24 * var(--u));
+}
+
+.heritage__story {
+  position: absolute;
+  right: calc(160 * var(--u));
+  top: calc(1600 * var(--u));
+  width: calc(420 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  line-height: calc(22 * var(--u));
+  text-align: right;
+  color: #f3f6f7;
+}
+
+.heritage__since {
+  position: absolute;
+  left: calc(142 * var(--u));
+  top: calc(1620 * var(--u));
+  width: calc(460 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(15 * var(--u));
+  line-height: calc(20 * var(--u));
+  color: #f3f6f7;
+}
+
+.heritage__photo {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.heritage__photo--tree {
+  left: calc(142 * var(--u));
+  top: calc(1742 * var(--u));
+  width: calc(624 * var(--u));
+  height: calc(600 * var(--u));
+  object-position: center 40%;
+}
+
+.heritage__photo--rider {
+  left: calc(925 * var(--u));
+  top: calc(1742 * var(--u));
+  width: calc(858 * var(--u));
+  height: calc(640 * var(--u));
+  object-position: center 62%;
+}
+
+.heritage__photo--stable {
+  left: calc(142 * var(--u));
+  top: calc(2382 * var(--u));
+  width: calc(624 * var(--u));
+  height: calc(650 * var(--u));
+  object-position: center 45%;
+}
+
+.heritage__caption {
+  position: absolute;
+  left: calc(146 * var(--u));
+  top: calc(3060 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+.heritage__link {
+  position: absolute;
+  left: calc(938 * var(--u));
+  top: calc(2410 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f3f6f7;
+}
+
+.heritage__link svg {
+  width: calc(86 * var(--u));
+  height: calc(8 * var(--u));
+  fill: none;
+  stroke: #f3f6f7;
+  stroke-width: 1;
+}
+
+.heritage__est {
+  position: absolute;
+  right: calc(154 * var(--u));
+  top: calc(2880 * var(--u));
+  margin: 0;
+  font-family: "Nicoletta Script", cursive;
+  font-weight: 400;
+  font-size: calc(48 * var(--u));
+  line-height: 1;
+  color: #f3f6f7;
+}

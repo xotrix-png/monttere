@@ -1,0 +1,55 @@
+/*
+  After Quiet (ends at Figma y:17796.685). Background #181e1f (158:44).
+  Horse group 315:52 starts at y:18783.031. Grass closes the block.
+  --u = 1 Figma px at the viewport width.
+*/
+
+.passage {
+  --u: calc(100vw / 1920);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(2611 * var(--u));
+  background: #181e1f;
+  overflow: visible;
+}
+
+/* horse body 307:23. Pulled up 8px under the mask: its last row is
+   only 37% opaque and otherwise shows the section background as a hairline. */
+.passage__horse {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: calc(1049.179 * var(--u));
+  width: calc(1920 * var(--u));
+  height: calc(1415.375 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* top fade 315:51, y:18783.031, 1920×448.421 */
+.passage__horse-mask {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: calc(602.639 * var(--u));
+  width: calc(1920 * var(--u));
+  height: calc(454.54 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* «переход после лошади». Fringe sits on the horse bottom, y:20619.879. */
+.passage__grass {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: calc(2298 * var(--u));
+  width: calc(1920 * var(--u));
+  height: calc(313 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+}

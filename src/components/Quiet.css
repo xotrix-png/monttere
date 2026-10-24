@@ -35,6 +35,102 @@
   height: calc(1147 * var(--u));
 }
 
+/* «Мрачные холмы в туманном свете», Figma 360:3.
+   Fill 2614.878×1470.087 at x:-395.522. Fades across mask 360:13. */
+.quiet__hills {
+  position: absolute;
+  z-index: 0;
+  left: calc(-395.522 * var(--u));
+  top: calc(1763.919 * var(--u));
+  width: calc(2614.878 * var(--u));
+  height: calc(1470.087 * var(--u));
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(1225.906 * var(--u)),
+    transparent calc(1420.217 * var(--u))
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(1225.906 * var(--u)),
+    transparent calc(1420.217 * var(--u))
+  );
+}
+
+/* Time 353:197, discipline 353:200, trust 353:201. Inter Tight 24 / #f3f6f7. */
+/* «линия пунктов», aligned to the three dots on the field. */
+.quiet__points {
+  position: absolute;
+  z-index: 1;
+  left: calc(201.931 * var(--u));
+  top: calc(2282.192 * var(--u));
+  width: calc(983.778 * var(--u));
+  height: calc(981.338 * var(--u));
+  max-width: none;
+  pointer-events: none;
+}
+
+.quiet__mark {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: calc(24 * var(--u));
+  line-height: calc(29 * var(--u));
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.quiet__mark--time {
+  left: calc(244.382 * var(--u));
+  top: calc(2491.795 * var(--u));
+}
+
+.quiet__mark--discipline {
+  left: calc(628.66 * var(--u));
+  top: calc(2780.131 * var(--u));
+}
+
+.quiet__mark--trust {
+  left: calc(611.379 * var(--u));
+  top: calc(3057.98 * var(--u));
+}
+
+/* Scroll span of the moving headline. Layout box only; the words are the spans. */
+.quiet__art-range {
+  position: absolute;
+  left: 0;
+  top: calc(2173.208 * var(--u));
+  width: 1px;
+  height: calc(2337.399 * var(--u));
+  pointer-events: none;
+}
+
+.quiet__art {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.quiet__art span {
+  position: absolute;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
 /* 05 — x:1744.16 y:15744.93 */
 .quiet__index {
   position: absolute;

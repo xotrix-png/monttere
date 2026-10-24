@@ -1,0 +1,77 @@
+/*
+  Figma y:24243. Background matches Quiet, #f3f6f7.
+  CONTACTS 342:59 is x:172.5 y:24493.869, 1575×537.
+  --u = 1 Figma px at the viewport width.
+*/
+
+.contacts {
+  --u: calc(100vw / 1920);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(1591 * var(--u));
+  background: #f3f6f7;
+  color: #222b2f;
+}
+
+.contacts__index {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(186 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  color: #222b2f;
+}
+
+.contacts__title {
+  position: absolute;
+  left: calc(172.5 * var(--u));
+  top: calc(265.9 * var(--u));
+  margin: 0;
+  font-family: "Voga", serif;
+  font-weight: 500;
+  font-size: calc(520 * var(--u));
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}
+
+.contacts__logo {
+  position: absolute;
+  left: calc(915.387 * var(--u));
+  top: calc(851 * var(--u));
+  width: calc(89.313 * var(--u));
+  height: calc(121.488 * var(--u));
+  max-width: none;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+.contacts__col {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contacts__col li {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(20 * var(--u));
+  line-height: calc(39 * var(--u));
+  text-transform: uppercase;
+  color: #222b2f;
+  white-space: nowrap;
+}

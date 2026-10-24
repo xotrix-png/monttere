@@ -3,6 +3,9 @@ import Gallery from "./components/Gallery.jsx";
 import Philosophy from "./components/Philosophy.jsx";
 import Estate from "./components/Estate.jsx";
 import Quiet from "./components/Quiet.jsx";
+import Passage from "./components/Passage.jsx";
+import Heritage from "./components/Heritage.jsx";
+import Contacts from "./components/Contacts.jsx";
 import SiteLogo from "./components/SiteLogo.jsx";
 
 export default function App() {
@@ -15,6 +18,9 @@ export default function App() {
       <Philosophy />
       <Estate />
       <Quiet />
+      <Passage />
+      <Heritage />
+      <Contacts />
     </main>
   );
 }
