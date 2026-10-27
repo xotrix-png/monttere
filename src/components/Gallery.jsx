@@ -376,7 +376,7 @@ export default function Gallery() {
     <>
       <section
         className="gallery"
-        id="stables"
+        id="collection"
         ref={sectionRef}
         aria-label="THE COLLECTION and horse gallery"
       >

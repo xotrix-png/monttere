@@ -24,6 +24,26 @@
   mix-blend-mode: difference;
 }
 
+/* Scroll-linked morph — kill CSS tweens so nothing fights the lerp */
+.site-logo--morphing,
+.site-logo--docked {
+  opacity: 1;
+  mix-blend-mode: normal;
+  transition: none !important;
+}
+
+.site-logo--docked .site-logo__mark {
+  background-color: #222b2f;
+}
+
+/* Away size/opacity must not animate while morphing */
+.site-logo--morphing.site-logo--away,
+.site-logo--docked.site-logo--away {
+  --logo-h: unset;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
 .site-logo:hover,
 .site-logo:focus-visible {
   opacity: 0.92;
@@ -40,6 +60,8 @@
   aspect-ratio: 89 / 121;
   width: auto;
   background-color: #f3f6f7;
+  /* Color is driven inline during settle; keep CSS tween off the morph */
+  transition: none;
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;

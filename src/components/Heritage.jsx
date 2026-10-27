@@ -4,20 +4,19 @@ import heritageStable from "../assets/images/heritage-stable.jpg";
 import "./Heritage.css";
 
 /*
-  Starts where Passage ends (Figma y:20407.685).
-  Dark field through the stable caption, then Contacts takes the light block.
+  After Passage (ends Figma y:20407.685). Dark field through caption /
+  Est. 1928, then Contacts starts at montÉrre (y:22701.972).
 */
 export default function Heritage() {
   return (
     <section className="heritage" id="heritage" aria-label="Our heritage">
-      <p className="heritage__index">
-        <span>06</span>
-        Our heritage
-      </p>
-
       <h2 className="heritage__title">
-        <span>Generations</span>
-        <span>of equestrians</span>
+        <span className="heritage__title-line heritage__title-line--gen">
+          Generations
+        </span>
+        <span className="heritage__title-line heritage__title-line--eq">
+          of equestrians
+        </span>
       </h2>
 
       <p className="heritage__story">
@@ -60,8 +59,12 @@ export default function Heritage() {
 
       <p className="heritage__link">
         Our story
-        <svg viewBox="0 0 86 8" aria-hidden="true">
-          <path d="M0 4h78M74 1l5 3-5 3" />
+        <svg
+          className="heritage__link-arrow"
+          viewBox="0 0 104 12"
+          aria-hidden="true"
+        >
+          <path d="M0 6h92M88 2l8 4-8 4" />
         </svg>
       </p>
 

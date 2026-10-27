@@ -1,77 +1,225 @@
 /*
-  Figma y:24243. Background matches Quiet, #f3f6f7.
-  CONTACTS 342:59 is x:172.5 y:24493.869, 1575×537.
+  Figma montÉrre 342:59 at y:22701.972 through frame end 24302.
+  Extra top pad keeps the wordmark off the dark heritage edge.
   --u = 1 Figma px at the viewport width.
 */
 
 .contacts {
   --u: calc(100vw / 1920);
+  /* Breathing room under dark Heritage so the wordmark doesn’t kiss the edge */
+  --pad: 280;
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc(1591 * var(--u));
+  height: calc((1600.028 + var(--pad)) * var(--u));
   background: #f3f6f7;
   color: #222b2f;
 }
 
-.contacts__index {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(186 * var(--u));
-  margin: 0;
-  font-family: "Inter Tight", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-  font-size: calc(20 * var(--u));
-  line-height: 1;
-  text-align: center;
-  text-transform: uppercase;
-  color: #222b2f;
-}
-
+/* 342:59 — 1644×512, font ~497.812 */
 .contacts__title {
   position: absolute;
-  left: calc(172.5 * var(--u));
-  top: calc(265.9 * var(--u));
+  left: calc(138 * var(--u));
+  top: calc(var(--pad) * var(--u));
   margin: 0;
   font-family: "Voga", serif;
   font-weight: 500;
-  font-size: calc(520 * var(--u));
-  line-height: 0.9;
+  font-size: calc(497.812 * var(--u));
+  line-height: calc(512 * var(--u));
   text-transform: uppercase;
   color: #222b2f;
   white-space: nowrap;
+  overflow: visible;
 }
 
+/* Dock only — never painted; sticky SiteLogo lands here */
 .contacts__logo {
   position: absolute;
-  left: calc(915.387 * var(--u));
-  top: calc(851 * var(--u));
+  left: calc(918.344 * var(--u));
+  top: calc((512 + var(--pad)) * var(--u));
   width: calc(89.313 * var(--u));
   height: calc(121.488 * var(--u));
-  max-width: none;
-  object-fit: contain;
-  filter: brightness(0);
+  opacity: 0;
+  pointer-events: none;
 }
 
-.contacts__col {
+/* Group 94 — y:23381.213 → +679.241 */
+.contacts__brand {
   position: absolute;
-  top: 0;
+  left: calc(760 * var(--u));
+  top: calc((679.241 + var(--pad)) * var(--u));
+  width: calc(406 * var(--u));
+  text-align: center;
+}
+
+.contacts__club {
   margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.contacts__col li {
-  position: absolute;
-  left: 0;
-  right: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
   font-size: calc(20 * var(--u));
   line-height: calc(39 * var(--u));
   text-transform: uppercase;
   color: #222b2f;
-  white-space: nowrap;
+}
+
+.contacts__rule {
+  display: block;
+  width: calc(399 * var(--u));
+  height: 1px;
+  margin: calc(30 * var(--u)) auto 0;
+  background: #222b2f;
+}
+
+.contacts__tag {
+  margin: calc(30 * var(--u)) 0 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: calc(20 * var(--u));
+  line-height: calc(39 * var(--u));
+  color: #222b2f;
+}
+
+/* 374:80 — Nicoletta upright; sized to Figma line box (~168) */
+.contacts__quote {
+  position: absolute;
+  right: calc(135.367 * var(--u));
+  top: calc((976.793 + var(--pad)) * var(--u));
+  width: calc(340 * var(--u));
+  margin: 0;
+  font-family: "Nicoletta Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-size: calc(56 * var(--u));
+  line-height: calc(56 * var(--u));
+  color: #222b2f;
+  text-align: right;
+  transform: none;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+.contacts__nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.contacts__col {
+  position: absolute;
+  top: calc((976.793 + var(--pad)) * var(--u));
+  pointer-events: auto;
+}
+
+.contacts__col--nav {
+  left: calc(141 * var(--u));
+  width: calc(183 * var(--u));
+}
+
+.contacts__col--explore {
+  left: calc(624 * var(--u));
+  width: calc(134 * var(--u));
+}
+
+.contacts__col--contact {
+  left: calc(1058 * var(--u));
+  width: calc(231 * var(--u));
+}
+
+.contacts__heading {
+  margin: 0 0 calc(40 * var(--u));
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 500;
+  font-size: calc(24 * var(--u));
+  line-height: calc(39 * var(--u));
+  text-transform: uppercase;
+  color: #222b2f;
+}
+
+.contacts__col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contacts__col li + li {
+  margin-top: calc(22 * var(--u));
+}
+
+.contacts__col a,
+.contacts__col span {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  line-height: calc(22 * var(--u));
+  text-transform: uppercase;
+  color: #222b2f;
+  text-decoration: none;
+}
+
+.contacts__col a:hover {
+  opacity: 0.7;
+}
+
+.contacts__with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(16 * var(--u));
+}
+
+.contacts__with-icon svg {
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+  flex: none;
+}
+
+/* Vector 25 + legal — y:24185.463 / 24235.838 */
+.contacts__foot {
+  position: absolute;
+  left: calc(136 * var(--u));
+  right: calc(136 * var(--u));
+  top: calc((1483.491 + var(--pad)) * var(--u));
+  padding-top: calc(40 * var(--u));
+  border-top: 1px solid #222b2f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(24 * var(--u));
+}
+
+.contacts__copy {
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(20 * var(--u));
+  letter-spacing: calc(0.04 * var(--u) * 16);
+  text-transform: uppercase;
+  color: #222b2f;
+}
+
+.contacts__legal {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-size: calc(14 * var(--u));
+  line-height: calc(20 * var(--u));
+  letter-spacing: calc(0.04 * var(--u) * 16);
+  text-transform: uppercase;
+  color: #222b2f;
+  text-decoration: none;
+}
+
+.contacts__legal svg {
+  width: calc(79 * var(--u));
+  height: calc(12 * var(--u));
+  fill: none;
+  stroke: #222b2f;
+  stroke-width: 1.2;
 }

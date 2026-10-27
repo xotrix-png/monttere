@@ -112,7 +112,7 @@ export default function Quiet() {
   }, []);
 
   return (
-    <section className="quiet" id="quiet" aria-label="05">
+    <section className="quiet" id="essence" aria-label="05 THE ESSENCE">
       <img
         className="quiet__sky"
         src={skyTransition}
@@ -147,7 +147,9 @@ export default function Quiet() {
       />
 
       <p className="quiet__index">05</p>
-      <p className="quiet__label">Chto-to</p>
+      <p className="quiet__label">The essence</p>
+      <p className="quiet__craft-index">06</p>
+      <p className="quiet__craft-label">The craft</p>
 
       <h2 className="quiet__title">
         <span className="quiet__quiet">THE QUIET</span>

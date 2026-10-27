@@ -1,6 +1,7 @@
 import photo from "../assets/images/hero-photo.png";
 import heroMask from "../assets/images/hero-mask.svg";
 import equestrianMark from "../equestrian.svg";
+import { jumpHandler } from "../utils/jump.js";
 import "./Hero.css";
 
 /*
@@ -13,7 +14,7 @@ import "./Hero.css";
 */
 export default function Hero() {
   return (
-    <section className="hero" aria-label="MONTÉRRE hero">
+    <section className="hero" id="membership" aria-label="MONTÉRRE hero">
       <img
         className="hero__photo"
         src={photo}
@@ -28,11 +29,26 @@ export default function Hero() {
 
       <nav className="hero__nav" aria-label="Primary">
         <div className="hero__nav-group hero__nav-group--left">
-          <a className="hero__nav-link" href="#membership">
-            MEMBERSHIP
+          <a
+            className="hero__nav-link"
+            href="#collection"
+            onClick={jumpHandler("collection")}
+          >
+            COLLECTION
           </a>
-          <a className="hero__nav-link hero__nav-link--stables" href="#stables">
-            STABLES
+          <a
+            className="hero__nav-link hero__nav-link--philosophy"
+            href="#philosophy"
+            onClick={jumpHandler("philosophy")}
+          >
+            PHILOSOPHY
+          </a>
+          <a
+            className="hero__nav-link hero__nav-link--estate"
+            href="#estate"
+            onClick={jumpHandler("estate")}
+          >
+            ESTATE
           </a>
         </div>
 
@@ -42,10 +58,25 @@ export default function Hero() {
         </span>
 
         <div className="hero__nav-group hero__nav-group--right">
-          <a className="hero__nav-link hero__nav-link--estate" href="#estate">
-            ESTATE
+          <a
+            className="hero__nav-link hero__nav-link--essence"
+            href="#essence"
+            onClick={jumpHandler("essence")}
+          >
+            ESSENCE
           </a>
-          <a className="hero__nav-link hero__nav-link--contact" href="#contact">
+          <a
+            className="hero__nav-link hero__nav-link--craft"
+            href="#craft"
+            onClick={jumpHandler("craft")}
+          >
+            CRAFT
+          </a>
+          <a
+            className="hero__nav-link hero__nav-link--contact"
+            href="#contacts"
+            onClick={jumpHandler("contacts")}
+          >
             CONTACT
           </a>
         </div>
@@ -96,7 +127,11 @@ export default function Hero() {
         }}
       />
 
-      <a className="hero__cta" href="#membership">
+      <a
+        className="hero__cta"
+        href="#membership"
+        onClick={jumpHandler("membership")}
+      >
         <span>REQUEST MEMBERSHIP</span>
         <span className="hero__cta-arrow" aria-hidden="true">
           <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">

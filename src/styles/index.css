@@ -16,6 +16,7 @@ body,
 
 html {
   background: #071a29;
+  scroll-behavior: auto;
 }
 
 body {

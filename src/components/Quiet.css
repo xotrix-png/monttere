@@ -131,11 +131,11 @@
   white-space: nowrap;
 }
 
-/* 05 — x:1744.16 y:15744.93 */
+/* 05 — x:1710.60 y:15744.93 */
 .quiet__index {
   position: absolute;
   z-index: 2;
-  left: calc(1744.16 * var(--u));
+  left: calc(1710.6 * var(--u));
   top: calc(280.241 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
@@ -148,11 +148,11 @@
   white-space: nowrap;
 }
 
-/* Chto-to — x:1698.66 y:15778.93 */
+/* THE ESSENCE — x:1659.10 y:15778.93 */
 .quiet__label {
   position: absolute;
   z-index: 2;
-  left: calc(1698.66 * var(--u));
+  left: calc(1659.1 * var(--u));
   top: calc(314.241 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
@@ -162,6 +162,39 @@
   line-height: normal;
   text-transform: uppercase;
   color: #222b2f;
+  white-space: nowrap;
+}
+
+/* 06 THE CRAFT — Figma 374:24 at y:17637.89 → quiet +2173.207 */
+.quiet__craft-index {
+  position: absolute;
+  z-index: 3;
+  left: calc(1721.664 * var(--u));
+  top: calc(2173.207 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f3f6f7;
+  white-space: nowrap;
+}
+
+.quiet__craft-label {
+  position: absolute;
+  z-index: 3;
+  left: calc(1681.664 * var(--u));
+  top: calc(2207.207 * var(--u));
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  color: #f3f6f7;
   white-space: nowrap;
 }
 

@@ -10,7 +10,7 @@ import "./Passage.css";
 */
 export default function Passage() {
   return (
-    <section className="passage" aria-label="Passage">
+    <section className="passage" id="craft" aria-label="06 THE CRAFT">
       <img
         className="passage__horse"
         src={passageHorseBody}

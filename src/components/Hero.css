@@ -167,14 +167,19 @@
   transition: opacity 0.2s ease;
 }
 
-/* Figma spacing: STABLES starts 289px after MEMBERSHIP,
-   CONTACT starts 223px after ESTATE (at 1920 wide) */
-.hero__nav-link--stables {
-  margin-left: calc(var(--nav-fs) * 8.35);
+/* Figma 374:2 — starts 141 / 327.56 / 515.07 and 1382.38 / 1538.65 / 1694.93 */
+.hero__nav-link--philosophy,
+.hero__nav-link--estate {
+  margin-left: calc(var(--nav-fs) * 3.3);
 }
 
+.hero__nav-link--essence {
+  font-weight: 400;
+}
+
+.hero__nav-link--craft,
 .hero__nav-link--contact {
-  margin-left: calc(var(--nav-fs) * 7.9);
+  margin-left: calc(var(--nav-fs) * 3.65);
   font-weight: 400;
 }
 

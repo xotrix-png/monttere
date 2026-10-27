@@ -1,6 +1,6 @@
 /*
-  After Passage (ends at Figma y:20407.685). Background continues #181e1f.
-  White contacts block starts at Figma y:24243.
+  Passage ends Figma y:20407.685. Contacts (montÉrre) at y:22701.972.
+  Heights below are relative to the heritage origin.
   --u = 1 Figma px at the viewport width.
 */
 
@@ -9,76 +9,66 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc(3820.6 * var(--u));
+  height: calc(2294.287 * var(--u));
   background: #181e1f;
   color: #f3f6f7;
 }
 
-.heritage__index {
-  position: absolute;
-  right: calc(142 * var(--u));
-  top: calc(152 * var(--u));
-  margin: 0;
-  font-family: "Inter Tight", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-  font-size: calc(20 * var(--u));
-  line-height: 1.2;
-  text-align: right;
-  text-transform: uppercase;
-  color: #f3f6f7;
-}
-
-.heritage__index span {
-  display: block;
-}
-
+/* GENERATIONS 362:18 — y:20522.523 → +114.838, 1643×415 */
 .heritage__title {
   position: absolute;
-  left: calc(137 * var(--u));
-  top: calc(283 * var(--u));
+  left: calc(141 * var(--u));
+  top: calc(114.838 * var(--u));
   margin: 0;
-  font-family: "Voga", serif;
-  font-weight: 500;
-  font-size: calc(403 * var(--u));
-  line-height: calc(415 * var(--u));
-  text-transform: uppercase;
   color: #f3f6f7;
+  text-transform: uppercase;
 }
 
-.heritage__title span {
+.heritage__title-line {
   display: block;
+  font-family: "Voga", serif;
+  font-weight: 500;
   white-space: nowrap;
 }
 
-.heritage__title span:last-child {
-  letter-spacing: calc(-24 * var(--u));
+.heritage__title-line--gen {
+  font-size: calc(403 * var(--u));
+  line-height: calc(415 * var(--u));
 }
 
+/* OF EQUESTRIANS 362:2 — y:20892.344 → +484.659, 1643×335 */
+.heritage__title-line--eq {
+  margin-top: calc(-45 * var(--u));
+  font-size: calc(328 * var(--u));
+  line-height: calc(335 * var(--u));
+  letter-spacing: 0;
+}
+
+/* 362:7 — x:1127.094 y:21264.146 → +856.461 */
 .heritage__story {
   position: absolute;
-  right: calc(160 * var(--u));
-  top: calc(1600 * var(--u));
-  width: calc(420 * var(--u));
+  left: calc(1127.094 * var(--u));
+  top: calc(856.461 * var(--u));
+  width: calc(654.873 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(16 * var(--u));
-  line-height: calc(22 * var(--u));
-  text-align: right;
+  font-size: calc(20 * var(--u));
+  line-height: calc(29 * var(--u));
   color: #f3f6f7;
 }
 
+/* 362:6 — x:141 y:21430.023 → +1022.338 */
 .heritage__since {
   position: absolute;
-  left: calc(142 * var(--u));
-  top: calc(1620 * var(--u));
-  width: calc(460 * var(--u));
+  left: calc(141 * var(--u));
+  top: calc(1022.338 * var(--u));
+  width: calc(654.873 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(15 * var(--u));
-  line-height: calc(20 * var(--u));
+  font-size: calc(20 * var(--u));
+  line-height: calc(29 * var(--u));
   color: #f3f6f7;
 }
 
@@ -89,77 +79,83 @@
   pointer-events: none;
 }
 
+/* 02-tree-field — 752.145×319.746, y:21551.604 → +1143.919 */
 .heritage__photo--tree {
-  left: calc(142 * var(--u));
-  top: calc(1742 * var(--u));
-  width: calc(624 * var(--u));
-  height: calc(600 * var(--u));
+  left: calc(141 * var(--u));
+  top: calc(1143.919 * var(--u));
+  width: calc(752.145 * var(--u));
+  height: calc(319.746 * var(--u));
   object-position: center 40%;
 }
 
+/* 05-rider-field — 849.234×636.926, y:21430.023 → +1022.338 */
 .heritage__photo--rider {
-  left: calc(925 * var(--u));
-  top: calc(1742 * var(--u));
-  width: calc(858 * var(--u));
-  height: calc(640 * var(--u));
-  object-position: center 62%;
+  left: calc(935.145 * var(--u));
+  top: calc(1022.338 * var(--u));
+  width: calc(849.234 * var(--u));
+  height: calc(636.926 * var(--u));
+  object-position: center 55%;
 }
 
+/* 03-stable — 752.145×382.227, y:21914.049 → +1506.364 */
 .heritage__photo--stable {
-  left: calc(142 * var(--u));
-  top: calc(2382 * var(--u));
-  width: calc(624 * var(--u));
-  height: calc(650 * var(--u));
+  left: calc(141 * var(--u));
+  top: calc(1506.364 * var(--u));
+  width: calc(752.145 * var(--u));
+  height: calc(382.227 * var(--u));
   object-position: center 45%;
 }
 
+/* 362:31 — y:22339.990 → +1932.305 */
 .heritage__caption {
   position: absolute;
-  left: calc(146 * var(--u));
-  top: calc(3060 * var(--u));
+  left: calc(141 * var(--u));
+  top: calc(1932.305 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(16 * var(--u));
-  line-height: 1.2;
-  letter-spacing: 0.04em;
+  font-size: calc(20 * var(--u));
+  line-height: calc(39 * var(--u));
   text-transform: uppercase;
   color: #f3f6f7;
   white-space: nowrap;
 }
 
+/* OUR STORY 362:30 — y:22163.609 → +1755.924 */
 .heritage__link {
   position: absolute;
-  left: calc(938 * var(--u));
-  top: calc(2410 * var(--u));
+  left: calc(935.145 * var(--u));
+  top: calc(1755.924 * var(--u));
   display: flex;
   align-items: center;
-  gap: calc(18 * var(--u));
+  gap: calc(33 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(16 * var(--u));
-  letter-spacing: 0.08em;
+  font-size: calc(20 * var(--u));
+  line-height: calc(39 * var(--u));
   text-transform: uppercase;
   color: #f3f6f7;
 }
 
-.heritage__link svg {
-  width: calc(86 * var(--u));
-  height: calc(8 * var(--u));
+.heritage__link-arrow {
+  width: calc(103.8 * var(--u));
+  height: calc(12.2 * var(--u));
   fill: none;
   stroke: #f3f6f7;
-  stroke-width: 1;
+  stroke-width: 1.2;
 }
 
+/* Est. 1928 362:36 — y:22307.990 → +1900.305 */
 .heritage__est {
   position: absolute;
-  right: calc(154 * var(--u));
-  top: calc(2880 * var(--u));
+  left: calc(1568.38 * var(--u));
+  top: calc(1900.305 * var(--u));
   margin: 0;
   font-family: "Nicoletta Script", cursive;
   font-weight: 400;
-  font-size: calc(48 * var(--u));
-  line-height: 1;
+  font-size: calc(56 * var(--u));
+  line-height: calc(71 * var(--u));
   color: #f3f6f7;
+  white-space: nowrap;
 }
