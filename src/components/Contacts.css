@@ -14,8 +14,8 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  /* Base 1494.491 (cropped foot) + pad stretches the light frame */
-  height: calc((1494.491 + var(--pad)) * var(--u));
+  /* Base 1394.491 (−100 with cols/foot) + pad stretches the light frame */
+  height: calc((1394.491 + var(--pad)) * var(--u));
   background: #f3f6f7;
   color: #222b2f;
 }
@@ -71,13 +71,14 @@
 .contacts__rule {
   display: block;
   width: calc(399 * var(--u));
-  height: 1px;
-  margin: calc(30 * var(--u)) auto 0;
+  height: 0.75px;
+  /* Was 30 — halved so brand stack fits one screen */
+  margin: calc(15 * var(--u)) auto 0;
   background: #222b2f;
 }
 
 .contacts__tag {
-  margin: calc(30 * var(--u)) 0 0;
+  margin: calc(15 * var(--u)) 0 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -90,7 +91,8 @@
 .contacts__quote {
   position: absolute;
   right: calc(135.367 * var(--u));
-  top: calc((976.793 + var(--pad)) * var(--u));
+  /* Centered in band between brand stack and foot line */
+  top: calc((919.741 + var(--pad)) * var(--u));
   width: calc(340 * var(--u));
   margin: 0;
   font-family: "Nicoletta Script", cursive;
@@ -117,7 +119,8 @@
 
 .contacts__col {
   position: absolute;
-  top: calc((976.793 + var(--pad)) * var(--u));
+  /* Same band center as quote — equal air above/below nav block */
+  top: calc((919.741 + var(--pad)) * var(--u));
   pointer-events: auto;
 }
 
@@ -197,7 +200,7 @@
   position: absolute;
   left: calc(136 * var(--u));
   right: calc(136 * var(--u));
-  top: calc((1433.491 + var(--pad)) * var(--u));
+  top: calc((1333.491 + var(--pad)) * var(--u));
   bottom: 0;
   padding-top: calc(20.5 * var(--u));
   padding-bottom: calc(20.5 * var(--u));

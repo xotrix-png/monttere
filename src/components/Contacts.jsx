@@ -166,7 +166,7 @@ export default function Contacts() {
             <li>
               <span className="contacts__with-icon">
                 <IconPin />
-                Gomel, Belarus
+                London, United Kingdom
               </span>
             </li>
           </ul>
