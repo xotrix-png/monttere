@@ -64,7 +64,11 @@ function IconIg() {
 
 function IconPin() {
   return (
-    <svg viewBox="0 0 16 20" aria-hidden="true">
+    <svg
+      className="contacts__icon-pin"
+      viewBox="0 0 16 20"
+      aria-hidden="true"
+    >
       <path
         d="M8 1.5c-3.3 0-6 2.6-6 5.8 0 4.3 6 11.2 6 11.2s6-6.9 6-11.2c0-3.2-2.7-5.8-6-5.8Z"
         fill="none"

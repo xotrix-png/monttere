@@ -11,10 +11,12 @@
   /* Match hero nav spacer so the crest doesn’t resize on first paint */
   --logo-h: max(56px, calc(121.49 * var(--u)));
   opacity: 0.82;
+  /* Idle only — morph/dock kill transitions in JS + --morphing/--docked */
   transition:
     opacity 0.45s ease,
     height 0.45s ease;
   -webkit-tap-highlight-color: transparent;
+  backface-visibility: hidden;
 }
 
 .site-logo--away {
@@ -29,6 +31,15 @@
   opacity: 1;
   mix-blend-mode: normal;
   transition: none !important;
+}
+
+/*
+  Pinned inside #contacts (JS sets position:absolute on the dock).
+  Scrolls with the section — not fixed, so no per-frame top jitter.
+*/
+.site-logo--docked {
+  position: absolute;
+  z-index: 5;
 }
 
 .site-logo--docked .site-logo__mark {

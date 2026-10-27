@@ -1,6 +1,7 @@
 /*
   Figma montÉrre 342:59 at y:22701.972 through frame end 24302.
-  Extra top pad keeps the wordmark off the dark heritage edge.
+  --pad drops the whole Figma stack (title → crest → brand → cols → foot)
+  so the É accent / crest clear the Heritage edge; frame grows by the same.
   --u = 1 Figma px at the viewport width.
 */
 
@@ -8,12 +9,13 @@
   /* cqw = layout width (no 100vw scrollbar drift; safe for width AND height) */
   container-type: inline-size;
   --u: calc(100cqw / 1920);
-  /* Breathing room under dark Heritage so the wordmark doesn’t kiss the edge */
-  --pad: 280;
+  /* Air under Heritage; keeps relative Figma gaps between title / crest / club */
+  --pad: 120;
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc((1600.028 + var(--pad)) * var(--u));
+  /* Base 1494.491 (cropped foot) + pad stretches the light frame */
+  height: calc((1494.491 + var(--pad)) * var(--u));
   background: #f3f6f7;
   color: #222b2f;
 }
@@ -179,20 +181,32 @@
   width: calc(20 * var(--u));
   height: calc(20 * var(--u));
   flex: none;
+  display: block;
 }
 
-/* Vector 25 + legal — y:24185.463 / 24235.838 */
+/* Pin viewBox is taller/narrower — bump size so it matches mail/IG optically */
+.contacts__with-icon svg.contacts__icon-pin {
+  width: calc(22.5 * var(--u));
+  height: calc(22.5 * var(--u));
+  /* Head sits high in the viewBox; nudge so it centers on the text line */
+  translate: 0 -0.06em;
+}
+
+/* Vector 25 + legal — equal air above/below text between line and section bottom */
 .contacts__foot {
   position: absolute;
   left: calc(136 * var(--u));
   right: calc(136 * var(--u));
-  top: calc((1483.491 + var(--pad)) * var(--u));
-  padding-top: calc(40 * var(--u));
+  top: calc((1433.491 + var(--pad)) * var(--u));
+  bottom: 0;
+  padding-top: calc(20.5 * var(--u));
+  padding-bottom: calc(20.5 * var(--u));
   border-top: 1px solid #222b2f;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: calc(24 * var(--u));
+  box-sizing: border-box;
 }
 
 .contacts__copy {
