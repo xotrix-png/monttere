@@ -32,11 +32,11 @@ const SCRUB = 0.4;
 const MOVE_W = 1;
 const HOLD_W = 0.55;
 /** Idle on Isabelle (card stands) before fur starts crawling up */
-const EXIT_HOLD_W = 0.5;
+const EXIT_HOLD_W = 0.2;
 /** Scrub: fur crawls onto Isabelle until Figma rest (375px overlap) */
-const FUR_REVEAL_W = 1.6;
+const FUR_REVEAL_W = 0.85;
 /** Hold settled fur on Isabelle before Philosophy scrolls in */
-const FUR_SETTLE_W = 0.7;
+const FUR_SETTLE_W = 0.35;
 const SCROLL_UNIT = 1.7;
 const NAV_EXIT_END = 0.14;
 const NAV_ENTER_START = 0.64;

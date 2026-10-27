@@ -1,4 +1,4 @@
-/* Quiet fixed brand mark — home affordance without competing with the scene */
+/* Fixed crest — always on the layout center axis */
 .site-logo {
   --u: min(100vw / 1920, 100dvh / 1080);
   position: fixed;
@@ -8,23 +8,22 @@
   translate: -50% 0;
   display: block;
   height: var(--logo-h);
-  --logo-h: max(48px, calc(110 * var(--u)));
+  /* Match hero nav spacer so the crest doesn’t resize on first paint */
+  --logo-h: max(56px, calc(121.49 * var(--u)));
   opacity: 0.82;
   transition:
     opacity 0.45s ease,
-    height 0.45s ease,
-    filter 0.45s ease;
+    height 0.45s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .site-logo--away {
   --logo-h: max(36px, calc(64 * var(--u)));
   opacity: 0.55;
-  /* Readable on both dark gallery and light Philosophy */
   mix-blend-mode: difference;
 }
 
-/* Scroll-linked morph — kill CSS tweens so nothing fights the lerp */
+/* Scroll-linked morph — no CSS tweens fighting the lerp */
 .site-logo--morphing,
 .site-logo--docked {
   opacity: 1;
@@ -34,14 +33,6 @@
 
 .site-logo--docked .site-logo__mark {
   background-color: #222b2f;
-}
-
-/* Away size/opacity must not animate while morphing */
-.site-logo--morphing.site-logo--away,
-.site-logo--docked.site-logo--away {
-  --logo-h: unset;
-  opacity: 1;
-  mix-blend-mode: normal;
 }
 
 .site-logo:hover,
@@ -59,8 +50,8 @@
   height: 100%;
   aspect-ratio: 89 / 121;
   width: auto;
+  margin-inline: auto;
   background-color: #f3f6f7;
-  /* Color is driven inline during settle; keep CSS tween off the morph */
   transition: none;
   -webkit-mask-size: contain;
   mask-size: contain;

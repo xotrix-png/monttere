@@ -9,7 +9,7 @@ import doorsBg from "../assets/images/doors-bg.png";
 import doorPhotoUrl from "../assets/images/doors-leaf-left.png";
 import doorModelUrl from "../../3D/Door/saloon_door.glb?url";
 import stablesVideo from "../assets/videos/stable-loop.mp4";
-import arenaImg from "../assets/images/estate-arena.png";
+import arenaVideo from "../assets/videos/arena-loop.mp4";
 import paddocksVideo from "../assets/videos/pasture-loop.mp4";
 import clubhouseVideo from "../assets/videos/terrace-loop.mp4";
 import arrowNe from "../assets/images/gallery-arrow-ne.svg";
@@ -50,7 +50,7 @@ const PANELS = [
   },
   {
     id: "arena",
-    image: arenaImg,
+    video: arenaVideo,
     height: 852,
     veil: { left: -14.334, width: 688.014 },
     kicker: "02  ARENA",

@@ -6,6 +6,8 @@ import "./Heritage.css";
 /*
   After Passage (ends Figma y:20407.685). Dark field through caption /
   Est. 1928, then Contacts starts at montÉrre (y:22701.972).
+  Body copy is Inter Tight 32. Each photo has a green grade rect
+  (Figma blend overlay) isolated to that shot.
 */
 export default function Heritage() {
   return (
@@ -20,40 +22,51 @@ export default function Heritage() {
       </h2>
 
       <p className="heritage__story">
-        Our story is built on a deep respect for tradition, a commitment to
-        excellence and a belief in the lasting value of the equestrian way of
-        life
+        <span>Our story is built on a deep respect for tradition,</span>
+        <span>a commitment to excellence and a belief in the</span>
+        <span>lasting value of the equestrian way of life</span>
       </p>
 
       <p className="heritage__since">
-        Since 1928, Montérre has been a place where people, horses and nature
-        come together
+        <span>Since 1928, Montérre has been a place where</span>
+        <span>people, horses and nature come together</span>
       </p>
 
-      <img
-        className="heritage__photo heritage__photo--tree"
-        src={heritageTree}
-        alt=""
-        width={1920}
-        height={1440}
-        decoding="async"
-      />
-      <img
-        className="heritage__photo heritage__photo--rider"
-        src={heritageRider}
-        alt=""
-        width={1920}
-        height={1440}
-        decoding="async"
-      />
-      <img
-        className="heritage__photo heritage__photo--stable"
-        src={heritageStable}
-        alt=""
-        width={1920}
-        height={1440}
-        decoding="async"
-      />
+      <div className="heritage__shot heritage__shot--tree">
+        <img
+          className="heritage__photo"
+          src={heritageTree}
+          alt=""
+          width={1920}
+          height={1440}
+          decoding="async"
+        />
+        <span className="heritage__grade" aria-hidden="true" />
+      </div>
+
+      <div className="heritage__shot heritage__shot--rider">
+        <img
+          className="heritage__photo"
+          src={heritageRider}
+          alt=""
+          width={1920}
+          height={1440}
+          decoding="async"
+        />
+        <span className="heritage__grade" aria-hidden="true" />
+      </div>
+
+      <div className="heritage__shot heritage__shot--stable">
+        <img
+          className="heritage__photo"
+          src={heritageStable}
+          alt=""
+          width={1920}
+          height={1440}
+          decoding="async"
+        />
+        <span className="heritage__grade" aria-hidden="true" />
+      </div>
 
       <p className="heritage__caption">Montérre private equestrian club</p>
 

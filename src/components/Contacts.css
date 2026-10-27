@@ -5,7 +5,9 @@
 */
 
 .contacts {
-  --u: calc(100vw / 1920);
+  /* cqw = layout width (no 100vw scrollbar drift; safe for width AND height) */
+  container-type: inline-size;
+  --u: calc(100cqw / 1920);
   /* Breathing room under dark Heritage so the wordmark doesn’t kiss the edge */
   --pad: 280;
   position: relative;
@@ -32,10 +34,11 @@
   overflow: visible;
 }
 
-/* Dock only — never painted; sticky SiteLogo lands here */
+/* Dock only — never painted; same center axis as fixed SiteLogo */
 .contacts__logo {
   position: absolute;
-  left: calc(918.344 * var(--u));
+  left: 50%;
+  translate: -50% 0;
   top: calc((512 + var(--pad)) * var(--u));
   width: calc(89.313 * var(--u));
   height: calc(121.488 * var(--u));
@@ -43,10 +46,11 @@
   pointer-events: none;
 }
 
-/* Group 94 — y:23381.213 → +679.241 */
+/* Group 94 — centered with the crest */
 .contacts__brand {
   position: absolute;
-  left: calc(760 * var(--u));
+  left: 50%;
+  translate: -50% 0;
   top: calc((679.241 + var(--pad)) * var(--u));
   width: calc(406 * var(--u));
   text-align: center;

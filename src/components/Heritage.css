@@ -1,11 +1,12 @@
 /*
   Passage ends Figma y:20407.685. Contacts (montÉrre) at y:22701.972.
   Heights below are relative to the heritage origin.
-  --u = 1 Figma px at the viewport width.
+  --u = 1 Figma px at the layout width.
 */
 
 .heritage {
-  --u: calc(100vw / 1920);
+  container-type: inline-size;
+  --u: calc(100cqw / 1920);
   position: relative;
   z-index: 2;
   width: 100%;
@@ -44,65 +45,117 @@
   letter-spacing: 0;
 }
 
-/* 362:7 — x:1127.094 y:21264.146 → +856.461 */
+/* 362:7 — Inter Tight 32, 3 lines, right-aligned to rider edge */
 .heritage__story {
   position: absolute;
-  left: calc(1127.094 * var(--u));
+  left: calc(935.145 * var(--u));
   top: calc(856.461 * var(--u));
-  width: calc(654.873 * var(--u));
+  width: calc(849.234 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(20 * var(--u));
-  line-height: calc(29 * var(--u));
+  font-style: normal;
+  font-size: calc(32 * var(--u));
+  line-height: calc(39 * var(--u));
+  letter-spacing: 0;
+  text-align: right;
   color: #f3f6f7;
 }
 
-/* 362:6 — x:141 y:21430.023 → +1022.338 */
+.heritage__story span {
+  display: block;
+}
+
+/* 362:6 — Inter Tight 32, 2 lines */
 .heritage__since {
   position: absolute;
   left: calc(141 * var(--u));
   top: calc(1022.338 * var(--u));
-  width: calc(654.873 * var(--u));
+  width: calc(752.145 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
-  font-size: calc(20 * var(--u));
-  line-height: calc(29 * var(--u));
+  font-style: normal;
+  font-size: calc(32 * var(--u));
+  line-height: calc(39 * var(--u));
+  letter-spacing: 0;
+  text-align: left;
   color: #f3f6f7;
 }
 
-.heritage__photo {
+.heritage__since span {
+  display: block;
+}
+
+/* Photo + Figma green grade rectangle (blend isolated per shot) */
+.heritage__shot {
   position: absolute;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.heritage__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
   max-width: none;
   object-fit: cover;
   pointer-events: none;
 }
 
+/* Figma: green rect over each photo — colorize + soft mood */
+.heritage__grade {
+  position: absolute;
+  inset: 0;
+  background: #3a5c4f;
+  mix-blend-mode: color;
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.heritage__grade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #1a332c;
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+}
+
 /* 02-tree-field — 752.145×319.746, y:21551.604 → +1143.919 */
-.heritage__photo--tree {
+.heritage__shot--tree {
   left: calc(141 * var(--u));
   top: calc(1143.919 * var(--u));
   width: calc(752.145 * var(--u));
   height: calc(319.746 * var(--u));
+}
+
+.heritage__shot--tree .heritage__photo {
   object-position: center 40%;
 }
 
 /* 05-rider-field — 849.234×636.926, y:21430.023 → +1022.338 */
-.heritage__photo--rider {
+.heritage__shot--rider {
   left: calc(935.145 * var(--u));
   top: calc(1022.338 * var(--u));
   width: calc(849.234 * var(--u));
   height: calc(636.926 * var(--u));
+}
+
+.heritage__shot--rider .heritage__photo {
   object-position: center 55%;
 }
 
 /* 03-stable — 752.145×382.227, y:21914.049 → +1506.364 */
-.heritage__photo--stable {
+.heritage__shot--stable {
   left: calc(141 * var(--u));
   top: calc(1506.364 * var(--u));
   width: calc(752.145 * var(--u));
   height: calc(382.227 * var(--u));
+}
+
+.heritage__shot--stable .heritage__photo {
   object-position: center 45%;
 }
 
