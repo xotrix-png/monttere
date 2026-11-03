@@ -100,8 +100,8 @@ export default function Quiet() {
       trigger: range,
       start: "top 85%",
       endTrigger: horse || range,
-      /* 22% ≈ compensates the +100px path shift so lines stay on-screen */
-      end: horse ? "top 22%" : "bottom 42%",
+      /* ~3%: after +100px path drop, finish a bit later so lines stay in frame */
+      end: horse ? "top 3%" : "bottom 42%",
       scrub: 0.8,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
