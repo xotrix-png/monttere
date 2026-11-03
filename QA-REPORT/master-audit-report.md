@@ -116,7 +116,7 @@ Duplicates merged; Interaction Criticals excluded from product Critical tally.
 | **FQA-001** (+ visual crop risk) | Collection horse clipped in 100vh pin | Gallery / Collection | Confirmed DOM: design ~1159 vs slide 1080 |
 | **VQA-002** | Hero `100vh` vs scaled 1080 artboard | Hero | 50–90px drift @ 1440/1280 |
 | **VQA-006** | Estate SPACE/WITH/PURPOSE ~−79px Y | Estate doors | Figma vs DOM |
-| **VQA-008** | Location “London…” vs Figma “Gomel, Belarus” | Contacts | Content mismatch (may be intentional product change — flag) |
+| ~~**VQA-008**~~ | Location London vs Figma Gomel | Contacts | **ACCEPTED** — keep **London, United Kingdom**; Figma stale |
 | **VQA-009** | Legal bar ~14px vs ~24px Figma | Contacts | |
 | **VQA-010** | Privacy link ~+120px X | Contacts | |
 | **FQA-002** | ~22MB GLB + 4× `preload="auto"` videos | Estate | Perf |
@@ -148,7 +148,7 @@ VQA-014–016; FQA-018–023 — polish, placeholders, dead CSS, long pin cost n
 | Collection / horse crop in pin | VQA-012 / VQA-014 (related) | **FQA-001** | NOT TESTED |
 | Scale unit / scrollbar drift | amplified @ 1440/1280 **VQA-002** | **FQA-005**, **FQA-006**, **FQA-015** | NOT TESTED |
 | Dead / misleading CTAs | — | **FQA-004**, **FQA-008**, **FQA-020** | IQA claimed all CTAs dead (**invalid Critical** on `main`) |
-| Contacts legal / footer vs Figma | **VQA-009**, **VQA-010**, **VQA-008** | FQA-020 (self-hash) | NOT TESTED |
+| Contacts legal / footer vs Figma | **VQA-009**, **VQA-010** (**VQA-008** Accepted/London) | FQA-020 (self-hash) | NOT TESTED |
 | Estate perf / WebGL | — | **FQA-002**, **FQA-003** | Videos NOT TESTED |
 | SiteLogo settle | **VQA-005**, **VQA-013** | **FQA-006** | IQA-004 logo click |
 
@@ -160,7 +160,7 @@ VQA-014–016; FQA-018–023 — polish, placeholders, dead CSS, long pin cost n
 2. **FQA-001** (Collection fit) independent of Estate perf but same Gallery pin system as **FQA-023**.  
 3. **FQA-002 / FQA-003 / FQA-007** form an Estate load/jank cluster.  
 4. **FQA-004 / FQA-016 / FQA-008 / FQA-020** are CTA/anchor contract fixes.  
-5. Contacts visual cluster (**VQA-008–011**) is independent of Gallery; confirm whether London vs Gomel is intentional before “fixing” to Figma.
+5. Contacts visual cluster (**VQA-009–011**; **VQA-008 Accepted — London**) is independent of Gallery.
 
 ---
 
@@ -170,7 +170,7 @@ VQA-014–016; FQA-018–023 — polish, placeholders, dead CSS, long pin cost n
 |-------|----------------:|----------|
 | **Confirmed product defects** | ~20+ High/Medium from VQA+FQA with evidence | FQA-001, VQA-002, VQA-006, FQA-004, … |
 | **Potential risks** (code-evident, magnitude UNVERIFIED) | Several Medium | FQA-005 scrollbar px; FQA-010 null pivot; FQA-017 overlap |
-| **Intentional / product decision?** | 1+ | VQA-008 London vs Gomel |
+| **Intentional / product decision (closed)** | 1 | **VQA-008** — keep London, United Kingdom |
 | **Invalid / environment** | 3 Critical + tooling High | IQA-001–003 as site-breaking; IQA-005 DevTools |
 | **NOT TESTED** | Interaction full pass on `main`; 1440/1280 interaction; reduced-motion; Safari/Firefox | See specialist NOT TESTED sections |
 
@@ -182,7 +182,7 @@ VQA-014–016; FQA-018–023 — polish, placeholders, dead CSS, long pin cost n
 2. **VQA-002** — Hero composition drift @ 1440 / 1280 (`100vh`)  
 3. **FQA-004 / FQA-008** — Dead / misleading CTAs  
 4. **VQA-006** — Estate door headline vertical bias  
-5. **VQA-009 / VQA-010** (+ decide **VQA-008**) — Contacts legal/footer vs Figma  
+5. **VQA-009 / VQA-010** — Contacts legal/footer vs Figma (**VQA-008** closed: London)  
 6. **FQA-005 / FQA-006** — Unify Scale units + logo morph  
 7. **FQA-002 / FQA-003 / FQA-007** — Estate media / WebGL / chunk budget  
 8. **Re-run Interaction QA on `main`** at all three desktop sizes before interaction sign-off  

@@ -159,14 +159,15 @@ Large `Montérre` wordmark **1643×512 @ x=138** matches Figma `342:59`. Logo se
 - **File / selector:** `#estate` / `.estate`
 - **Viewports affected:** 1920 (scales with width)
 
-### VQA-008 — Contacts location copy ≠ Figma
+### VQA-008 — Contacts location copy ≠ Figma — ACCEPTED (London)
 - **Section / element:** Contacts — location line
-- **Description:** Figma specifies “Gomel, Belarus”; live site shows “London, United Kingdom”.
-- **Expected:** Gomel, Belarus (`374:59`)
+- **Description:** Figma still shows “Gomel, Belarus”; live site shows “London, United Kingdom”.
+- **Expected (product):** **London, United Kingdom** — confirmed by stakeholder 2026-11-03; do **not** revert to Gomel.
+- **Figma (stale):** Gomel, Belarus (`374:59`)
 - **Actual:** London, United Kingdom
-- **Discrepancy:** Content / geography mismatch (not a px delta)
-- **Severity:** High
-- **Evidence:** `evidence/visual/1920x1080/cmp-contacts.png`; Figma text `374:59`
+- **Discrepancy:** Figma text outdated vs product copy — **not a site defect**
+- **Severity:** ~~High~~ → **Accepted / Won’t fix (site)** — update Figma when convenient
+- **Evidence:** `evidence/visual/1920x1080/cmp-contacts.png`; product decision
 - **File / selector:** `#contacts` contact column
 - **Viewports affected:** 1920 / 1440 / 1280
 
@@ -297,10 +298,10 @@ Large `Montérre` wordmark **1643×512 @ x=138** matches Figma `342:59`. Logo se
 ## 8. Top issues for remediation priority
 
 1. **VQA-002** — Hero `100vh` breaks desktop scaling at 1440/1280  
-2. **VQA-008** — Contacts location copy vs Figma  
-3. **VQA-009 / VQA-010** — Legal bar size + privacy position  
-4. **VQA-006** — Estate SPACE/WITH/PURPOSE vertical shift  
-5. **VQA-001 / VQA-003** — Hero type + right-nav ~18–20px offsets at 1920  
+2. **VQA-009 / VQA-010** — Legal bar size + privacy position  
+3. **VQA-006** — Estate SPACE/WITH/PURPOSE vertical shift  
+4. **VQA-001 / VQA-003** — Hero type + right-nav ~18–20px offsets at 1920  
+5. ~~**VQA-008**~~ — London kept (Accepted); sync Figma later optional  
 
 ---
 
