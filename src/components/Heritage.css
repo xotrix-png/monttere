@@ -49,7 +49,8 @@
 .heritage__story {
   position: absolute;
   left: calc(935.145 * var(--u));
-  top: calc(856.461 * var(--u));
+  /* Swapped with since — right copy sits lower */
+  top: calc(1022.338 * var(--u));
   width: calc(849.234 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
@@ -71,7 +72,8 @@
 .heritage__since {
   position: absolute;
   left: calc(141 * var(--u));
-  top: calc(1022.338 * var(--u));
+  /* Swapped with story — left copy sits higher */
+  top: calc(856.461 * var(--u));
   width: calc(752.145 * var(--u));
   margin: 0;
   font-family: "Inter Tight", sans-serif;
