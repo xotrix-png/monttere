@@ -5,7 +5,7 @@ import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
 import "./PageLoader.css";
 
-const MIN_MS = 700;
+const MIN_MS = 280;
 const imageCache = new Map();
 
 function loadImage(src) {
@@ -100,8 +100,8 @@ export default function PageLoader({ onDone }) {
       if (cancelled) return;
       const cur = shownRef.current;
       const tgt = targetRef.current;
-      const next = cur + (tgt - cur) * 0.14;
-      const shown = tgt - next < 0.35 ? tgt : next;
+      const next = cur + (tgt - cur) * 0.28;
+      const shown = tgt - next < 0.6 ? tgt : next;
       shownRef.current = shown;
       setPct(Math.round(shown));
       if (shown < 100 || tgt < 100) {
