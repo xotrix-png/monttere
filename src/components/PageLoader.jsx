@@ -5,7 +5,7 @@ import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
 import "./PageLoader.css";
 
-const MIN_MS = 650;
+const MIN_MS = 700;
 const imageCache = new Map();
 
 function loadImage(src) {
@@ -13,7 +13,14 @@ function loadImage(src) {
   const job = new Promise((resolve) => {
     const img = new Image();
     img.decoding = "async";
-    img.onload = () => resolve(true);
+    img.onload = async () => {
+      try {
+        if (img.decode) await img.decode();
+      } catch {
+        /* ignore decode errors — still paint what we can */
+      }
+      resolve(true);
+    };
     img.onerror = () => resolve(false);
     img.src = src;
   });
@@ -21,9 +28,37 @@ function loadImage(src) {
   return job;
 }
 
+/** Wait until Hero DOM images are decoded & painted (not just bytes cached). */
+async function waitHeroPaint() {
+  const nodes = [
+    ...document.querySelectorAll(".hero__photo, .hero__photo-fg"),
+  ];
+  await Promise.all(
+    nodes.map(async (img) => {
+      if (!(img instanceof HTMLImageElement)) return;
+      if (!img.complete || img.naturalWidth === 0) {
+        await new Promise((resolve) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        });
+      }
+      try {
+        if (img.decode) await img.decode();
+      } catch {
+        /* ignore */
+      }
+    }),
+  );
+  // Two frames so the browser can composite before we fade the cover
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+}
+
 /**
  * Full-viewport boot cover (#181E1F + %) until Hero-critical assets
  * and fonts are ready — hides the piecemeal first paint.
+ *
+ * Scroll is blocked via listeners (not overflow:hidden) so removing
+ * the cover does not change layout width / make the hero jump.
  */
 export default function PageLoader({ onDone }) {
   const [pct, setPct] = useState(0);
@@ -41,6 +76,25 @@ export default function PageLoader({ onDone }) {
 
   useEffect(() => {
     let cancelled = false;
+
+    const blockScroll = (e) => {
+      e.preventDefault();
+    };
+    const blockKeys = (e) => {
+      const keys = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+      ];
+      if (keys.includes(e.key)) e.preventDefault();
+    };
+    window.addEventListener("wheel", blockScroll, { passive: false });
+    window.addEventListener("touchmove", blockScroll, { passive: false });
+    window.addEventListener("keydown", blockKeys);
 
     const tick = () => {
       if (cancelled) return;
@@ -63,7 +117,8 @@ export default function PageLoader({ onDone }) {
     const run = async () => {
       setTarget(4);
 
-      const fonts = document.fonts?.ready?.catch?.(() => null) ?? Promise.resolve();
+      const fonts =
+        document.fonts?.ready?.catch?.(() => null) ?? Promise.resolve();
       const hero = loadImage(heroPhoto);
       const crest = loadImage(logo);
       const mark = loadImage(equestrianMark);
@@ -88,6 +143,10 @@ export default function PageLoader({ onDone }) {
 
       await hero;
       if (cancelled) return;
+      setTarget(92);
+
+      await waitHeroPaint();
+      if (cancelled) return;
       setTarget(100);
 
       const elapsed = performance.now() - startedRef.current;
@@ -95,7 +154,6 @@ export default function PageLoader({ onDone }) {
       await new Promise((r) => setTimeout(r, wait));
       if (cancelled) return;
 
-      // Let the % ease to 100 before fade
       await new Promise((r) => {
         const finish = () => {
           if (shownRef.current >= 99.5) {
@@ -110,6 +168,12 @@ export default function PageLoader({ onDone }) {
       });
       if (cancelled) return;
 
+      // One more paint with cover still opaque at 100%
+      await new Promise((r) =>
+        requestAnimationFrame(() => requestAnimationFrame(r)),
+      );
+      if (cancelled) return;
+
       setLeaving(true);
     };
 
@@ -118,6 +182,9 @@ export default function PageLoader({ onDone }) {
     return () => {
       cancelled = true;
       cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("wheel", blockScroll);
+      window.removeEventListener("touchmove", blockScroll);
+      window.removeEventListener("keydown", blockKeys);
     };
   }, []);
 

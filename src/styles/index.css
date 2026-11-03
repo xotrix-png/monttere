@@ -17,6 +17,8 @@ body,
 html {
   background: #181e1f;
   scroll-behavior: auto;
+  /* Keep layout width stable when the scrollbar appears after boot */
+  scrollbar-gutter: stable;
 }
 
 body {

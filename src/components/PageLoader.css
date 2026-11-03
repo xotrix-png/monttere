@@ -9,7 +9,10 @@
   color: #f3f6f7;
   pointer-events: auto;
   opacity: 1;
-  transition: opacity 0.55s ease;
+  /* Slightly longer ease so the reveal doesn’t “pop” */
+  transition: opacity 0.7s ease;
+  /* Isolate from underlying paint while opaque */
+  transform: translateZ(0);
 }
 
 .page-loader--leave {
@@ -26,7 +29,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-html.is-booting,
-html.is-booting body {
-  overflow: hidden !important;
+/* Flag only — do NOT toggle overflow here (that caused a hero jump). */
+html.is-booting {
+  overscroll-behavior: none;
 }
