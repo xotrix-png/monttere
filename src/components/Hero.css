@@ -350,29 +350,65 @@
   height: auto;
 }
 
-/* ——— Phones / narrow tablets: same scene system, stacked wordmark ——— */
-@media (max-width: 768px) {
+/* Burger / drawer — desktop-hidden; activated only ≤1023 */
+.hero__menu-toggle,
+.hero__menu {
+  display: none;
+}
+
+/*
+  ——— Mobile composition (<1024) ———
+  Designed for a ~390×844 portrait screen, not a scaled 1920 artboard.
+
+  Structure (top → bottom):
+    chrome (burger + crest) → open sky / subjects →
+    intro (eyebrow + lead) → MONTÉRRE (behind mask) →
+    EQUESTRIAN (in front) → Est. → CTA
+
+  Photo+mask still share --sx/--sy/--s so the silhouette registers.
+  Typography is a new bottom stack, not Figma --gy offsets.
+*/
+@media (max-width: 1023px) {
   .hero {
-    min-height: 560px;
+    height: 100svh;
+    min-height: 100svh;
     --gutter: 20px;
-    /* frame the woman + horse's head */
-    --sx-want: max(
-      calc(-440 * var(--s)),
-      min(var(--sx-c), calc(100cqw - 1050 * var(--s)))
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --chrome-h: calc(52px + env(safe-area-inset-top, 0px));
+    --cta-h: 50px;
+    --cta-gap: calc(16px + var(--safe-b));
+
+    /*
+      Portrait crop: woman ~55% across so the LEFT third of the screen
+      stays open for “MON…” while she masks the center of MONTÉRRE.
+      Horse head remains on the right edge.
+    */
+    --sx-want: clamp(
+      calc(100cqw - var(--sw)),
+      calc(0.55 * 100cqw - 640 * var(--s)),
+      0px
     );
-    /* MONTÉRRE alone spans ~3.3em; EQUESTRIAN drops below it */
-    --t: min(
-      calc(287.142 * var(--s)),
-      calc((100cqw - 2 * var(--gutter)) / 3.26)
-    );
-    --gw: calc(3.26 * var(--t));
+
+    /* Title sized to the phone width — brand as the hero signal */
+    --t: calc((100cqw - 2 * var(--gutter)) / 3.18);
+    --gw: calc(100cqw - 2 * var(--gutter));
     --gx: var(--gutter);
-    --gy: calc(var(--sy) + 519.81 * var(--s));
+
+    /*
+      Wordmark origin = top of MONTÉRRE.
+      Cluster ≈ intro(~2.6rem) + 1em title + ~0.7em equestrian/script.
+      Sit the stack in the lower third with clear air above CTA.
+    */
+    /* Reserve: MONTÉRRE→Est. (1.58·t) + script line + air above CTA */
+    --gy: calc(
+      100cqh - var(--cta-h) - var(--cta-gap) - 1.58 * var(--t) - 48px
+    );
   }
 
   .hero__blur--nav {
-    height: 90px;
-    filter: blur(60px);
+    height: calc(100px + env(safe-area-inset-top, 0px));
+    filter: blur(40px);
+    opacity: 0.75;
   }
 
   .hero__blur--intro {
@@ -380,47 +416,269 @@
   }
 
   .hero__nav {
-    top: 16px;
-    left: var(--gutter);
-    width: calc(100cqw - 2 * var(--gutter));
-    --logo-h: 52px;
-    column-gap: 12px;
-    --nav-fs: 11px;
-  }
-
-  .hero__nav-link--stables,
-  .hero__nav-link--estate {
     display: none;
   }
 
-  .hero__nav-link--contact {
-    margin-left: 0;
+  /* ——— Burger ——— */
+  .hero__menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 70;
+    top: max(8px, env(safe-area-inset-top, 0px) + 2px);
+    left: var(--gutter);
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #f3f6f7;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
+  .hero__menu-toggle:focus-visible {
+    outline: 1px solid #f3f6f7;
+    outline-offset: 4px;
+  }
+
+  .hero__menu-toggle-bars,
+  .hero__menu-toggle-bars::before,
+  .hero__menu-toggle-bars::after {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: currentColor;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .hero__menu-toggle-bars {
+    position: relative;
+  }
+
+  .hero__menu-toggle-bars::before,
+  .hero__menu-toggle-bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+
+  .hero__menu-toggle-bars::before {
+    top: -7px;
+  }
+
+  .hero__menu-toggle-bars::after {
+    top: 7px;
+  }
+
+  .hero__menu-toggle.is-open .hero__menu-toggle-bars {
+    background: transparent;
+  }
+
+  .hero__menu-toggle.is-open .hero__menu-toggle-bars::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .hero__menu-toggle.is-open .hero__menu-toggle-bars::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  .hero__menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 55;
+    inset: 0;
+    padding: calc(88px + env(safe-area-inset-top, 0px)) var(--gutter)
+      calc(28px + var(--safe-b));
+    background: #071a29;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.35s ease,
+      visibility 0.35s ease;
+  }
+
+  .hero__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .hero__menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2.8vh, 22px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hero__menu-link {
+    font-family: "Voga", serif;
+    font-weight: 500;
+    font-size: clamp(34px, 10vw, 50px);
+    line-height: 1.02;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #f3f6f7;
+  }
+
+  .hero__menu-link:focus-visible {
+    outline: 1px solid #f3f6f7;
+    outline-offset: 4px;
+  }
+
+  .hero__menu-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 52px;
+    margin-top: 24px;
+    border-radius: 4px;
+    background: #f3f6f7;
+    color: #071a29;
+    text-decoration: none;
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero__menu-cta:focus-visible {
+    outline: 1px solid #f3f6f7;
+    outline-offset: 4px;
+  }
+
+  /* ——— Bottom brand stack (new mobile composition) ——— */
+  .hero__wordmark {
+    left: var(--gx);
+    top: var(--gy);
+    width: var(--gw);
+    height: 0;
+    font-size: var(--t);
+  }
+
+  /*
+    Intro sits just above MONTÉRRE. Wordmark height is 0, so
+    bottom:N anchors to the title origin; content grows upward.
+    Do not also translateY(-100%) — that doubles the offset.
+  */
   .hero__intro {
-    max-width: calc(100cqw - 2 * var(--gutter));
-    width: auto;
+    left: 0;
+    top: auto;
+    bottom: 12px;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
   }
 
+  .hero__eyebrow,
+  .hero__lead {
+    font-size: clamp(11px, 3.1vw, 13px);
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  .hero__eyebrow {
+    letter-spacing: 0.04em;
+  }
+
+  .hero__lead {
+    margin-top: 0.25em;
+    max-width: 26em;
+  }
+
+  .hero__title-monterre {
+    left: 0;
+    top: 0;
+    letter-spacing: -0.02em;
+  }
+
+  /* EQUESTRIAN under the right half, in front of the mask (em = --t) */
   .hero__title-equestrian {
     left: auto;
     right: 0;
-    top: 1.02em;
-    width: 1.9em;
-    height: 0.495em;
+    top: 0.98em;
+    width: 1.72em;
+    height: auto;
+    aspect-ratio: 653 / 170;
   }
 
+  /*
+    Script sets its own font-size — offsets must use var(--t),
+    otherwise em collapses against ~18px and lands on MONTÉRRE.
+  */
   .hero__script {
     left: auto;
     right: 0;
-    top: calc(1.6 * var(--t));
-    font-size: max(16px, calc(56 / 287.142 * var(--t)));
+    top: calc(1.58 * var(--t));
+    max-width: 12em;
+    font-size: clamp(17px, 4.6vw, 22px);
+    line-height: 1.15;
+    white-space: normal;
+    text-align: right;
+  }
+
+  /*
+    Mask follows the woman in the new crop: covers mid letters (TÉ…);
+    left “MON” stays open, right edge peeks beside the silhouette.
+  */
+  .hero__photo-fg {
+    -webkit-mask-size: calc(760 * var(--s)) calc(540 * var(--s));
+    mask-size: calc(760 * var(--s)) calc(540 * var(--s));
+    -webkit-mask-position: calc(560 * var(--s)) calc(320 * var(--s));
+    mask-position: calc(560 * var(--s)) calc(320 * var(--s));
   }
 
   .hero__cta {
-    bottom: 28px;
-    width: min(306px, calc(100% - 40px));
-    height: 50px;
-    font-size: 14px;
+    bottom: var(--cta-gap);
+    width: calc(100% - 2 * var(--gutter));
+    max-width: 340px;
+    height: var(--cta-h);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    gap: 10px;
+  }
+}
+
+/* Short phones: compress vertical rhythm so nothing clips */
+@media (max-width: 1023px) and (max-height: 700px) {
+  .hero {
+    --t: calc((100cqw - 2 * var(--gutter)) / 3.4);
+    --gy: calc(
+      100cqh - var(--cta-h) - var(--cta-gap) - 1.7 * var(--t) - 0.25rem
+    );
+  }
+
+  .hero__eyebrow,
+  .hero__lead {
+    font-size: 11px;
+  }
+
+  .hero__script {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .hero__menu,
+  .hero__menu-toggle-bars,
+  .hero__menu-toggle-bars::before,
+  .hero__menu-toggle-bars::after {
+    transition: none;
   }
 }

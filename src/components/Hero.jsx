@@ -1,18 +1,65 @@
+import { useEffect, useId, useState } from "react";
 import photo from "../assets/images/hero-photo.png";
 import heroMask from "../assets/images/hero-mask.svg";
 import equestrianMark from "../equestrian.svg";
-import { jumpHandler } from "../utils/jump.js";
+import { jumpHandler, jumpTo } from "../utils/jump.js";
 import "./Hero.css";
 
 /*
-  Fully fluid hero — no JS, no fixed artboard.
-  Geometry lives in CSS custom properties on .hero (see Hero.css):
-  the photo is a cover-fitted "scene" whose focal point keeps the woman and
-  horse framed; the masked foreground copy shares that exact geometry, and
-  the wordmark group is anchored to the same scene so MONTÉRRE always sits
-  behind the woman. Nav and CTA are laid out against the viewport.
+  Fully fluid hero — no fixed artboard.
+  Geometry lives in CSS custom properties on .hero (see Hero.css).
+  Desktop: horizontal nav. Mobile (≤1023): burger drawer; scene/mask intact.
 */
+
+const MOBILE_NAV = [
+  { label: "Membership", id: "membership" },
+  { label: "Collection", id: "collection" },
+  { label: "Philosophy", id: "philosophy" },
+  { label: "Estate", id: "estate" },
+  { label: "Stables", id: "stables" },
+  { label: "Essence", id: "essence" },
+  { label: "Craft", id: "craft" },
+  { label: "Contact", id: "contacts" },
+];
+
 export default function Hero() {
+  const menuId = useId();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  /* Close drawer if user rotates / resizes into desktop */
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = (e) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const go = (id) => (event) => {
+    event.preventDefault();
+    setMenuOpen(false);
+    /* Defer jump until body scroll unlock flushes */
+    requestAnimationFrame(() => jumpTo(id));
+  };
+
   return (
     <section className="hero" id="membership" aria-label="MONTÉRRE hero">
       <img
@@ -26,6 +73,45 @@ export default function Hero() {
       />
 
       <div className="hero__blur hero__blur--nav" aria-hidden="true" />
+
+      <button
+        type="button"
+        className={`hero__menu-toggle${menuOpen ? " is-open" : ""}`}
+        aria-expanded={menuOpen}
+        aria-controls={menuId}
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        onClick={() => setMenuOpen((v) => !v)}
+      >
+        <span className="hero__menu-toggle-bars" aria-hidden="true" />
+      </button>
+
+      <div
+        id={menuId}
+        className={`hero__menu${menuOpen ? " is-open" : ""}`}
+        aria-hidden={!menuOpen}
+      >
+        <nav className="hero__menu-nav" aria-label="Mobile primary">
+          {MOBILE_NAV.map((item) => (
+            <a
+              key={item.id}
+              className="hero__menu-link"
+              href={`#${item.id}`}
+              tabIndex={menuOpen ? 0 : -1}
+              onClick={go(item.id)}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a
+          className="hero__menu-cta"
+          href="#membership"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={go("membership")}
+        >
+          Request membership
+        </a>
+      </div>
 
       <nav className="hero__nav" aria-label="Primary">
         <div className="hero__nav-group hero__nav-group--left">

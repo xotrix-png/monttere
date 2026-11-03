@@ -74,12 +74,15 @@
   mask-mode: alpha;
 }
 
-@media (max-width: 720px) {
+/* Mobile crest — quieter presence; morph/dock JS unchanged */
+@media (max-width: 1023px) {
   .site-logo {
-    --logo-h: 44px;
+    z-index: 65;
+    top: max(8px, env(safe-area-inset-top, 0px) + 2px);
+    --logo-h: 42px;
   }
 
   .site-logo--away {
-    --logo-h: 34px;
+    --logo-h: 32px;
   }
 }
