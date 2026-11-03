@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MONTÉRRE — Private Equestrian Club</title>
-    <!-- Same face React uses — ready before first % paint -->
     <link
       rel="preload"
       href="/fonts/InstrumentSerif-Regular.ttf"
@@ -13,7 +12,6 @@
       crossorigin
     />
     <style>
-      /* Instant boot cover — Instrument Serif only, no Times flash */
       @font-face {
         font-family: "Instrument Serif";
         src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
@@ -26,6 +24,7 @@
         margin: 0;
         background: #181e1f;
       }
+      /* Same chrome React keeps driving — never swapped for a second overlay */
       #boot-loader {
         position: fixed;
         inset: 0;
@@ -35,8 +34,29 @@
         justify-content: center;
         background: #181e1f;
         color: #f3f6f7;
+        opacity: 1;
+        transition: opacity 0.35s ease;
+      }
+      #boot-loader.page-loader--leave {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #boot-loader .page-loader__stage {
+        position: relative;
+        width: clamp(180px, 24vw, 260px);
+        height: clamp(180px, 24vw, 260px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #boot-loader .page-loader__ring {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
       }
       #boot-loader-pct {
+        position: relative;
+        z-index: 1;
         font-family: "Instrument Serif", serif;
         font-weight: 400;
         font-style: normal;
@@ -44,36 +64,76 @@
         letter-spacing: 0.02em;
         font-variant-numeric: tabular-nums;
         line-height: 1;
+        /* Invisible until Instrument Serif is ready — no Times flash */
+        opacity: 0;
+      }
+      #boot-loader.is-ready #boot-loader-pct {
+        opacity: 1;
       }
     </style>
   </head>
   <body>
-    <div id="boot-loader" aria-live="polite" aria-busy="true">
-      <span id="boot-loader-pct">1%</span>
+    <div id="boot-loader" class="page-loader" aria-live="polite" aria-busy="true">
+      <div class="page-loader__stage">
+        <div class="page-loader__ring" id="boot-loader-ring" aria-hidden="true"></div>
+        <span class="page-loader__pct" id="boot-loader-pct">0%</span>
+      </div>
     </div>
     <script>
-      /* Continuous optimistic % — React PageLoader picks up from here */
       (function () {
         window.__bootStarted = performance.now();
-        window.__bootPct = 1;
+        window.__bootPct = 0;
+        var root = document.getElementById("boot-loader");
         var el = document.getElementById("boot-loader-pct");
-        if (!el) return;
-        var shown = 1;
+        if (!root || !el) return;
+
+        var shown = 0;
         var lastDigit = performance.now();
-        function frame(now) {
-          if (!document.getElementById("boot-loader")) return;
-          var elapsed = now - window.__bootStarted;
-          /* Soft climb toward ~18 while waiting for React — +1 only */
-          var target = Math.min(18, 1 + Math.floor(elapsed / 45));
-          if (shown < target && now - lastDigit >= 28) {
-            shown += 1;
-            lastDigit = now;
-            window.__bootPct = shown;
-            el.textContent = shown + "%";
+        var ready = false;
+        var takenOver = false;
+
+        window.__bootTakeOver = function () {
+          takenOver = true;
+        };
+
+        function paint(n) {
+          window.__bootPct = n;
+          el.textContent = n + "%";
+        }
+
+        function startTicks() {
+          function frame(now) {
+            if (takenOver || !document.getElementById("boot-loader")) return;
+            /* Soft climb while React boots — no hard stop at 18 */
+            var elapsed = now - window.__bootStarted;
+            var target = Math.min(24, Math.floor(elapsed / 40));
+            if (shown < target && now - lastDigit >= 30) {
+              shown += 1;
+              lastDigit = now;
+              paint(shown);
+            }
+            requestAnimationFrame(frame);
           }
           requestAnimationFrame(frame);
         }
-        requestAnimationFrame(frame);
+
+        function reveal() {
+          if (ready) return;
+          ready = true;
+          root.classList.add("is-ready");
+          paint(0);
+          startTicks();
+        }
+
+        if (document.fonts && document.fonts.load) {
+          document.fonts
+            .load('400 48px "Instrument Serif"')
+            .then(reveal, reveal);
+          /* Failsafe if fonts API hangs */
+          setTimeout(reveal, 400);
+        } else {
+          reveal();
+        }
       })();
     </script>
     <div id="root"></div>

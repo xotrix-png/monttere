@@ -1,99 +1,63 @@
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 100000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #181e1f;
-  color: #f3f6f7;
-  pointer-events: auto;
-  opacity: 1;
-  transition: opacity 0.35s ease;
-  transform: translateZ(0);
-}
+/* Overlay chrome lives on #boot-loader (see index.html).
+   This file styles the hoof ring React injects into that same node. */
 
-.page-loader--leave {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.page-loader__stage {
-  position: relative;
-  width: clamp(180px, 24vw, 260px);
-  height: clamp(180px, 24vw, 260px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.page-loader__ring {
-  position: absolute;
-  inset: 0;
-}
-
-/*
-  Trail of ~2–3 prints walks clockwise (matches ref).
-  Asset: toes point down, dewclaws up → after place, rotate(-90deg)
-  so toes follow the circle tangent.
-*/
 .page-loader__hoof {
   --count: 12;
-  --radius: clamp(68px, 9vw, 96px);
+  --radius: clamp(72px, 9.5vw, 100px);
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(28px, 3.4vw, 40px);
+  width: clamp(26px, 3.2vw, 36px);
   height: auto;
-  transform: rotate(calc(var(--i) * 360deg / var(--count)))
+  display: block;
+  /*
+    Center on the % first, then place on the ring.
+    Asset: tapered toes at BOTTOM (front), dewclaws (dots) at TOP (heel).
+    Wave advances clockwise (rising --i). Local -90deg aims toes into that
+    tangent so the animal walks forward, not heel-first.
+  */
+  transform: translate(-50%, -50%)
+    rotate(calc(var(--i) * 360deg / var(--count)))
     translateY(calc(-1 * var(--radius)))
     rotate(-90deg);
   transform-origin: center center;
   opacity: 0;
   animation: page-loader-walk 1.8s linear infinite;
-  animation-delay: calc(var(--i) * (1.8s / var(--count)) * -1);
+  /* i=0 peaks first → next peak at i=1… = clockwise */
+  animation-delay: calc((var(--count) - var(--i)) * (1.8s / var(--count)) * -1);
   pointer-events: none;
   user-select: none;
 }
 
-.page-loader__pct {
-  position: relative;
-  z-index: 1;
-  font-family: "Instrument Serif", "Times New Roman", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: clamp(32px, 4vw, 48px);
-  letter-spacing: 0.02em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-
-/* Short visible trail — stomp in, fade out, rest of ring empty */
 @keyframes page-loader-walk {
   0% {
     opacity: 0;
-    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(0.75);
   }
   2% {
     opacity: 1;
-    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(1.08);
   }
   8% {
     opacity: 0.85;
-    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(1);
   }
   16% {
     opacity: 0.35;
-    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(0.92);
@@ -101,7 +65,8 @@
   24%,
   100% {
     opacity: 0;
-    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(0.75);
@@ -121,11 +86,8 @@
   }
 }
 
-/* Lock page scroll during boot without window wheel preventDefault —
-   stale listeners were leaving mouse scroll dead after the cover faded. */
 html.is-booting,
 html.is-booting body {
   overflow: hidden;
   overscroll-behavior: none;
-  /* scrollbar-gutter: stable on html keeps width from jumping when unlocked */
 }

@@ -1,15 +1,14 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import heroPhoto from "../assets/images/hero-photo.png";
 import logo from "../assets/images/logo.png";
 import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
-import hoofMark from "../assets/images/hoof-stamp.png";
+import hoofMark from "../assets/images/hoof-print.svg";
 import "./PageLoader.css";
 
 const HOOF_COUNT = 12;
 const MIN_MS = 1700;
 const MAX_LOCK_MS = 3800;
-/** Wall-clock ms per +1% — progress keeps moving even after a long frame */
 const MS_PER_DIGIT = 30;
 const MS_PER_DIGIT_FINISH = 18;
 const imageCache = new Map();
@@ -73,7 +72,7 @@ function readBootPct() {
       if (m) fromDom = parseInt(m[1], 10) || 0;
     }
   }
-  return Math.max(1, fromWindow, fromDom);
+  return Math.max(0, fromWindow, fromDom);
 }
 
 function bootStartMs() {
@@ -88,46 +87,89 @@ function unlockBoot() {
 }
 
 /**
- * Boot cover: Instrument Serif % + hoof trail.
- * Same face as HTML #boot-loader; % only climbs, one digit at a time,
- * driven by wall-clock so it does not freeze during long frames.
+ * Drives the existing #boot-loader node (never remounts a second overlay).
+ * Same Instrument Serif % element from first paint → 100%, plus hoof trail.
  */
 export default function PageLoader({ onDone }) {
-  const initial = Math.round(readBootPct());
-  const [pct, setPct] = useState(initial);
-  const [leaving, setLeaving] = useState(false);
-  const [gone, setGone] = useState(false);
-  const targetRef = useRef(initial + 2);
-  const displayRef = useRef(initial);
+  const displayRef = useRef(0);
+  const targetRef = useRef(2);
   const rafRef = useRef(0);
   const startedRef = useRef(bootStartMs());
-  const digitOriginRef = useRef({ t: bootStartMs(), p: initial });
+  const digitOriginRef = useRef({ t: bootStartMs(), p: 0 });
   const doneRef = useRef(false);
   const finishTimerRef = useRef(0);
 
   useLayoutEffect(() => {
     document.documentElement.classList.add("is-booting");
-    document.getElementById("boot-loader")?.remove();
+    window.__bootTakeOver?.();
+
+    const root = document.getElementById("boot-loader");
+    const ring = document.getElementById("boot-loader-ring");
+    const pctEl = document.getElementById("boot-loader-pct");
+    if (!root || !ring || !pctEl) return;
+
+    root.classList.add("is-ready");
+
+    const initial = readBootPct();
+    displayRef.current = initial;
+    targetRef.current = initial + 2;
+    // Continue from the live digit — do not backfill a catch-up burst
+    digitOriginRef.current = { t: performance.now(), p: initial };
+    pctEl.textContent = `${initial}%`;
+
+    // Inject hoof trail once into the same centered stage
+    if (!ring.dataset.hooves) {
+      ring.dataset.hooves = "1";
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < HOOF_COUNT; i += 1) {
+        const img = document.createElement("img");
+        img.className = "page-loader__hoof";
+        img.src = hoofMark;
+        img.alt = "";
+        img.width = 40;
+        img.height = 63;
+        img.draggable = false;
+        img.style.setProperty("--i", String(i));
+        frag.appendChild(img);
+      }
+      ring.appendChild(frag);
+    }
   }, []);
 
   useEffect(() => {
     let alive = true;
+    const root = document.getElementById("boot-loader");
+    const pctEl = document.getElementById("boot-loader-pct");
+    if (!root || !pctEl) return undefined;
+
+    const setPct = (n) => {
+      window.__bootPct = n;
+      pctEl.textContent = `${n}%`;
+      root.setAttribute("aria-label", `Loading ${n} percent`);
+    };
 
     const finishLeave = () => {
       if (doneRef.current) return;
       doneRef.current = true;
       unlockBoot();
-      setGone(true);
+      root.remove();
       onDone?.();
     };
 
     const beginLeave = () => {
       if (doneRef.current) return;
       unlockBoot();
-      setLeaving(true);
+      root.classList.add("page-loader--leave");
+      root.setAttribute("aria-busy", "false");
       window.clearTimeout(finishTimerRef.current);
       finishTimerRef.current = window.setTimeout(finishLeave, 450);
     };
+
+    const onTransitionEnd = (e) => {
+      if (e.target !== root || e.propertyName !== "opacity") return;
+      finishLeave();
+    };
+    root.addEventListener("transitionend", onTransitionEnd);
 
     const setTarget = (value) => {
       targetRef.current = Math.min(
@@ -150,14 +192,12 @@ export default function PageLoader({ onDone }) {
       const tgt = Math.min(100, Math.round(targetRef.current));
       const origin = digitOriginRef.current;
       const ms = tgt >= 100 ? MS_PER_DIGIT_FINISH : MS_PER_DIGIT;
-      // Ideal digit from wall-clock — survives long frames without a freeze
       const ideal = Math.min(
         tgt,
         origin.p + Math.floor((now - origin.t) / ms),
       );
       const cur = displayRef.current;
       if (ideal > cur) {
-        // Advance at most one integer per frame (no multi-digit leaps)
         const next = cur + 1;
         displayRef.current = next;
         setPct(next);
@@ -168,7 +208,7 @@ export default function PageLoader({ onDone }) {
     rafRef.current = requestAnimationFrame(tick);
 
     const run = async () => {
-      document.fonts?.load?.('400 42px "Instrument Serif"').catch(() => {});
+      document.fonts?.load?.('400 48px "Instrument Serif"').catch(() => {});
       setTarget(displayRef.current + 2);
 
       const hero = loadImage(heroPhoto);
@@ -229,7 +269,6 @@ export default function PageLoader({ onDone }) {
 
     run();
 
-    // Failsafe: force target to 100, let digits finish — never snap the counter
     const maxLockTimer = window.setTimeout(() => {
       if (!alive || doneRef.current) return;
       setTarget(100);
@@ -249,48 +288,10 @@ export default function PageLoader({ onDone }) {
       cancelAnimationFrame(rafRef.current);
       window.clearTimeout(maxLockTimer);
       window.clearTimeout(finishTimerRef.current);
+      root.removeEventListener("transitionend", onTransitionEnd);
       unlockBoot();
     };
   }, [onDone]);
 
-  const handleTransitionEnd = (e) => {
-    if (e.target !== e.currentTarget) return;
-    if (e.propertyName !== "opacity" || !leaving) return;
-    unlockBoot();
-    if (doneRef.current) return;
-    doneRef.current = true;
-    setGone(true);
-    onDone?.();
-  };
-
-  if (gone) return null;
-
-  return (
-    <div
-      className={`page-loader${leaving ? " page-loader--leave" : ""}`}
-      role="status"
-      aria-live="polite"
-      aria-busy={!leaving}
-      aria-label={`Loading ${pct} percent`}
-      onTransitionEnd={handleTransitionEnd}
-    >
-      <div className="page-loader__stage">
-        <div className="page-loader__ring" aria-hidden="true">
-          {Array.from({ length: HOOF_COUNT }, (_, i) => (
-            <img
-              key={i}
-              className="page-loader__hoof"
-              src={hoofMark}
-              alt=""
-              style={{ "--i": i }}
-              width={40}
-              height={48}
-              draggable={false}
-            />
-          ))}
-        </div>
-        <span className="page-loader__pct">{pct}%</span>
-      </div>
-    </div>
-  );
+  return null;
 }
