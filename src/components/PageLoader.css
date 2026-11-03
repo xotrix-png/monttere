@@ -20,36 +20,40 @@
 
 .page-loader__stage {
   position: relative;
-  width: clamp(140px, 18vw, 200px);
-  height: clamp(140px, 18vw, 200px);
+  width: clamp(160px, 20vw, 220px);
+  height: clamp(160px, 20vw, 220px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Whole track walks clockwise around the % */
 .page-loader__ring {
   position: absolute;
   inset: 0;
-  animation: page-loader-spin 2.8s linear infinite;
+  animation: page-loader-spin 3.2s linear infinite;
 }
 
 .page-loader__hoof {
-  --count: 6;
+  --count: 8;
+  --radius: clamp(58px, 7.2vw, 82px);
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(16px, 2vw, 22px);
+  width: clamp(20px, 2.4vw, 28px);
   height: auto;
-  margin: 0;
+  /* Place on circle; toes point along clockwise walk */
   transform: rotate(calc(var(--i) * 360deg / var(--count)))
-    translateY(calc(-1 * clamp(52px, 6.5vw, 72px)))
-    rotate(calc(var(--i) * 360deg / var(--count) + 12deg));
+    translateY(calc(-1 * var(--radius)))
+    rotate(90deg);
   transform-origin: center center;
-  opacity: 0.22;
-  animation: page-loader-hoof 1.4s ease-in-out infinite;
-  animation-delay: calc(var(--i) * -0.23s);
+  opacity: 0.15;
+  animation: page-loader-step 1.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.2s);
   pointer-events: none;
   user-select: none;
+  /* Black print on transparent — invert to light prints on #181E1F */
+  filter: invert(1);
 }
 
 .page-loader__pct {
@@ -70,14 +74,20 @@
   }
 }
 
-@keyframes page-loader-hoof {
+/* Gait pulse — prints light up in sequence like footsteps */
+@keyframes page-loader-step {
   0%,
   100% {
-    opacity: 0.18;
+    opacity: 0.12;
+    scale: 0.92;
   }
-  45%,
+  40% {
+    opacity: 1;
+    scale: 1;
+  }
   55% {
-    opacity: 0.95;
+    opacity: 0.55;
+    scale: 0.98;
   }
 }
 
@@ -88,7 +98,8 @@
 
   .page-loader__hoof {
     animation: none;
-    opacity: 0.55;
+    opacity: 0.65;
+    scale: 1;
   }
 }
 

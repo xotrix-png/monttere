@@ -3,10 +3,10 @@ import heroPhoto from "../assets/images/hero-photo.png";
 import logo from "../assets/images/logo.png";
 import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
-import hoofMark from "../assets/images/hoof.svg";
+import hoofMark from "../assets/images/hoof-single.png";
 import "./PageLoader.css";
 
-const HOOF_COUNT = 6;
+const HOOF_COUNT = 8;
 
 const MIN_MS = 280;
 const imageCache = new Map();
@@ -226,8 +226,8 @@ export default function PageLoader({ onDone }) {
               src={hoofMark}
               alt=""
               style={{ "--i": i }}
-              width={22}
-              height={26}
+              width={26}
+              height={32}
               draggable={false}
             />
           ))}
