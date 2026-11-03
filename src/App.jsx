@@ -7,20 +7,24 @@ import Passage from "./components/Passage.jsx";
 import Heritage from "./components/Heritage.jsx";
 import Contacts from "./components/Contacts.jsx";
 import SiteLogo from "./components/SiteLogo.jsx";
+import PageLoader from "./components/PageLoader.jsx";
 
 export default function App() {
   return (
-    <main id="top">
-      <SiteLogo />
-      <Hero />
-      {/* Collection / HORSE is the first panel of the horizontal gallery */}
-      <Gallery />
-      <Philosophy />
-      <Estate />
-      <Quiet />
-      <Passage />
-      <Heritage />
-      <Contacts />
-    </main>
+    <>
+      <PageLoader />
+      <main id="top">
+        <SiteLogo />
+        <Hero />
+        {/* Collection / HORSE is the first panel of the horizontal gallery */}
+        <Gallery />
+        <Philosophy />
+        <Estate />
+        <Quiet />
+        <Passage />
+        <Heritage />
+        <Contacts />
+      </main>
+    </>
   );
 }

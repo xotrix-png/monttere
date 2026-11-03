@@ -1,0 +1,32 @@
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #181e1f;
+  color: #f3f6f7;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.55s ease;
+}
+
+.page-loader--leave {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader__pct {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.1vw, 18px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+html.is-booting,
+html.is-booting body {
+  overflow: hidden !important;
+}
