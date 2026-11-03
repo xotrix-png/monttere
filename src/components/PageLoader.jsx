@@ -6,7 +6,7 @@ import heroMask from "../assets/images/hero-mask.svg";
 import hoofMark from "../assets/images/hoof-stamp.png";
 import "./PageLoader.css";
 
-const HOOF_COUNT = 10;
+const HOOF_COUNT = 12;
 const MIN_MS = 220;
 const imageCache = new Map();
 
@@ -222,8 +222,8 @@ export default function PageLoader({ onDone }) {
               src={hoofMark}
               alt=""
               style={{ "--i": i }}
-              width={32}
-              height={37}
+              width={40}
+              height={48}
               draggable={false}
             />
           ))}
