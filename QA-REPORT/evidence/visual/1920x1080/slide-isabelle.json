@@ -1,0 +1,93 @@
+{
+  "scrollY": 18400,
+  "slideClass": "gallery__slide gallery__slide--horse gallery__slide--isabelle",
+  "name": {
+    "text": "ISABELLE",
+    "x": 141,
+    "y": 279.5,
+    "w": 443,
+    "h": 164,
+    "fontSize": "160px",
+    "fontWeight": "500",
+    "fontFamily": "Voga, serif"
+  },
+  "meta": {
+    "text": "LUSITANO",
+    "x": 141,
+    "y": 489.5,
+    "w": 109,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "color": {
+    "text": "white",
+    "x": 141,
+    "y": 528.5,
+    "w": 71,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "tag": {
+    "text": "Bold in spirit,",
+    "x": 141,
+    "y": 647.5,
+    "w": 238,
+    "h": 39,
+    "fontSize": "32px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "cta": {
+    "x": 162,
+    "y": 846,
+    "w": 114,
+    "h": 20,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "ctaBox": {
+    "x": 141,
+    "y": 826.5,
+    "w": 188.7,
+    "h": 59.1,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif",
+    "bg": "rgb(243, 246, 247)"
+  },
+  "content": {
+    "x": 141,
+    "y": 194.5,
+    "w": 443,
+    "h": 691.1,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "photo": {
+    "x": 0,
+    "y": 0,
+    "w": 1920,
+    "h": 1080,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "pagerItems": [
+    {
+      "text": "06",
+      "x": 193.3,
+      "y": 194.5,
+      "w": 37,
+      "h": 39,
+      "fontSize": "32px",
+      "fontWeight": "400",
+      "fontFamily": "\"Inter Tight\", sans-serif"
+    }
+  ]
+}

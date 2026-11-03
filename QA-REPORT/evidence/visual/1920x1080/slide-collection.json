@@ -1,0 +1,41 @@
+{
+  "scrollY": 1200,
+  "slideClass": "gallery__slide gallery__slide--collection",
+  "name": {
+    "text": "Scroll",
+    "x": 1727.1,
+    "y": 949,
+    "w": 57,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "meta": null,
+  "color": null,
+  "tag": null,
+  "cta": null,
+  "ctaBox": null,
+  "content": null,
+  "photo": {
+    "x": -341.8,
+    "y": 0,
+    "w": 2586,
+    "h": 1159,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "pagerItems": [
+    {
+      "text": "02",
+      "x": 1693.2,
+      "y": 100,
+      "w": 23,
+      "h": 24,
+      "fontSize": "20px",
+      "fontWeight": "400",
+      "fontFamily": "\"Inter Tight\", sans-serif"
+    }
+  ]
+}

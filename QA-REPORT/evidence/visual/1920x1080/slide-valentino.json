@@ -1,0 +1,93 @@
+{
+  "scrollY": 10000,
+  "slideClass": "gallery__slide gallery__slide--horse gallery__slide--valentino",
+  "name": {
+    "text": "VALENTINO",
+    "x": 141,
+    "y": 299,
+    "w": 522,
+    "h": 164,
+    "fontSize": "160px",
+    "fontWeight": "500",
+    "fontFamily": "Voga, serif"
+  },
+  "meta": {
+    "text": "HANOVERIAN",
+    "x": 141,
+    "y": 509,
+    "w": 144,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "color": {
+    "text": "GREY",
+    "x": 141,
+    "y": 548,
+    "w": 59,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "tag": {
+    "text": "Power, balance, presence",
+    "x": 141,
+    "y": 667,
+    "w": 351,
+    "h": 39,
+    "fontSize": "32px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "cta": {
+    "x": 178.9,
+    "y": 826.5,
+    "w": 114,
+    "h": 20,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "ctaBox": {
+    "x": 141,
+    "y": 807,
+    "w": 255.3,
+    "h": 59.1,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif",
+    "bg": "rgb(243, 246, 247)"
+  },
+  "content": {
+    "x": 141,
+    "y": 214,
+    "w": 522,
+    "h": 652.1,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "photo": {
+    "x": 0,
+    "y": 0,
+    "w": 1920,
+    "h": 1080,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "pagerItems": [
+    {
+      "text": "03",
+      "x": 193.3,
+      "y": 214,
+      "w": 38,
+      "h": 39,
+      "fontSize": "32px",
+      "fontWeight": "400",
+      "fontFamily": "\"Inter Tight\", sans-serif"
+    }
+  ]
+}
