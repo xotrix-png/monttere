@@ -1,9 +1,10 @@
 @font-face {
   font-family: "Instrument Serif";
-  src: url("../assets/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+  src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  /* block: no Times flash on the boot %; preload in index.html */
+  font-display: block;
 }
 
 @font-face {

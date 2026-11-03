@@ -4,8 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MONTÉRRE — Private Equestrian Club</title>
+    <!-- Same face React uses — ready before first % paint -->
+    <link
+      rel="preload"
+      href="/fonts/InstrumentSerif-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
     <style>
-      /* Instant boot cover — paints before JS/CSS modules arrive */
+      /* Instant boot cover — Instrument Serif only, no Times flash */
+      @font-face {
+        font-family: "Instrument Serif";
+        src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+        font-display: block;
+      }
       html,
       body {
         margin: 0;
@@ -20,9 +35,15 @@
         justify-content: center;
         background: #181e1f;
         color: #f3f6f7;
-        font-family: "Times New Roman", Times, serif;
-        font-size: clamp(28px, 3.6vw, 42px);
-        letter-spacing: 0.04em;
+      }
+      #boot-loader-pct {
+        font-family: "Instrument Serif", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: clamp(32px, 4vw, 48px);
+        letter-spacing: 0.02em;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
       }
     </style>
   </head>
@@ -31,20 +52,28 @@
       <span id="boot-loader-pct">1%</span>
     </div>
     <script>
-      /* Optimistic % before React hydrates — avoids a long 0% stare */
+      /* Continuous optimistic % — React PageLoader picks up from here */
       (function () {
+        window.__bootStarted = performance.now();
+        window.__bootPct = 1;
         var el = document.getElementById("boot-loader-pct");
         if (!el) return;
-        var n = 1;
-        var id = setInterval(function () {
-          if (!document.getElementById("boot-loader")) {
-            clearInterval(id);
-            return;
+        var shown = 1;
+        var lastDigit = performance.now();
+        function frame(now) {
+          if (!document.getElementById("boot-loader")) return;
+          var elapsed = now - window.__bootStarted;
+          /* Soft climb toward ~18 while waiting for React — +1 only */
+          var target = Math.min(18, 1 + Math.floor(elapsed / 45));
+          if (shown < target && now - lastDigit >= 28) {
+            shown += 1;
+            lastDigit = now;
+            window.__bootPct = shown;
+            el.textContent = shown + "%";
           }
-          n = Math.min(18, n + 1);
-          el.textContent = n + "%";
-          if (n >= 18) clearInterval(id);
-        }, 40);
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
       })();
     </script>
     <div id="root"></div>

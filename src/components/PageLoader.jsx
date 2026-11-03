@@ -7,9 +7,11 @@ import hoofMark from "../assets/images/hoof-stamp.png";
 import "./PageLoader.css";
 
 const HOOF_COUNT = 12;
-const MIN_MS = 220;
-/** Hard cap — never leave the boot cover stuck if paint/load stalls */
-const MAX_LOCK_MS = 4000;
+const MIN_MS = 1700;
+const MAX_LOCK_MS = 3800;
+/** Wall-clock ms per +1% — progress keeps moving even after a long frame */
+const MS_PER_DIGIT = 30;
+const MS_PER_DIGIT_FINISH = 18;
 const imageCache = new Map();
 
 function loadImage(src) {
@@ -32,29 +34,53 @@ function loadImage(src) {
   return job;
 }
 
-async function waitHeroPaint() {
-  const nodes = [
-    ...document.querySelectorAll(".hero__photo, .hero__photo-fg"),
-  ];
-  await Promise.all(
-    nodes.map(async (img) => {
-      if (!(img instanceof HTMLImageElement)) return;
-      if (!img.complete || img.naturalWidth === 0) {
-        await new Promise((resolve) => {
-          img.addEventListener("load", resolve, { once: true });
-          img.addEventListener("error", resolve, { once: true });
-        });
-      }
-      try {
-        if (img.decode) await img.decode();
-      } catch {
-        /* ignore */
-      }
-    }),
-  );
-  await new Promise((r) =>
-    requestAnimationFrame(() => requestAnimationFrame(r)),
-  );
+async function waitHeroPaint(timeoutMs = 600) {
+  const work = (async () => {
+    const nodes = [
+      ...document.querySelectorAll(".hero__photo, .hero__photo-fg"),
+    ];
+    await Promise.all(
+      nodes.map(async (img) => {
+        if (!(img instanceof HTMLImageElement)) return;
+        if (!img.complete || img.naturalWidth === 0) {
+          await new Promise((resolve) => {
+            img.addEventListener("load", resolve, { once: true });
+            img.addEventListener("error", resolve, { once: true });
+          });
+        }
+        try {
+          if (img.decode) await img.decode();
+        } catch {
+          /* ignore */
+        }
+      }),
+    );
+    await new Promise((r) =>
+      requestAnimationFrame(() => requestAnimationFrame(r)),
+    );
+  })();
+  await Promise.race([work, new Promise((r) => setTimeout(r, timeoutMs))]);
+}
+
+function readBootPct() {
+  let fromWindow = 0;
+  let fromDom = 0;
+  if (typeof window !== "undefined") {
+    fromWindow = Number(window.__bootPct) || 0;
+    const el = document.getElementById("boot-loader-pct");
+    if (el) {
+      const m = el.textContent?.match(/(\d+)/);
+      if (m) fromDom = parseInt(m[1], 10) || 0;
+    }
+  }
+  return Math.max(1, fromWindow, fromDom);
+}
+
+function bootStartMs() {
+  if (typeof window !== "undefined" && typeof window.__bootStarted === "number") {
+    return window.__bootStarted;
+  }
+  return performance.now();
 }
 
 function unlockBoot() {
@@ -62,19 +88,22 @@ function unlockBoot() {
 }
 
 /**
- * Boot cover: Instrument Serif % + hoof trail around the ring.
- * Scroll is locked via html.is-booting { overflow: hidden } — never via
- * window wheel preventDefault (those listeners were leaving mouse scroll dead).
+ * Boot cover: Instrument Serif % + hoof trail.
+ * Same face as HTML #boot-loader; % only climbs, one digit at a time,
+ * driven by wall-clock so it does not freeze during long frames.
  */
 export default function PageLoader({ onDone }) {
-  const [pct, setPct] = useState(3);
+  const initial = Math.round(readBootPct());
+  const [pct, setPct] = useState(initial);
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
-  const targetRef = useRef(8);
-  const shownRef = useRef(3);
+  const targetRef = useRef(initial + 2);
+  const displayRef = useRef(initial);
   const rafRef = useRef(0);
-  const startedRef = useRef(performance.now());
+  const startedRef = useRef(bootStartMs());
+  const digitOriginRef = useRef({ t: bootStartMs(), p: initial });
   const doneRef = useRef(false);
+  const finishTimerRef = useRef(0);
 
   useLayoutEffect(() => {
     document.documentElement.classList.add("is-booting");
@@ -82,10 +111,10 @@ export default function PageLoader({ onDone }) {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
+    let alive = true;
 
     const finishLeave = () => {
-      if (doneRef.current || cancelled) return;
+      if (doneRef.current) return;
       doneRef.current = true;
       unlockBoot();
       setGone(true);
@@ -93,40 +122,54 @@ export default function PageLoader({ onDone }) {
     };
 
     const beginLeave = () => {
-      if (cancelled || doneRef.current) return;
-      // Unlock scroll as soon as the fade starts (overlay is pointer-events:none)
+      if (doneRef.current) return;
       unlockBoot();
       setLeaving(true);
-      window.setTimeout(finishLeave, 500);
+      window.clearTimeout(finishTimerRef.current);
+      finishTimerRef.current = window.setTimeout(finishLeave, 450);
     };
 
     const setTarget = (value) => {
-      targetRef.current = Math.min(100, Math.max(targetRef.current, value));
+      targetRef.current = Math.min(
+        100,
+        Math.max(targetRef.current, displayRef.current, value),
+      );
     };
 
-    const tick = () => {
-      if (cancelled) return;
-      const elapsed = performance.now() - startedRef.current;
-      const soft = Math.min(72, 8 + (elapsed / 850) * 64);
+    const tick = (now) => {
+      if (!alive) return;
+
+      const elapsed = now - startedRef.current;
+      const ease = 1 + 80 * (1 - Math.exp(-elapsed / 1200));
+      const crawl = Math.min(96, 3 + elapsed * 0.03);
+      const soft = Math.min(96, Math.max(ease, crawl));
       if (targetRef.current < 100) {
         targetRef.current = Math.max(targetRef.current, soft);
       }
 
-      const cur = shownRef.current;
-      const tgt = targetRef.current;
-      const next = cur + (tgt - cur) * 0.38;
-      const shown = tgt - next < 0.5 ? tgt : next;
-      shownRef.current = shown;
-      setPct(Math.round(shown));
-      if (shown < 100 || tgt < 100) {
-        rafRef.current = requestAnimationFrame(tick);
+      const tgt = Math.min(100, Math.round(targetRef.current));
+      const origin = digitOriginRef.current;
+      const ms = tgt >= 100 ? MS_PER_DIGIT_FINISH : MS_PER_DIGIT;
+      // Ideal digit from wall-clock — survives long frames without a freeze
+      const ideal = Math.min(
+        tgt,
+        origin.p + Math.floor((now - origin.t) / ms),
+      );
+      const cur = displayRef.current;
+      if (ideal > cur) {
+        // Advance at most one integer per frame (no multi-digit leaps)
+        const next = cur + 1;
+        displayRef.current = next;
+        setPct(next);
       }
+
+      rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
 
     const run = async () => {
-      setTarget(12);
       document.fonts?.load?.('400 42px "Instrument Serif"').catch(() => {});
+      setTarget(displayRef.current + 2);
 
       const hero = loadImage(heroPhoto);
       const crest = loadImage(logo);
@@ -135,70 +178,77 @@ export default function PageLoader({ onDone }) {
       const hoof = loadImage(hoofMark);
 
       crest.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 30));
-      });
-      mark.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 38));
-      });
-      mask.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 44));
+        if (alive) setTarget(34);
       });
       hoof.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 28));
+        if (alive) setTarget(42);
+      });
+      mark.then(() => {
+        if (alive) setTarget(50);
+      });
+      mask.then(() => {
+        if (alive) setTarget(58);
       });
 
       await Promise.all([crest, mark, mask, hoof]);
-      if (cancelled) return;
-      setTarget(58);
+      if (!alive) return;
+      setTarget(68);
 
       await hero;
-      if (cancelled) return;
-      setTarget(92);
+      if (!alive) return;
+      setTarget(90);
 
       await waitHeroPaint();
-      if (cancelled) return;
+      if (!alive) return;
       setTarget(100);
 
       const elapsed = performance.now() - startedRef.current;
       await new Promise((r) => setTimeout(r, Math.max(0, MIN_MS - elapsed)));
-      if (cancelled) return;
+      if (!alive) return;
 
+      setTarget(100);
       await new Promise((r) => {
-        const finish = () => {
-          if (shownRef.current >= 99.5) {
-            shownRef.current = 100;
-            setPct(100);
+        const wait = () => {
+          if (!alive || displayRef.current >= 100) {
             r();
             return;
           }
-          requestAnimationFrame(finish);
+          requestAnimationFrame(wait);
         };
-        finish();
+        wait();
       });
-      if (cancelled) return;
+      if (!alive) return;
 
       await new Promise((r) =>
         requestAnimationFrame(() => requestAnimationFrame(r)),
       );
-      if (cancelled) return;
+      if (!alive) return;
 
       beginLeave();
     };
 
     run();
 
+    // Failsafe: force target to 100, let digits finish — never snap the counter
     const maxLockTimer = window.setTimeout(() => {
-      if (cancelled) return;
+      if (!alive || doneRef.current) return;
       setTarget(100);
-      shownRef.current = 100;
-      setPct(100);
-      beginLeave();
+      const check = () => {
+        if (doneRef.current) return;
+        if (displayRef.current >= 100) {
+          beginLeave();
+          return;
+        }
+        requestAnimationFrame(check);
+      };
+      check();
     }, MAX_LOCK_MS);
 
     return () => {
-      cancelled = true;
+      alive = false;
       cancelAnimationFrame(rafRef.current);
       window.clearTimeout(maxLockTimer);
+      window.clearTimeout(finishTimerRef.current);
       unlockBoot();
     };
   }, [onDone]);
