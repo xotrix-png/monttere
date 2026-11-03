@@ -1,0 +1,93 @@
+{
+  "scrollY": 12800,
+  "slideClass": "gallery__slide gallery__slide--horse gallery__slide--adrian",
+  "name": {
+    "text": "ADRIAN",
+    "x": 141,
+    "y": 279.5,
+    "w": 361,
+    "h": 164,
+    "fontSize": "160px",
+    "fontWeight": "500",
+    "fontFamily": "Voga, serif"
+  },
+  "meta": {
+    "text": "HOLSTEINER",
+    "x": 141,
+    "y": 489.5,
+    "w": 136,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "color": {
+    "text": "dark brown",
+    "x": 141,
+    "y": 528.5,
+    "w": 149,
+    "h": 29,
+    "fontSize": "24px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "tag": {
+    "text": "Power, discipline,",
+    "x": 141,
+    "y": 647.5,
+    "w": 298,
+    "h": 39,
+    "fontSize": "32px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "cta": {
+    "x": 178.9,
+    "y": 846,
+    "w": 114,
+    "h": 20,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "ctaBox": {
+    "x": 141,
+    "y": 826.5,
+    "w": 255.3,
+    "h": 59.1,
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif",
+    "bg": "rgb(243, 246, 247)"
+  },
+  "content": {
+    "x": 141,
+    "y": 194.5,
+    "w": 463,
+    "h": 691.1,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "photo": {
+    "x": 0,
+    "y": 0,
+    "w": 1920,
+    "h": 1080,
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "fontFamily": "\"Inter Tight\", sans-serif"
+  },
+  "pagerItems": [
+    {
+      "text": "04",
+      "x": 193.3,
+      "y": 194.5,
+      "w": 38,
+      "h": 39,
+      "fontSize": "32px",
+      "fontWeight": "400",
+      "fontFamily": "\"Inter Tight\", sans-serif"
+    }
+  ]
+}

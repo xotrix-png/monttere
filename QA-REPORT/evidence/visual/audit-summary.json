@@ -1,0 +1,296 @@
+[
+  {
+    "vp": "1920x1080",
+    "scrollHeight": 37264,
+    "children": [
+      {
+        "i": 0,
+        "tag": "A",
+        "id": null,
+        "className": "site-logo",
+        "y": 24,
+        "h": 121,
+        "w": 89,
+        "x": 915
+      },
+      {
+        "i": 1,
+        "tag": "SECTION",
+        "id": "membership",
+        "className": "hero",
+        "y": 0,
+        "h": 1080,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 2,
+        "tag": "DIV",
+        "id": null,
+        "className": "pin-spacer",
+        "y": 1080,
+        "h": 20910,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 3,
+        "tag": "SECTION",
+        "id": "philosophy",
+        "className": "philosophy",
+        "y": 21805,
+        "h": 1555,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 4,
+        "tag": "SECTION",
+        "id": "estate",
+        "className": "estate",
+        "y": 23360,
+        "h": 5152,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 5,
+        "tag": "SECTION",
+        "id": "essence",
+        "className": "quiet",
+        "y": 28512,
+        "h": 2332,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 6,
+        "tag": "SECTION",
+        "id": "craft",
+        "className": "passage",
+        "y": 30844,
+        "h": 2611,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 7,
+        "tag": "SECTION",
+        "id": "heritage",
+        "className": "heritage",
+        "y": 33455,
+        "h": 2294,
+        "w": 1920,
+        "x": 0
+      },
+      {
+        "i": 8,
+        "tag": "SECTION",
+        "id": "contacts",
+        "className": "contacts",
+        "y": 35749,
+        "h": 1514,
+        "w": 1920,
+        "x": 0
+      }
+    ],
+    "textCount": 48,
+    "shots": 34
+  },
+  {
+    "vp": "1440x900",
+    "scrollHeight": 29765,
+    "children": [
+      {
+        "i": 0,
+        "tag": "A",
+        "id": null,
+        "className": "site-logo",
+        "y": 18,
+        "h": 91,
+        "w": 67,
+        "x": 687
+      },
+      {
+        "i": 1,
+        "tag": "SECTION",
+        "id": "membership",
+        "className": "hero",
+        "y": 0,
+        "h": 900,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 2,
+        "tag": "DIV",
+        "id": null,
+        "className": "pin-spacer",
+        "y": 900,
+        "h": 17416,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 3,
+        "tag": "SECTION",
+        "id": "philosophy",
+        "className": "philosophy",
+        "y": 18171,
+        "h": 1166,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 4,
+        "tag": "SECTION",
+        "id": "estate",
+        "className": "estate",
+        "y": 19338,
+        "h": 3864,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 5,
+        "tag": "SECTION",
+        "id": "essence",
+        "className": "quiet",
+        "y": 23202,
+        "h": 1749,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 6,
+        "tag": "SECTION",
+        "id": "craft",
+        "className": "passage",
+        "y": 24951,
+        "h": 1958,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 7,
+        "tag": "SECTION",
+        "id": "heritage",
+        "className": "heritage",
+        "y": 26909,
+        "h": 1721,
+        "w": 1440,
+        "x": 0
+      },
+      {
+        "i": 8,
+        "tag": "SECTION",
+        "id": "contacts",
+        "className": "contacts",
+        "y": 28630,
+        "h": 1136,
+        "w": 1440,
+        "x": 0
+      }
+    ],
+    "textCount": 48,
+    "shots": 30
+  },
+  {
+    "vp": "1280x800",
+    "scrollHeight": 26458,
+    "children": [
+      {
+        "i": 0,
+        "tag": "A",
+        "id": null,
+        "className": "site-logo",
+        "y": 16,
+        "h": 81,
+        "w": 60,
+        "x": 610
+      },
+      {
+        "i": 1,
+        "tag": "SECTION",
+        "id": "membership",
+        "className": "hero",
+        "y": 0,
+        "h": 800,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 2,
+        "tag": "DIV",
+        "id": null,
+        "className": "pin-spacer",
+        "y": 800,
+        "h": 15483,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 3,
+        "tag": "SECTION",
+        "id": "philosophy",
+        "className": "philosophy",
+        "y": 16152,
+        "h": 1037,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 4,
+        "tag": "SECTION",
+        "id": "estate",
+        "className": "estate",
+        "y": 17188,
+        "h": 3435,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 5,
+        "tag": "SECTION",
+        "id": "essence",
+        "className": "quiet",
+        "y": 20623,
+        "h": 1555,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 6,
+        "tag": "SECTION",
+        "id": "craft",
+        "className": "passage",
+        "y": 22178,
+        "h": 1741,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 7,
+        "tag": "SECTION",
+        "id": "heritage",
+        "className": "heritage",
+        "y": 23918,
+        "h": 1530,
+        "w": 1280,
+        "x": 0
+      },
+      {
+        "i": 8,
+        "tag": "SECTION",
+        "id": "contacts",
+        "className": "contacts",
+        "y": 25448,
+        "h": 1010,
+        "w": 1280,
+        "x": 0
+      }
+    ],
+    "textCount": 48,
+    "shots": 30
+  }
+]

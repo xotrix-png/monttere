@@ -1,0 +1,2435 @@
+{
+  "1920x1080": {
+    "data": {
+      "vw": 1920,
+      "vh": 1080,
+      "scrollHeight": 37264,
+      "monterre": {
+        "x": 134,
+        "y": 518.8,
+        "w": 948,
+        "h": 296,
+        "fontSize": "287.142px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "est": {
+        "text": "Est. 1928 — Heritage & Refinement",
+        "x": 1223,
+        "y": 765.8,
+        "w": 564,
+        "h": 76,
+        "fontSize": "56px",
+        "fontFamily": "\"Nicoletta Script\", cursive",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "cta": {
+        "x": 806.4,
+        "y": 907.9,
+        "w": 307.2,
+        "h": 59.1,
+        "fontSize": "20px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "color": "rgb(7, 26, 41)",
+        "opacity": "1"
+      },
+      "logo": {
+        "x": 915.3,
+        "y": 23.7,
+        "w": 89.3,
+        "h": 121.5,
+        "fontSize": "16px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(0, 0, 238)",
+        "opacity": "0.82",
+        "position": "fixed"
+      },
+      "equestrian": {
+        "x": 1130.9,
+        "y": 568.2,
+        "w": 653.1,
+        "h": 170.2,
+        "fontSize": "287.142px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "sub": {
+        "x": 141,
+        "y": 431.8,
+        "w": 446,
+        "h": 29,
+        "fontSize": "24px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "600",
+        "lineHeight": "28.9992px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "tagline": {
+        "text": "A private world shaped by horses,heritage and quiet pursuit",
+        "x": 141,
+        "y": 460.8,
+        "w": 446,
+        "h": 58,
+        "fontSize": "24px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "28.9992px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "collectionLabel": {
+        "x": 1624.7,
+        "y": 1209,
+        "w": 159,
+        "h": 24,
+        "fontSize": "20px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "heritage": {
+        "x": 141,
+        "y": 1290.7,
+        "w": 308,
+        "h": 39,
+        "fontSize": "32px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "hor": {
+        "x": 142.7,
+        "y": 1380.1,
+        "w": 1055.1,
+        "h": 501.9
+      },
+      "se": {
+        "x": 1237.2,
+        "y": 1380.1,
+        "w": 548.3,
+        "h": 501.9
+      },
+      "horseImg": {
+        "x": -341.8,
+        "y": 1080,
+        "w": 2586,
+        "h": 1159
+      },
+      "space": {
+        "x": 141,
+        "y": 23764,
+        "w": 857,
+        "h": 472.8
+      },
+      "withW": {
+        "x": 1031.9,
+        "y": 24170,
+        "w": 763,
+        "h": 473.8
+      },
+      "purpose": {
+        "x": 141.7,
+        "y": 24404,
+        "w": 557,
+        "h": 201.4
+      },
+      "quiet": {
+        "x": 141,
+        "y": 28912,
+        "w": 1644,
+        "h": 521.9,
+        "fontSize": "521.899px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "521.899px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "between": {
+        "x": 1220,
+        "y": 29402.9,
+        "w": 565,
+        "h": 200,
+        "fontSize": "200px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "200px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "contactsWord": {
+        "text": "Montérre",
+        "x": 138,
+        "y": 35869.4,
+        "w": 1643,
+        "h": 512,
+        "fontSize": "497.812px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "512px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "copy": {
+        "text": "© 2028 Montérre. All rights reserved.",
+        "x": 136,
+        "y": 37223.9,
+        "w": 295.7,
+        "h": 20,
+        "fontSize": "14px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "0.64px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "privacy": {
+        "text": "Privacy policy · Terms",
+        "x": 1518.9,
+        "y": 37223.9,
+        "w": 265.1,
+        "h": 20,
+        "fontSize": "14px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "0.64px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "nav": [
+        {
+          "text": "COLLECTION",
+          "x": 141,
+          "y": 74.4,
+          "w": 120,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "PHILOSOPHY",
+          "x": 327,
+          "y": 74.4,
+          "w": 121,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESTATE",
+          "x": 514,
+          "y": 74.4,
+          "w": 67,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESSENCE",
+          "x": 1401,
+          "y": 74.4,
+          "w": 85,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CRAFT",
+          "x": 1559,
+          "y": 74.4,
+          "w": 62,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CONTACT",
+          "x": 1694,
+          "y": 74.4,
+          "w": 90,
+          "h": 20,
+          "fontSize": "20px",
+          "fontWeight": "400"
+        }
+      ],
+      "gallerySlides": [
+        {
+          "class": "gallery__slide gallery__slide--collection",
+          "x": 0,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--arabella",
+          "x": 1920,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--eleanor",
+          "x": 3840,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--valentino",
+          "x": 5760,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--adrian",
+          "x": 7680,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--theodore",
+          "x": 9600,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--isabelle",
+          "x": 11520,
+          "y": 1080,
+          "w": 1920,
+          "h": 1080
+        }
+      ],
+      "viewHorseBtns": [
+        {
+          "textBox": {
+            "x": 2098.9,
+            "y": 1926,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 2061,
+            "y": 1906.5,
+            "w": 255.3,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 4018.9,
+            "y": 1926,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 3981,
+            "y": 1906.5,
+            "w": 255.3,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 5938.9,
+            "y": 1906.5,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 5901,
+            "y": 1887,
+            "w": 255.3,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 7858.9,
+            "y": 1926,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 7821,
+            "y": 1906.5,
+            "w": 255.3,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 9778.9,
+            "y": 1926,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 9741,
+            "y": 1906.5,
+            "w": 255.3,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 11682,
+            "y": 1926,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 11661,
+            "y": 1906.5,
+            "w": 188.7,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 162,
+            "y": 25632.8,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 141,
+            "y": 25613.2,
+            "w": 188.7,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 162,
+            "y": 26468.9,
+            "w": 114,
+            "h": 20
+          },
+          "btn": {
+            "x": 141,
+            "y": 26449.3,
+            "w": 188.7,
+            "h": 59.1
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        }
+      ],
+      "horsemanship": {
+        "text": "HORSEMANSHIP",
+        "x": 131.2,
+        "y": 22395.6,
+        "w": 1662,
+        "h": 301.3,
+        "fontSize": "350.113px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "301.097px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "philLabel": {
+        "x": 1624.7,
+        "y": 21955.5,
+        "w": 159,
+        "h": 24,
+        "fontSize": "20px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "theArtCraft": [],
+      "footerNav": [
+        {
+          "text": "Home",
+          "x": 141,
+          "y": 36869.1,
+          "w": 45,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The collection",
+          "x": 141,
+          "y": 36913.1,
+          "w": 127,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The philosophy",
+          "x": 141,
+          "y": 36957.1,
+          "w": 126,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The estate",
+          "x": 141,
+          "y": 37001.1,
+          "w": 89,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The craft",
+          "x": 141,
+          "y": 37045.1,
+          "w": 83,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The interlude",
+          "x": 141,
+          "y": 37089.1,
+          "w": 115,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Membership",
+          "x": 624,
+          "y": 36869.1,
+          "w": 97,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Stables",
+          "x": 624,
+          "y": 36913.1,
+          "w": 64,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Arena",
+          "x": 624,
+          "y": 36957.1,
+          "w": 49,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Paddocks",
+          "x": 624,
+          "y": 37001.1,
+          "w": 81,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Clubhouse",
+          "x": 624,
+          "y": 37045.1,
+          "w": 91,
+          "h": 20,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "hello@monterre.com",
+          "x": 1058,
+          "y": 36868.1,
+          "w": 219,
+          "h": 22,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "@monterre.club",
+          "x": 1058,
+          "y": 36915.1,
+          "w": 176,
+          "h": 22,
+          "fontSize": "16px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Privacy policy · Terms",
+          "x": 1518.9,
+          "y": 37223.9,
+          "w": 265.1,
+          "h": 20,
+          "fontSize": "14px",
+          "textTransform": "uppercase"
+        }
+      ],
+      "sections": [
+        {
+          "id": "",
+          "class": "site-logo",
+          "x": 915.3,
+          "y": 23.7,
+          "w": 89.3,
+          "h": 121.5
+        },
+        {
+          "id": "membership",
+          "class": "hero",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "id": "",
+          "class": "pin-spacer",
+          "x": 0,
+          "y": 1080,
+          "w": 1920,
+          "h": 20910
+        },
+        {
+          "id": "philosophy",
+          "class": "philosophy",
+          "x": 0,
+          "y": 21805,
+          "w": 1920,
+          "h": 1555
+        },
+        {
+          "id": "estate",
+          "class": "estate",
+          "x": 0,
+          "y": 23360,
+          "w": 1920,
+          "h": 5152.1
+        },
+        {
+          "id": "essence",
+          "class": "quiet",
+          "x": 0,
+          "y": 28512.1,
+          "w": 1920,
+          "h": 2332
+        },
+        {
+          "id": "craft",
+          "class": "passage",
+          "x": 0,
+          "y": 30844.1,
+          "w": 1920,
+          "h": 2611
+        },
+        {
+          "id": "heritage",
+          "class": "heritage",
+          "x": 0,
+          "y": 33455.1,
+          "w": 1920,
+          "h": 2294.3
+        },
+        {
+          "id": "contacts",
+          "class": "contacts",
+          "x": 0,
+          "y": 35749.4,
+          "w": 1920,
+          "h": 1514.5
+        }
+      ]
+    },
+    "figma": {
+      "monterre": {
+        "x": 134.04,
+        "y": 500.81,
+        "w": 948.14,
+        "h": 295
+      },
+      "equestrian": {
+        "x": 1131.14,
+        "y": 550.23,
+        "w": 653.17,
+        "h": 170.21
+      },
+      "cta": {
+        "x": 806.57,
+        "y": 909.14,
+        "w": 307.24,
+        "h": 59.08
+      },
+      "logo": {
+        "x": 915.53,
+        "y": 24.66,
+        "w": 89.33,
+        "h": 121.49
+      },
+      "est": {
+        "x": 1223.22,
+        "y": 747.81,
+        "w": 561.08,
+        "h": 76
+      },
+      "sub": {
+        "x": 141.03,
+        "y": 413.81,
+        "w": 442.07,
+        "h": 87
+      },
+      "navCollection": {
+        "x": 141.03,
+        "y": 73.4
+      },
+      "navContact": {
+        "x": 1694.93,
+        "y": 73.4
+      },
+      "navEssence": {
+        "x": 1382.38,
+        "y": 73.4
+      },
+      "collectionLabel": {
+        "x": 1624.66,
+        "y": 1208.999
+      },
+      "heritageLocal": {
+        "x": 141,
+        "y": 210.72
+      },
+      "contactsWord": {
+        "x": 138,
+        "w": 1644,
+        "h": 512
+      },
+      "copy": {
+        "x": 138,
+        "fontApprox": 24
+      },
+      "privacy": {
+        "x": 1399.34
+      }
+    },
+    "deltas": {
+      "monterre": {
+        "x": 0,
+        "y": 18,
+        "w": -0.1,
+        "h": 1
+      },
+      "equestrian": {
+        "x": -0.2,
+        "y": 18,
+        "w": -0.1,
+        "h": 0
+      },
+      "cta": {
+        "x": -0.2,
+        "y": -1.2,
+        "w": 0,
+        "h": 0
+      },
+      "logo": {
+        "x": -0.2,
+        "y": -1,
+        "w": 0,
+        "h": 0
+      },
+      "est": {
+        "x": -0.2,
+        "y": 18,
+        "w": 2.9,
+        "h": 0
+      },
+      "subBlockTop": {
+        "x": 0,
+        "y": 18
+      },
+      "navEssenceX": 18.6,
+      "navContactX": -0.9,
+      "contactsWord": {
+        "x": 0,
+        "w": -1,
+        "h": 0
+      }
+    }
+  },
+  "1440x900": {
+    "data": {
+      "vw": 1440,
+      "vh": 900,
+      "scrollHeight": 29765,
+      "monterre": {
+        "x": 57.6,
+        "y": 432.8,
+        "w": 759,
+        "h": 237,
+        "fontSize": "230.544px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "est": {
+        "text": "Est. 1928 — Heritage & Refinement",
+        "x": 932,
+        "y": 631.1,
+        "w": 460,
+        "h": 61,
+        "fontSize": "44.962px",
+        "fontFamily": "\"Nicoletta Script\", cursive",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "cta": {
+        "x": 604,
+        "y": 771,
+        "w": 232,
+        "h": 44.3,
+        "fontSize": "15px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "15px",
+        "letterSpacing": "normal",
+        "color": "rgb(7, 26, 41)",
+        "opacity": "1"
+      },
+      "logo": {
+        "x": 686.5,
+        "y": 17.7,
+        "w": 67,
+        "h": 91.1,
+        "fontSize": "16px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(0, 0, 238)",
+        "opacity": "0.82",
+        "position": "fixed"
+      },
+      "equestrian": {
+        "x": 858,
+        "y": 472.4,
+        "w": 524.3,
+        "h": 136.7,
+        "fontSize": "230.544px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "sub": {
+        "x": 63.2,
+        "y": 362.9,
+        "w": 355,
+        "h": 23.3,
+        "fontSize": "19.2694px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "600",
+        "lineHeight": "23.2833px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "tagline": {
+        "text": "A private world shaped by horses,heritage and quiet pursuit",
+        "x": 63.2,
+        "y": 386.2,
+        "w": 355,
+        "h": 46.5,
+        "fontSize": "19.2694px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "23.2833px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "collectionLabel": {
+        "x": 1218.5,
+        "y": 996.8,
+        "w": 120,
+        "h": 19,
+        "fontSize": "15px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "heritage": {
+        "x": 105.8,
+        "y": 1058,
+        "w": 236,
+        "h": 29,
+        "fontSize": "24px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "hor": {
+        "x": 107,
+        "y": 1125.1,
+        "w": 791.3,
+        "h": 376.4
+      },
+      "se": {
+        "x": 927.9,
+        "y": 1125.1,
+        "w": 411.2,
+        "h": 376.4
+      },
+      "horseImg": {
+        "x": -256.3,
+        "y": 900,
+        "w": 1939.5,
+        "h": 869.3
+      },
+      "space": {
+        "x": 105.8,
+        "y": 19640.5,
+        "w": 643,
+        "h": 354.6
+      },
+      "withW": {
+        "x": 773.9,
+        "y": 19945,
+        "w": 572,
+        "h": 355.3
+      },
+      "purpose": {
+        "x": 106.3,
+        "y": 20120.5,
+        "w": 418,
+        "h": 151.1
+      },
+      "quiet": {
+        "x": 105.8,
+        "y": 23501.5,
+        "w": 1231,
+        "h": 391.4,
+        "fontSize": "391.424px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "391.424px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "between": {
+        "x": 915,
+        "y": 23869.6,
+        "w": 423,
+        "h": 150,
+        "fontSize": "150px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "150px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "contactsWord": {
+        "text": "Montérre",
+        "x": 103.5,
+        "y": 28719.5,
+        "w": 1231,
+        "h": 384,
+        "fontSize": "373.359px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "384px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "copy": {
+        "text": "© 2028 Montérre. All rights reserved.",
+        "x": 102,
+        "y": 29735.5,
+        "w": 219.8,
+        "h": 15,
+        "fontSize": "10.5px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "15px",
+        "letterSpacing": "0.48px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "privacy": {
+        "text": "Privacy policy · Terms",
+        "x": 1142.7,
+        "y": 29735.5,
+        "w": 195.3,
+        "h": 15,
+        "fontSize": "10.5px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "15px",
+        "letterSpacing": "0.48px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "nav": [
+        {
+          "text": "COLLECTION",
+          "x": 63.2,
+          "y": 55.8,
+          "w": 89,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "PHILOSOPHY",
+          "x": 201.7,
+          "y": 55.8,
+          "w": 90,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESTATE",
+          "x": 341.2,
+          "y": 55.8,
+          "w": 51,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESSENCE",
+          "x": 1097.9,
+          "y": 55.8,
+          "w": 63,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CRAFT",
+          "x": 1215.6,
+          "y": 55.8,
+          "w": 45,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CONTACT",
+          "x": 1315.4,
+          "y": 55.8,
+          "w": 67,
+          "h": 15,
+          "fontSize": "15px",
+          "fontWeight": "400"
+        }
+      ],
+      "gallerySlides": [
+        {
+          "class": "gallery__slide gallery__slide--collection",
+          "x": 0,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--arabella",
+          "x": 1440,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--eleanor",
+          "x": 2880,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--valentino",
+          "x": 4320,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--adrian",
+          "x": 5760,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--theodore",
+          "x": 7200,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--isabelle",
+          "x": 8640,
+          "y": 900,
+          "w": 1440,
+          "h": 900
+        }
+      ],
+      "viewHorseBtns": [
+        {
+          "textBox": {
+            "x": 1574.4,
+            "y": 1578.5,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 1545.8,
+            "y": 1563.9,
+            "w": 191.4,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 3014.4,
+            "y": 1578.5,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 2985.8,
+            "y": 1563.9,
+            "w": 191.4,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 4454.4,
+            "y": 1564,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 4425.8,
+            "y": 1549.4,
+            "w": 191.4,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 5894.4,
+            "y": 1578.5,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 5865.8,
+            "y": 1563.9,
+            "w": 191.4,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 7334.4,
+            "y": 1578.5,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 7305.8,
+            "y": 1563.9,
+            "w": 191.4,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 8761.8,
+            "y": 1578.5,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 8745.8,
+            "y": 1563.9,
+            "w": 141.5,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 121.8,
+            "y": 21042.1,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 105.8,
+            "y": 21027.4,
+            "w": 141.5,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 121.8,
+            "y": 21669.1,
+            "w": 85,
+            "h": 15
+          },
+          "btn": {
+            "x": 105.8,
+            "y": 21654.5,
+            "w": 141.5,
+            "h": 44.3
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        }
+      ],
+      "horsemanship": {
+        "text": "HORSEMANSHIP",
+        "x": 98.4,
+        "y": 18614.2,
+        "w": 1246.5,
+        "h": 225.9,
+        "fontSize": "262.585px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "225.823px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "philLabel": {
+        "x": 1218.5,
+        "y": 18284.2,
+        "w": 120,
+        "h": 19,
+        "fontSize": "15px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "theArtCraft": [],
+      "footerNav": [
+        {
+          "text": "Home",
+          "x": 105.8,
+          "y": 29472.6,
+          "w": 34,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The collection",
+          "x": 105.8,
+          "y": 29509.6,
+          "w": 96,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The philosophy",
+          "x": 105.8,
+          "y": 29546.6,
+          "w": 96,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The estate",
+          "x": 105.8,
+          "y": 29583.6,
+          "w": 66,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The craft",
+          "x": 105.8,
+          "y": 29620.6,
+          "w": 61,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The interlude",
+          "x": 105.8,
+          "y": 29657.6,
+          "w": 86,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Membership",
+          "x": 468,
+          "y": 29472.6,
+          "w": 73,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Stables",
+          "x": 468,
+          "y": 29509.6,
+          "w": 48,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Arena",
+          "x": 468,
+          "y": 29546.6,
+          "w": 38,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Paddocks",
+          "x": 468,
+          "y": 29583.6,
+          "w": 61,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Clubhouse",
+          "x": 468,
+          "y": 29620.6,
+          "w": 68,
+          "h": 15,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "hello@monterre.com",
+          "x": 793.5,
+          "y": 29468.8,
+          "w": 166,
+          "h": 16.5,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "@monterre.club",
+          "x": 793.5,
+          "y": 29505.3,
+          "w": 132,
+          "h": 16.5,
+          "fontSize": "12px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Privacy policy · Terms",
+          "x": 1142.7,
+          "y": 29735.5,
+          "w": 195.3,
+          "h": 15,
+          "fontSize": "10.5px",
+          "textTransform": "uppercase"
+        }
+      ],
+      "sections": [
+        {
+          "id": "",
+          "class": "site-logo",
+          "x": 686.5,
+          "y": 17.7,
+          "w": 67,
+          "h": 91.1
+        },
+        {
+          "id": "membership",
+          "class": "hero",
+          "x": 0,
+          "y": 0,
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "id": "",
+          "class": "pin-spacer",
+          "x": 0,
+          "y": 900,
+          "w": 1440,
+          "h": 17416
+        },
+        {
+          "id": "philosophy",
+          "class": "philosophy",
+          "x": 0,
+          "y": 18171.3,
+          "w": 1440,
+          "h": 1166.3
+        },
+        {
+          "id": "estate",
+          "class": "estate",
+          "x": 0,
+          "y": 19337.5,
+          "w": 1440,
+          "h": 3864.1
+        },
+        {
+          "id": "essence",
+          "class": "quiet",
+          "x": 0,
+          "y": 23201.6,
+          "w": 1440,
+          "h": 1749
+        },
+        {
+          "id": "craft",
+          "class": "passage",
+          "x": 0,
+          "y": 24950.6,
+          "w": 1440,
+          "h": 1958.3
+        },
+        {
+          "id": "heritage",
+          "class": "heritage",
+          "x": 0,
+          "y": 26908.8,
+          "w": 1440,
+          "h": 1720.7
+        },
+        {
+          "id": "contacts",
+          "class": "contacts",
+          "x": 0,
+          "y": 28629.5,
+          "w": 1440,
+          "h": 1135.9
+        }
+      ]
+    },
+    "figma": {
+      "monterre": {
+        "x": 100.53,
+        "y": 375.6075,
+        "w": 711.105,
+        "h": 221.25
+      },
+      "equestrian": {
+        "x": 848.355,
+        "y": 412.6725,
+        "w": 489.87749999999994,
+        "h": 127.6575
+      },
+      "cta": {
+        "x": 604.9275,
+        "y": 681.855,
+        "w": 230.43,
+        "h": 44.31
+      },
+      "logo": {
+        "x": 686.6475,
+        "y": 18.495,
+        "w": 66.9975,
+        "h": 91.11749999999999
+      },
+      "est": {
+        "x": 917.415,
+        "y": 560.8575,
+        "w": 420.81000000000006,
+        "h": 57
+      },
+      "sub": {
+        "x": 105.77250000000001,
+        "y": 310.3575,
+        "w": 331.5525,
+        "h": 65.25
+      },
+      "navCollection": {
+        "x": 105.77250000000001,
+        "y": 55.050000000000004
+      },
+      "navContact": {
+        "x": 1271.1975,
+        "y": 55.050000000000004
+      },
+      "navEssence": {
+        "x": 1036.785,
+        "y": 55.050000000000004
+      },
+      "collectionLabel": {
+        "x": 1218.4950000000001,
+        "y": 906.7492500000001
+      },
+      "heritageLocal": {
+        "x": 105.75,
+        "y": 158.04
+      },
+      "contactsWord": {
+        "x": 103.5,
+        "w": 1233,
+        "h": 384
+      },
+      "copy": {
+        "x": 103.5,
+        "fontApprox": 24
+      },
+      "privacy": {
+        "x": 1049.5049999999999
+      }
+    },
+    "deltas": {
+      "monterre": {
+        "x": -42.9,
+        "y": 57.2,
+        "w": 47.9,
+        "h": 15.8
+      },
+      "equestrian": {
+        "x": 9.6,
+        "y": 59.7,
+        "w": 34.4,
+        "h": 9
+      },
+      "cta": {
+        "x": -0.9,
+        "y": 89.1,
+        "w": 1.6,
+        "h": 0
+      },
+      "logo": {
+        "x": -0.1,
+        "y": -0.8,
+        "w": 0,
+        "h": 0
+      },
+      "est": {
+        "x": 14.6,
+        "y": 70.2,
+        "w": 39.2,
+        "h": 4
+      },
+      "subBlockTop": {
+        "x": -42.6,
+        "y": 52.5
+      },
+      "navEssenceX": 61.1,
+      "navContactX": 44.2,
+      "contactsWord": {
+        "x": 0,
+        "w": -2,
+        "h": 0
+      }
+    }
+  },
+  "1280x800": {
+    "data": {
+      "vw": 1280,
+      "vh": 800,
+      "scrollHeight": 26458,
+      "monterre": {
+        "x": 51.2,
+        "y": 384.7,
+        "w": 678,
+        "h": 211,
+        "fontSize": "204.928px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "est": {
+        "text": "Est. 1928 — Heritage & Refinement",
+        "x": 828.4,
+        "y": 561,
+        "w": 406,
+        "h": 55,
+        "fontSize": "39.9662px",
+        "fontFamily": "\"Nicoletta Script\", cursive",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "cta": {
+        "x": 524,
+        "y": 680.7,
+        "w": 232,
+        "h": 44,
+        "fontSize": "14px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "14px",
+        "letterSpacing": "normal",
+        "color": "rgb(7, 26, 41)",
+        "opacity": "1"
+      },
+      "logo": {
+        "x": 610.2,
+        "y": 15.8,
+        "w": 59.6,
+        "h": 81,
+        "fontSize": "16px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(0, 0, 238)",
+        "opacity": "0.82",
+        "position": "fixed"
+      },
+      "equestrian": {
+        "x": 762.7,
+        "y": 420,
+        "w": 466.1,
+        "h": 121.5,
+        "fontSize": "204.928px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "sub": {
+        "x": 56.2,
+        "y": 322.6,
+        "w": 321,
+        "h": 20.7,
+        "fontSize": "17.1284px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "600",
+        "lineHeight": "20.6962px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "tagline": {
+        "text": "A private world shaped by horses,heritage and quiet pursuit",
+        "x": 56.2,
+        "y": 343.3,
+        "w": 321,
+        "h": 41.4,
+        "fontSize": "17.1284px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "20.6962px",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "collectionLabel": {
+        "x": 1083.1,
+        "y": 886,
+        "w": 106,
+        "h": 16,
+        "fontSize": "13.3333px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "heritage": {
+        "x": 94,
+        "y": 940.5,
+        "w": 207,
+        "h": 26,
+        "fontSize": "21.3333px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(243, 246, 247)",
+        "opacity": "1"
+      },
+      "hor": {
+        "x": 95.1,
+        "y": 1000,
+        "w": 703.4,
+        "h": 334.6
+      },
+      "se": {
+        "x": 824.8,
+        "y": 1000,
+        "w": 365.5,
+        "h": 334.6
+      },
+      "horseImg": {
+        "x": -227.8,
+        "y": 800,
+        "w": 1724,
+        "h": 772.7
+      },
+      "space": {
+        "x": 94,
+        "y": 17457.7,
+        "w": 571,
+        "h": 315.2
+      },
+      "withW": {
+        "x": 687.9,
+        "y": 17728.3,
+        "w": 509,
+        "h": 315.9
+      },
+      "purpose": {
+        "x": 94.5,
+        "y": 17884.3,
+        "w": 369,
+        "h": 134.3
+      },
+      "quiet": {
+        "x": 94,
+        "y": 20889.6,
+        "w": 1095,
+        "h": 347.9,
+        "fontSize": "347.933px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "347.933px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "between": {
+        "x": 813.3,
+        "y": 21216.9,
+        "w": 376,
+        "h": 133.3,
+        "fontSize": "133.333px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "133.333px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "contactsWord": {
+        "text": "Montérre",
+        "x": 92,
+        "y": 25527.9,
+        "w": 1096,
+        "h": 341.3,
+        "fontSize": "331.875px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "341.333px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "copy": {
+        "text": "© 2028 Montérre. All rights reserved.",
+        "x": 90.7,
+        "y": 26431,
+        "w": 201.8,
+        "h": 13.3,
+        "fontSize": "9.33333px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "13.3333px",
+        "letterSpacing": "0.426667px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "privacy": {
+        "text": "Privacy policy · Terms",
+        "x": 1012,
+        "y": 26431,
+        "w": 177.4,
+        "h": 13.3,
+        "fontSize": "9.33333px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "13.3333px",
+        "letterSpacing": "0.426667px",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "nav": [
+        {
+          "text": "COLLECTION",
+          "x": 56.2,
+          "y": 49.6,
+          "w": 79,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "PHILOSOPHY",
+          "x": 179.2,
+          "y": 49.6,
+          "w": 81,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESTATE",
+          "x": 304.2,
+          "y": 49.6,
+          "w": 45,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "500"
+        },
+        {
+          "text": "ESSENCE",
+          "x": 976.5,
+          "y": 49.6,
+          "w": 55,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CRAFT",
+          "x": 1080.1,
+          "y": 49.6,
+          "w": 40,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "400"
+        },
+        {
+          "text": "CONTACT",
+          "x": 1168.8,
+          "y": 49.6,
+          "w": 60,
+          "h": 13.3,
+          "fontSize": "13.3333px",
+          "fontWeight": "400"
+        }
+      ],
+      "gallerySlides": [
+        {
+          "class": "gallery__slide gallery__slide--collection",
+          "x": 0,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--arabella",
+          "x": 1280,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--eleanor",
+          "x": 2560,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--valentino",
+          "x": 3840,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--adrian",
+          "x": 5120,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--theodore",
+          "x": 6400,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "class": "gallery__slide gallery__slide--horse gallery__slide--isabelle",
+          "x": 7680,
+          "y": 800,
+          "w": 1280,
+          "h": 800
+        }
+      ],
+      "viewHorseBtns": [
+        {
+          "textBox": {
+            "x": 1399.8,
+            "y": 1405.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 1374,
+            "y": 1392.1,
+            "w": 170.2,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 2679.8,
+            "y": 1405.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 2654,
+            "y": 1392.1,
+            "w": 170.2,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 3959.8,
+            "y": 1392.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 3934,
+            "y": 1379.1,
+            "w": 170.2,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 5239.8,
+            "y": 1405.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 5214,
+            "y": 1392.1,
+            "w": 170.2,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 6519.8,
+            "y": 1405.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 6494,
+            "y": 1392.1,
+            "w": 170.2,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 7788.5,
+            "y": 1405.1,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 7774,
+            "y": 1392.1,
+            "w": 125.8,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 108.5,
+            "y": 18703.5,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 94,
+            "y": 18690.5,
+            "w": 125.8,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        },
+        {
+          "textBox": {
+            "x": 108.5,
+            "y": 19260.9,
+            "w": 75,
+            "h": 13.3
+          },
+          "btn": {
+            "x": 94,
+            "y": 19247.9,
+            "w": 125.8,
+            "h": 39.4
+          },
+          "boxBg": "rgb(243, 246, 247)",
+          "boxDisplay": "flex"
+        }
+      ],
+      "horsemanship": {
+        "text": "HORSEMANSHIP",
+        "x": 87.5,
+        "y": 16545.4,
+        "w": 1108,
+        "h": 200.8,
+        "fontSize": "233.409px",
+        "fontFamily": "Voga, serif",
+        "fontWeight": "500",
+        "lineHeight": "200.731px",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "philLabel": {
+        "x": 1083.1,
+        "y": 16252,
+        "w": 107,
+        "h": 16,
+        "fontSize": "13.3333px",
+        "fontFamily": "\"Inter Tight\", sans-serif",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "rgb(34, 43, 47)",
+        "opacity": "1"
+      },
+      "theArtCraft": [],
+      "footerNav": [
+        {
+          "text": "Home",
+          "x": 94,
+          "y": 26199.7,
+          "w": 30,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The collection",
+          "x": 94,
+          "y": 26235,
+          "w": 86,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The philosophy",
+          "x": 94,
+          "y": 26270.3,
+          "w": 85,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The estate",
+          "x": 94,
+          "y": 26305.7,
+          "w": 57,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The craft",
+          "x": 94,
+          "y": 26341,
+          "w": 54,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "The interlude",
+          "x": 94,
+          "y": 26376.3,
+          "w": 76,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Membership",
+          "x": 416,
+          "y": 26199.7,
+          "w": 63,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Stables",
+          "x": 416,
+          "y": 26235,
+          "w": 42,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Arena",
+          "x": 416,
+          "y": 26270.3,
+          "w": 34,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Paddocks",
+          "x": 416,
+          "y": 26305.7,
+          "w": 53,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Clubhouse",
+          "x": 416,
+          "y": 26341,
+          "w": 60,
+          "h": 13,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "hello@monterre.com",
+          "x": 705.3,
+          "y": 26195.7,
+          "w": 148,
+          "h": 14.7,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "@monterre.club",
+          "x": 705.3,
+          "y": 26230.3,
+          "w": 117,
+          "h": 14.7,
+          "fontSize": "10.6667px",
+          "textTransform": "uppercase"
+        },
+        {
+          "text": "Privacy policy · Terms",
+          "x": 1012,
+          "y": 26431,
+          "w": 177.4,
+          "h": 13.3,
+          "fontSize": "9.33333px",
+          "textTransform": "uppercase"
+        }
+      ],
+      "sections": [
+        {
+          "id": "",
+          "class": "site-logo",
+          "x": 610.2,
+          "y": 15.8,
+          "w": 59.6,
+          "h": 81
+        },
+        {
+          "id": "membership",
+          "class": "hero",
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 800
+        },
+        {
+          "id": "",
+          "class": "pin-spacer",
+          "x": 0,
+          "y": 800,
+          "w": 1280,
+          "h": 15483
+        },
+        {
+          "id": "philosophy",
+          "class": "philosophy",
+          "x": 0,
+          "y": 16151.7,
+          "w": 1280,
+          "h": 1036.7
+        },
+        {
+          "id": "estate",
+          "class": "estate",
+          "x": 0,
+          "y": 17188.3,
+          "w": 1280,
+          "h": 3434.7
+        },
+        {
+          "id": "essence",
+          "class": "quiet",
+          "x": 0,
+          "y": 20623,
+          "w": 1280,
+          "h": 1554.7
+        },
+        {
+          "id": "craft",
+          "class": "passage",
+          "x": 0,
+          "y": 22177.7,
+          "w": 1280,
+          "h": 1740.7
+        },
+        {
+          "id": "heritage",
+          "class": "heritage",
+          "x": 0,
+          "y": 23918.4,
+          "w": 1280,
+          "h": 1529.5
+        },
+        {
+          "id": "contacts",
+          "class": "contacts",
+          "x": 0,
+          "y": 25447.9,
+          "w": 1280,
+          "h": 1009.7
+        }
+      ]
+    },
+    "figma": {
+      "monterre": {
+        "x": 89.35999999999999,
+        "y": 333.87333333333333,
+        "w": 632.0933333333332,
+        "h": 196.66666666666666
+      },
+      "equestrian": {
+        "x": 754.0933333333334,
+        "y": 366.82,
+        "w": 435.4466666666666,
+        "h": 113.47333333333333
+      },
+      "cta": {
+        "x": 537.7133333333334,
+        "y": 606.0933333333332,
+        "w": 204.82666666666665,
+        "h": 39.38666666666666
+      },
+      "logo": {
+        "x": 610.3533333333332,
+        "y": 16.439999999999998,
+        "w": 59.55333333333333,
+        "h": 80.99333333333333
+      },
+      "est": {
+        "x": 815.48,
+        "y": 498.53999999999996,
+        "w": 374.05333333333334,
+        "h": 50.666666666666664
+      },
+      "sub": {
+        "x": 94.02,
+        "y": 275.87333333333333,
+        "w": 294.7133333333333,
+        "h": 58
+      },
+      "navCollection": {
+        "x": 94.02,
+        "y": 48.93333333333334
+      },
+      "navContact": {
+        "x": 1129.9533333333334,
+        "y": 48.93333333333334
+      },
+      "navEssence": {
+        "x": 921.5866666666667,
+        "y": 48.93333333333334
+      },
+      "collectionLabel": {
+        "x": 1083.1066666666666,
+        "y": 805.9993333333333
+      },
+      "heritageLocal": {
+        "x": 94,
+        "y": 140.48
+      },
+      "contactsWord": {
+        "x": 92,
+        "w": 1096,
+        "h": 341.3333333333333
+      },
+      "copy": {
+        "x": 92,
+        "fontApprox": 24
+      },
+      "privacy": {
+        "x": 932.8933333333332
+      }
+    },
+    "deltas": {
+      "monterre": {
+        "x": -38.2,
+        "y": 50.8,
+        "w": 45.9,
+        "h": 14.3
+      },
+      "equestrian": {
+        "x": 8.6,
+        "y": 53.2,
+        "w": 30.7,
+        "h": 8
+      },
+      "cta": {
+        "x": -13.7,
+        "y": 74.6,
+        "w": 27.2,
+        "h": 4.6
+      },
+      "logo": {
+        "x": -0.2,
+        "y": -0.6,
+        "w": 0,
+        "h": 0
+      },
+      "est": {
+        "x": 12.9,
+        "y": 62.5,
+        "w": 31.9,
+        "h": 4.3
+      },
+      "subBlockTop": {
+        "x": -37.8,
+        "y": 46.7
+      },
+      "navEssenceX": 54.9,
+      "navContactX": 38.8,
+      "contactsWord": {
+        "x": 0,
+        "w": 0,
+        "h": 0
+      }
+    }
+  }
+}
