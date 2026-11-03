@@ -433,9 +433,24 @@
   max-width: none;
   object-fit: fill;
   /*
-    No CSS mask on the foot: dissolving the right/top near the fold
-    re-exposed the viewport edge as a white strip. Source PNG already
-    has wispy alpha; keep it intact through the Philosophy hang.
+    Soft top only (matches Figma blur on the mask): dissolve hard tips /
+    upper-right shelf. Foot stays fully opaque so Philosophy isn’t a strip.
   */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 6%,
+    rgba(0, 0, 0, 0.75) 14%,
+    #000 26%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 6%,
+    rgba(0, 0, 0, 0.75) 14%,
+    #000 26%,
+    #000 100%
+  );
 }
 
