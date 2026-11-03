@@ -148,29 +148,6 @@
   object-position: center center;
 }
 
-/*
-  Soften Isabelle’s bottom crop so the viewport edge doesn’t flash as a hard
-  shelf through sparse fur wisps. Fur crawl / GSAP untouched.
-*/
-.gallery__slide--isabelle .gallery__media {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 72%,
-    rgba(0, 0, 0, 0.9) 84%,
-    rgba(0, 0, 0, 0.4) 94%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 72%,
-    rgba(0, 0, 0, 0.9) 84%,
-    rgba(0, 0, 0, 0.4) 94%,
-    transparent 100%
-  );
-}
-
 /* ELEANOR — Figma Rectangle 6: black, blur 125, opacity 50%, ~688×869 */
 .gallery__veil {
   position: absolute;
@@ -424,11 +401,10 @@
 }
 
 /*
-  «шерстьь переход» — Figma 98:29.
-  PNG alpha: wisps only over Isabelle (no full-width opaque shelf in the
-  375 overlap); solid #F3F6F7 foot starts at the fold and hangs into Philosophy.
-  Soil/cap are a thin seal under the asset foot only — never under wisps.
-  GSAP crawl untouched.
+  «шерстьь переход» — Figma 98:29 / original PNG (#F3F6F7 + hair alpha).
+  No soil/cap/box-shadow slab under the wisps — those painted the white strip.
+  Foot of the PNG is opaque #F3F6F7 into Philosophy; gallery::after seals the hang.
+  Soften only the hard upper-right bitmap shelf. GSAP crawl untouched.
 */
 .gallery__fur {
   position: absolute;
@@ -436,41 +412,18 @@
   left: 0;
   top: calc(100dvh - var(--fur-overlap));
   width: 100%;
-  height: calc(var(--fur-h) + 12px);
+  height: var(--fur-h);
   font-size: 0;
   line-height: 0;
   pointer-events: none;
   will-change: transform;
-  /* Thin seal vs html #071a29 — must not read as a white band */
-  box-shadow: 0 8px 0 0 #f3f6f7;
 }
 
-.gallery__fur-soil {
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  top: calc(500 / 536 * var(--fur-h));
-  bottom: 0;
-  background: #f3f6f7;
-  pointer-events: none;
-}
-
+.gallery__fur-soil,
 .gallery__fur-cap {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  top: calc(500 / 536 * var(--fur-h));
-  bottom: 0;
-  background: #f3f6f7;
-  pointer-events: none;
+  display: none;
 }
 
-/*
-  Soften only the bitmap’s hard upper tip + upper-right shelf over Isabelle.
-  Keep mid/lower wisps at full strength so the foot doesn’t become a white bar.
-*/
 .gallery__fur-img {
   position: relative;
   z-index: 1;
@@ -479,25 +432,20 @@
   height: var(--fur-h);
   max-width: none;
   object-fit: fill;
-  -webkit-mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.4) 4%,
-      #000 12%,
-      #000 100%
-    ),
-    linear-gradient(to right, #000 0%, #000 68%, rgba(0, 0, 0, 0.7) 82%, transparent 94%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.4) 4%,
-      #000 12%,
-      #000 100%
-    ),
-    linear-gradient(to right, #000 0%, #000 68%, rgba(0, 0, 0, 0.7) 82%, transparent 94%);
-  mask-composite: intersect;
+  /* Dissolve hard upper-right opaque shelf only — leave wisps full strength */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 58%,
+    rgba(0, 0, 0, 0.65) 72%,
+    transparent 88%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 58%,
+    rgba(0, 0, 0, 0.65) 72%,
+    transparent 88%
+  );
 }
 
