@@ -3,7 +3,10 @@ import heroPhoto from "../assets/images/hero-photo.png";
 import logo from "../assets/images/logo.png";
 import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
+import hoofMark from "../assets/images/hoof.svg";
 import "./PageLoader.css";
+
+const HOOF_COUNT = 6;
 
 const MIN_MS = 280;
 const imageCache = new Map();
@@ -117,8 +120,16 @@ export default function PageLoader({ onDone }) {
     const run = async () => {
       setTarget(4);
 
-      const fonts =
-        document.fonts?.ready?.catch?.(() => null) ?? Promise.resolve();
+      const fonts = (async () => {
+        try {
+          if (document.fonts?.load) {
+            await document.fonts.load('400 42px "Instrument Serif"');
+          }
+          await document.fonts?.ready;
+        } catch {
+          /* ignore */
+        }
+      })();
       const hero = loadImage(heroPhoto);
       const crest = loadImage(logo);
       const mark = loadImage(equestrianMark);
@@ -203,9 +214,26 @@ export default function PageLoader({ onDone }) {
       role="status"
       aria-live="polite"
       aria-busy={!leaving}
+      aria-label={`Loading ${pct} percent`}
       onTransitionEnd={handleTransitionEnd}
     >
-      <span className="page-loader__pct">{pct}%</span>
+      <div className="page-loader__stage">
+        <div className="page-loader__ring" aria-hidden="true">
+          {Array.from({ length: HOOF_COUNT }, (_, i) => (
+            <img
+              key={i}
+              className="page-loader__hoof"
+              src={hoofMark}
+              alt=""
+              style={{ "--i": i }}
+              width={22}
+              height={26}
+              draggable={false}
+            />
+          ))}
+        </div>
+        <span className="page-loader__pct">{pct}%</span>
+      </div>
     </div>
   );
 }
