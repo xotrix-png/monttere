@@ -2,12 +2,12 @@
    This file styles the hoof ring React injects into that same node. */
 
 .page-loader__hoof {
-  --count: 12;
-  --radius: clamp(72px, 9.5vw, 100px);
+  --count: 10;
+  --radius: clamp(78px, 10.2vw, 108px);
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(26px, 3.2vw, 36px);
+  width: clamp(24px, 3vw, 34px);
   height: auto;
   display: block;
   /*
@@ -15,6 +15,7 @@
     Asset: tapered toes at BOTTOM (front), dewclaws (dots) at TOP (heel).
     Wave advances clockwise (rising --i). Local -90deg aims toes into that
     tangent so the animal walks forward, not heel-first.
+    10 slots + slightly larger radius = a touch more air between stamps.
   */
   transform: translate(-50%, -50%)
     rotate(calc(var(--i) * 360deg / var(--count)))
@@ -22,9 +23,9 @@
     rotate(-90deg);
   transform-origin: center center;
   opacity: 0;
-  animation: page-loader-walk 1.8s linear infinite;
+  animation: page-loader-walk 1.9s linear infinite;
   /* i=0 peaks first → next peak at i=1… = clockwise */
-  animation-delay: calc((var(--count) - var(--i)) * (1.8s / var(--count)) * -1);
+  animation-delay: calc((var(--count) - var(--i)) * (1.9s / var(--count)) * -1);
   pointer-events: none;
   user-select: none;
 }
@@ -44,9 +45,9 @@
       rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
-      scale(1.08);
+      scale(1.06);
   }
-  8% {
+  7% {
     opacity: 0.85;
     transform: translate(-50%, -50%)
       rotate(calc(var(--i) * 360deg / var(--count)))
@@ -54,15 +55,15 @@
       rotate(-90deg)
       scale(1);
   }
-  16% {
-    opacity: 0.35;
+  14% {
+    opacity: 0.3;
     transform: translate(-50%, -50%)
       rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--radius)))
       rotate(-90deg)
       scale(0.92);
   }
-  24%,
+  20%,
   100% {
     opacity: 0;
     transform: translate(-50%, -50%)

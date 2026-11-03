@@ -6,7 +6,7 @@ import heroMask from "../assets/images/hero-mask.svg";
 import hoofMark from "../assets/images/hoof-print.svg";
 import "./PageLoader.css";
 
-const HOOF_COUNT = 12;
+const HOOF_COUNT = 10;
 const MIN_MS = 1700;
 const MAX_LOCK_MS = 3800;
 const MS_PER_DIGIT = 30;
@@ -117,23 +117,22 @@ export default function PageLoader({ onDone }) {
     digitOriginRef.current = { t: performance.now(), p: initial };
     pctEl.textContent = `${initial}%`;
 
-    // Inject hoof trail once into the same centered stage
-    if (!ring.dataset.hooves) {
-      ring.dataset.hooves = "1";
-      const frag = document.createDocumentFragment();
-      for (let i = 0; i < HOOF_COUNT; i += 1) {
-        const img = document.createElement("img");
-        img.className = "page-loader__hoof";
-        img.src = hoofMark;
-        img.alt = "";
-        img.width = 40;
-        img.height = 63;
-        img.draggable = false;
-        img.style.setProperty("--i", String(i));
-        frag.appendChild(img);
-      }
-      ring.appendChild(frag);
+    // Inject / refresh hoof trail on the same centered stage
+    ring.replaceChildren();
+    ring.dataset.hooves = String(HOOF_COUNT);
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < HOOF_COUNT; i += 1) {
+      const img = document.createElement("img");
+      img.className = "page-loader__hoof";
+      img.src = hoofMark;
+      img.alt = "";
+      img.width = 40;
+      img.height = 63;
+      img.draggable = false;
+      img.style.setProperty("--i", String(i));
+      frag.appendChild(img);
     }
+    ring.appendChild(frag);
   }, []);
 
   useEffect(() => {
