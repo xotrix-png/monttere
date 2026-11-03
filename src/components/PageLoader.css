@@ -20,40 +20,36 @@
 
 .page-loader__stage {
   position: relative;
-  width: clamp(160px, 20vw, 220px);
-  height: clamp(160px, 20vw, 220px);
+  width: clamp(168px, 22vw, 240px);
+  height: clamp(168px, 22vw, 240px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Whole track walks clockwise around the % */
 .page-loader__ring {
   position: absolute;
   inset: 0;
-  animation: page-loader-spin 3.2s linear infinite;
 }
 
 .page-loader__hoof {
-  --count: 8;
-  --radius: clamp(58px, 7.2vw, 82px);
+  --count: 10;
+  --radius: clamp(62px, 8vw, 88px);
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(20px, 2.4vw, 28px);
+  width: clamp(22px, 2.8vw, 32px);
   height: auto;
-  /* Place on circle; toes point along clockwise walk */
+  /* Tip points outward; slight clockwise lean like the ref */
   transform: rotate(calc(var(--i) * 360deg / var(--count)))
     translateY(calc(-1 * var(--radius)))
-    rotate(90deg);
+    rotate(18deg);
   transform-origin: center center;
-  opacity: 0.15;
-  animation: page-loader-step 1.6s ease-in-out infinite;
-  animation-delay: calc(var(--i) * -0.2s);
+  opacity: 0.18;
+  animation: page-loader-stomp 1.1s linear infinite;
+  animation-delay: calc(var(--i) * -0.11s);
   pointer-events: none;
   user-select: none;
-  /* Black print on transparent — invert to light prints on #181E1F */
-  filter: invert(1);
 }
 
 .page-loader__pct {
@@ -62,44 +58,50 @@
   font-family: "Instrument Serif", "Times New Roman", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(28px, 3.6vw, 42px);
-  letter-spacing: 0.04em;
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-@keyframes page-loader-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Gait pulse — prints light up in sequence like footsteps */
-@keyframes page-loader-step {
+/* Bright stamp travels around the ring — continuous circular stomp */
+@keyframes page-loader-stomp {
   0%,
   100% {
-    opacity: 0.12;
-    scale: 0.92;
+    opacity: 0.14;
+    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(18deg)
+      scale(0.9);
   }
-  40% {
+  8% {
     opacity: 1;
-    scale: 1;
+    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(18deg)
+      scale(1.08);
   }
-  55% {
-    opacity: 0.55;
-    scale: 0.98;
+  22% {
+    opacity: 0.45;
+    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(18deg)
+      scale(0.96);
+  }
+  40%,
+  100% {
+    opacity: 0.16;
+    transform: rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(18deg)
+      scale(0.9);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-loader__ring {
-    animation: none;
-  }
-
   .page-loader__hoof {
     animation: none;
-    opacity: 0.65;
-    scale: 1;
+    opacity: 0.55;
   }
 }
 

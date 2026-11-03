@@ -28,8 +28,25 @@
   </head>
   <body>
     <div id="boot-loader" aria-live="polite" aria-busy="true">
-      <span>0%</span>
+      <span id="boot-loader-pct">1%</span>
     </div>
+    <script>
+      /* Optimistic % before React hydrates — avoids a long 0% stare */
+      (function () {
+        var el = document.getElementById("boot-loader-pct");
+        if (!el) return;
+        var n = 1;
+        var id = setInterval(function () {
+          if (!document.getElementById("boot-loader")) {
+            clearInterval(id);
+            return;
+          }
+          n = Math.min(18, n + 1);
+          el.textContent = n + "%";
+          if (n >= 18) clearInterval(id);
+        }, 40);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

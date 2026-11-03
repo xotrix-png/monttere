@@ -3,12 +3,11 @@ import heroPhoto from "../assets/images/hero-photo.png";
 import logo from "../assets/images/logo.png";
 import equestrianMark from "../equestrian.svg";
 import heroMask from "../assets/images/hero-mask.svg";
-import hoofMark from "../assets/images/hoof-single.png";
+import hoofMark from "../assets/images/hoof-stamp.png";
 import "./PageLoader.css";
 
-const HOOF_COUNT = 8;
-
-const MIN_MS = 280;
+const HOOF_COUNT = 10;
+const MIN_MS = 220;
 const imageCache = new Map();
 
 function loadImage(src) {
@@ -20,7 +19,7 @@ function loadImage(src) {
       try {
         if (img.decode) await img.decode();
       } catch {
-        /* ignore decode errors — still paint what we can */
+        /* ignore */
       }
       resolve(true);
     };
@@ -31,7 +30,6 @@ function loadImage(src) {
   return job;
 }
 
-/** Wait until Hero DOM images are decoded & painted (not just bytes cached). */
 async function waitHeroPaint() {
   const nodes = [
     ...document.querySelectorAll(".hero__photo, .hero__photo-fg"),
@@ -52,23 +50,21 @@ async function waitHeroPaint() {
       }
     }),
   );
-  // Two frames so the browser can composite before we fade the cover
-  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await new Promise((r) =>
+    requestAnimationFrame(() => requestAnimationFrame(r)),
+  );
 }
 
 /**
- * Full-viewport boot cover (#181E1F + %) until Hero-critical assets
- * and fonts are ready — hides the piecemeal first paint.
- *
- * Scroll is blocked via listeners (not overflow:hidden) so removing
- * the cover does not change layout width / make the hero jump.
+ * Boot cover: Instrument Serif % + 10 hoof stamps stomping around the ring.
+ * Optimistic % climbs immediately so we never sit on 0%.
  */
 export default function PageLoader({ onDone }) {
-  const [pct, setPct] = useState(0);
+  const [pct, setPct] = useState(3);
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
-  const targetRef = useRef(0);
-  const shownRef = useRef(0);
+  const targetRef = useRef(8);
+  const shownRef = useRef(3);
   const rafRef = useRef(0);
   const startedRef = useRef(performance.now());
 
@@ -80,31 +76,43 @@ export default function PageLoader({ onDone }) {
   useEffect(() => {
     let cancelled = false;
 
-    const blockScroll = (e) => {
-      e.preventDefault();
-    };
+    const blockScroll = (e) => e.preventDefault();
     const blockKeys = (e) => {
-      const keys = [
-        "ArrowUp",
-        "ArrowDown",
-        "PageUp",
-        "PageDown",
-        "Home",
-        "End",
-        " ",
-      ];
-      if (keys.includes(e.key)) e.preventDefault();
+      if (
+        [
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
     };
     window.addEventListener("wheel", blockScroll, { passive: false });
     window.addEventListener("touchmove", blockScroll, { passive: false });
     window.addEventListener("keydown", blockKeys);
 
+    const setTarget = (value) => {
+      targetRef.current = Math.min(100, Math.max(targetRef.current, value));
+    };
+
     const tick = () => {
       if (cancelled) return;
+      // Soft time floor — climbs even while assets are still pending
+      const elapsed = performance.now() - startedRef.current;
+      const soft = Math.min(72, 8 + (elapsed / 850) * 64);
+      if (targetRef.current < 100) {
+        targetRef.current = Math.max(targetRef.current, soft);
+      }
+
       const cur = shownRef.current;
       const tgt = targetRef.current;
-      const next = cur + (tgt - cur) * 0.28;
-      const shown = tgt - next < 0.6 ? tgt : next;
+      const next = cur + (tgt - cur) * 0.38;
+      const shown = tgt - next < 0.5 ? tgt : next;
       shownRef.current = shown;
       setPct(Math.round(shown));
       if (shown < 100 || tgt < 100) {
@@ -113,44 +121,34 @@ export default function PageLoader({ onDone }) {
     };
     rafRef.current = requestAnimationFrame(tick);
 
-    const setTarget = (value) => {
-      targetRef.current = Math.min(100, Math.max(targetRef.current, value));
-    };
-
     const run = async () => {
-      setTarget(4);
+      setTarget(12);
 
-      const fonts = (async () => {
-        try {
-          if (document.fonts?.load) {
-            await document.fonts.load('400 42px "Instrument Serif"');
-          }
-          await document.fonts?.ready;
-        } catch {
-          /* ignore */
-        }
-      })();
+      // Don't await fonts — they must not pin us at low %
+      document.fonts?.load?.('400 42px "Instrument Serif"').catch(() => {});
+
       const hero = loadImage(heroPhoto);
       const crest = loadImage(logo);
       const mark = loadImage(equestrianMark);
       const mask = loadImage(heroMask);
+      const hoof = loadImage(hoofMark);
 
-      fonts.then(() => {
-        if (!cancelled) setTarget(22);
-      });
       crest.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 34));
+        if (!cancelled) setTarget(Math.max(targetRef.current, 30));
       });
       mark.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 42));
+        if (!cancelled) setTarget(Math.max(targetRef.current, 38));
       });
       mask.then(() => {
-        if (!cancelled) setTarget(Math.max(targetRef.current, 48));
+        if (!cancelled) setTarget(Math.max(targetRef.current, 44));
+      });
+      hoof.then(() => {
+        if (!cancelled) setTarget(Math.max(targetRef.current, 28));
       });
 
-      await Promise.all([fonts, crest, mark, mask]);
+      await Promise.all([crest, mark, mask, hoof]);
       if (cancelled) return;
-      setTarget(55);
+      setTarget(58);
 
       await hero;
       if (cancelled) return;
@@ -161,8 +159,7 @@ export default function PageLoader({ onDone }) {
       setTarget(100);
 
       const elapsed = performance.now() - startedRef.current;
-      const wait = Math.max(0, MIN_MS - elapsed);
-      await new Promise((r) => setTimeout(r, wait));
+      await new Promise((r) => setTimeout(r, Math.max(0, MIN_MS - elapsed)));
       if (cancelled) return;
 
       await new Promise((r) => {
@@ -179,7 +176,6 @@ export default function PageLoader({ onDone }) {
       });
       if (cancelled) return;
 
-      // One more paint with cover still opaque at 100%
       await new Promise((r) =>
         requestAnimationFrame(() => requestAnimationFrame(r)),
       );
@@ -226,8 +222,8 @@ export default function PageLoader({ onDone }) {
               src={hoofMark}
               alt=""
               style={{ "--i": i }}
-              width={26}
-              height={32}
+              width={32}
+              height={37}
               draggable={false}
             />
           ))}
