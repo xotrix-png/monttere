@@ -7,10 +7,10 @@
 .heritage {
   container-type: inline-size;
   --u: calc(100cqw / 1920);
-  /* Body copy lockup — since.top = story.bottom (3 lines) */
+  /* Body copy: story above rider; since locks to rider top edge */
   --heritage-copy-lh: calc((39 / 1.5) * var(--u));
   --heritage-story-top: calc(920.338 * var(--u));
-  --heritage-story-lines: 3;
+  --heritage-rider-top: calc(1022.338 * var(--u));
   position: relative;
   z-index: 2;
   width: 100%;
@@ -79,10 +79,8 @@
 .heritage__since {
   position: absolute;
   left: calc(141 * var(--u));
-  /* Top edge = bottom edge of right story block */
-  top: calc(
-    var(--heritage-story-top) + var(--heritage-story-lines) * var(--heritage-copy-lh)
-  );
+  /* Align to top edge of right rider photo */
+  top: var(--heritage-rider-top);
   width: calc(752.145 * var(--u));
   margin: 0;
   z-index: 2;
@@ -151,7 +149,7 @@
 /* 05-rider-field — 849.234×636.926, y:21430.023 → +1022.338 */
 .heritage__shot--rider {
   left: calc(935.145 * var(--u));
-  top: calc(1022.338 * var(--u));
+  top: var(--heritage-rider-top);
   width: calc(849.234 * var(--u));
   height: calc(636.926 * var(--u));
 }
