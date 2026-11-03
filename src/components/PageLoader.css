@@ -121,6 +121,11 @@
   }
 }
 
-html.is-booting {
+/* Lock page scroll during boot without window wheel preventDefault —
+   stale listeners were leaving mouse scroll dead after the cover faded. */
+html.is-booting,
+html.is-booting body {
+  overflow: hidden;
   overscroll-behavior: none;
+  /* scrollbar-gutter: stable on html keeps width from jumping when unlocked */
 }

@@ -8,6 +8,8 @@ import "./PageLoader.css";
 
 const HOOF_COUNT = 12;
 const MIN_MS = 220;
+/** Hard cap — never leave the boot cover stuck if paint/load stalls */
+const MAX_LOCK_MS = 4000;
 const imageCache = new Map();
 
 function loadImage(src) {
@@ -55,9 +57,14 @@ async function waitHeroPaint() {
   );
 }
 
+function unlockBoot() {
+  document.documentElement.classList.remove("is-booting");
+}
+
 /**
- * Boot cover: Instrument Serif % + 10 hoof stamps stomping around the ring.
- * Optimistic % climbs immediately so we never sit on 0%.
+ * Boot cover: Instrument Serif % + hoof trail around the ring.
+ * Scroll is locked via html.is-booting { overflow: hidden } — never via
+ * window wheel preventDefault (those listeners were leaving mouse scroll dead).
  */
 export default function PageLoader({ onDone }) {
   const [pct, setPct] = useState(3);
@@ -67,6 +74,7 @@ export default function PageLoader({ onDone }) {
   const shownRef = useRef(3);
   const rafRef = useRef(0);
   const startedRef = useRef(performance.now());
+  const doneRef = useRef(false);
 
   useLayoutEffect(() => {
     document.documentElement.classList.add("is-booting");
@@ -76,25 +84,21 @@ export default function PageLoader({ onDone }) {
   useEffect(() => {
     let cancelled = false;
 
-    const blockScroll = (e) => e.preventDefault();
-    const blockKeys = (e) => {
-      if (
-        [
-          "ArrowUp",
-          "ArrowDown",
-          "PageUp",
-          "PageDown",
-          "Home",
-          "End",
-          " ",
-        ].includes(e.key)
-      ) {
-        e.preventDefault();
-      }
+    const finishLeave = () => {
+      if (doneRef.current || cancelled) return;
+      doneRef.current = true;
+      unlockBoot();
+      setGone(true);
+      onDone?.();
     };
-    window.addEventListener("wheel", blockScroll, { passive: false });
-    window.addEventListener("touchmove", blockScroll, { passive: false });
-    window.addEventListener("keydown", blockKeys);
+
+    const beginLeave = () => {
+      if (cancelled || doneRef.current) return;
+      // Unlock scroll as soon as the fade starts (overlay is pointer-events:none)
+      unlockBoot();
+      setLeaving(true);
+      window.setTimeout(finishLeave, 500);
+    };
 
     const setTarget = (value) => {
       targetRef.current = Math.min(100, Math.max(targetRef.current, value));
@@ -102,7 +106,6 @@ export default function PageLoader({ onDone }) {
 
     const tick = () => {
       if (cancelled) return;
-      // Soft time floor — climbs even while assets are still pending
       const elapsed = performance.now() - startedRef.current;
       const soft = Math.min(72, 8 + (elapsed / 850) * 64);
       if (targetRef.current < 100) {
@@ -123,8 +126,6 @@ export default function PageLoader({ onDone }) {
 
     const run = async () => {
       setTarget(12);
-
-      // Don't await fonts — they must not pin us at low %
       document.fonts?.load?.('400 42px "Instrument Serif"').catch(() => {});
 
       const hero = loadImage(heroPhoto);
@@ -181,23 +182,33 @@ export default function PageLoader({ onDone }) {
       );
       if (cancelled) return;
 
-      setLeaving(true);
+      beginLeave();
     };
 
     run();
 
+    const maxLockTimer = window.setTimeout(() => {
+      if (cancelled) return;
+      setTarget(100);
+      shownRef.current = 100;
+      setPct(100);
+      beginLeave();
+    }, MAX_LOCK_MS);
+
     return () => {
       cancelled = true;
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("wheel", blockScroll);
-      window.removeEventListener("touchmove", blockScroll);
-      window.removeEventListener("keydown", blockKeys);
+      window.clearTimeout(maxLockTimer);
+      unlockBoot();
     };
-  }, []);
+  }, [onDone]);
 
   const handleTransitionEnd = (e) => {
+    if (e.target !== e.currentTarget) return;
     if (e.propertyName !== "opacity" || !leaving) return;
-    document.documentElement.classList.remove("is-booting");
+    unlockBoot();
+    if (doneRef.current) return;
+    doneRef.current = true;
     setGone(true);
     onDone?.();
   };
