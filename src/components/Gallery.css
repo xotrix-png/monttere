@@ -401,10 +401,10 @@
 }
 
 /*
-  «шерстьь переход» — unmodified Images/шерстьь переход.png (Figma 98:29).
-  Rest: top = 100dvh − 375·u. Export is transparent below ~y480; Figma composites
-  an opaque #F3F6F7 foot (mask fills). .gallery__fur-soil recreates that foot.
-  box-shadow seals transform-layer edge against html #071a29 (the “дырка”).
+  «шерстьь переход» — Figma 98:29 / original PNG (#F3F6F7 + hair alpha).
+  No soil/cap/box-shadow slab under the wisps — those painted the white strip.
+  Foot of the PNG is opaque #F3F6F7 into Philosophy; gallery::after seals the hang.
+  Soften only the hard upper-right bitmap shelf. GSAP crawl untouched.
 */
 .gallery__fur {
   position: absolute;
@@ -412,48 +412,18 @@
   left: 0;
   top: calc(100dvh - var(--fur-overlap));
   width: 100%;
-  height: calc(var(--fur-h) + 16px);
+  height: var(--fur-h);
   font-size: 0;
   line-height: 0;
   pointer-events: none;
   will-change: transform;
-  /* Paint below the layer so no 1px dark body fringe shows at the foot */
-  box-shadow: 0 12px 0 0 #f3f6f7;
 }
 
-/* Exact Philosophy / Figma foot color under PNG transparent band */
-.gallery__fur-soil {
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  top: calc(370 / 536 * var(--fur-h));
-  bottom: 0;
-  background: #f3f6f7;
-  pointer-events: none;
-}
-
-/*
-  Figma 98:29 composites opaque #F3F6F7 through the foot; the PNG export is
-  transparent from y≈480 and has a soft alpha fringe at y479. Cap paints the
-  same solid over that fringe so no hairline reads against html #071a29.
-*/
+.gallery__fur-soil,
 .gallery__fur-cap {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  /* Starts where clipped img ends (478/536) — continuous #F3F6F7 into Philosophy */
-  top: calc(478 / 536 * var(--fur-h));
-  bottom: 0;
-  background: #f3f6f7;
-  pointer-events: none;
+  display: none;
 }
 
-/*
-  Clip PNG transparent foot (y480–535) + fringe (y479). Source file untouched;
-  soil/cap paint Figma’s opaque #F3F6F7 foot under/over the clip.
-*/
 .gallery__fur-img {
   position: relative;
   z-index: 1;
@@ -462,33 +432,25 @@
   height: var(--fur-h);
   max-width: none;
   object-fit: fill;
-  clip-path: inset(0 0 calc(58 / 536 * 100%) 0);
   /*
-    Right side of the source is already near-opaque at the top of the file,
-    so the bitmap edge reads as a hard line over Isabelle’s coat.
-    Keep the left/center wisps; dissolve only the upper-right shelf.
+    Soft top only (matches Figma blur on the mask): dissolve hard tips /
+    upper-right shelf. Foot stays fully opaque so Philosophy isn’t a strip.
   */
-  -webkit-mask-image:
-    linear-gradient(to right, #000 0%, #000 58%, transparent 78%),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 4%,
-      rgba(0, 0, 0, 0.45) 14%,
-      #000 34%,
-      #000 100%
-    );
-  -webkit-mask-composite: source-over;
-  mask-image:
-    linear-gradient(to right, #000 0%, #000 58%, transparent 78%),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 4%,
-      rgba(0, 0, 0, 0.45) 14%,
-      #000 34%,
-      #000 100%
-    );
-  mask-composite: add;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 6%,
+    rgba(0, 0, 0, 0.75) 14%,
+    #000 26%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 6%,
+    rgba(0, 0, 0, 0.75) 14%,
+    #000 26%,
+    #000 100%
+  );
 }
 

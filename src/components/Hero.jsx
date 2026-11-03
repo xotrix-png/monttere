@@ -22,7 +22,7 @@ export default function Hero() {
         width={1920}
         height={1081}
         fetchPriority="high"
-        decoding="async"
+        decoding="sync"
       />
 
       <div className="hero__blur hero__blur--nav" aria-hidden="true" />
@@ -121,6 +121,7 @@ export default function Hero() {
         aria-hidden="true"
         width={1920}
         height={1081}
+        decoding="sync"
         style={{
           WebkitMaskImage: `url(${heroMask})`,
           maskImage: `url(${heroMask})`,

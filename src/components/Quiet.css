@@ -107,7 +107,8 @@
 .quiet__art-range {
   position: absolute;
   left: 0;
-  top: calc(2173.208 * var(--u));
+  /* Matches ART_LINES from-Y (+100 vs original 2173.208) */
+  top: calc(2273.208 * var(--u));
   width: 1px;
   height: calc(2337.399 * var(--u));
   pointer-events: none;

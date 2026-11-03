@@ -15,14 +15,16 @@ body,
 }
 
 html {
-  background: #071a29;
+  background: #181e1f;
   scroll-behavior: auto;
+  /* Keep layout width stable when the scrollbar appears after boot */
+  scrollbar-gutter: stable;
 }
 
 body {
   font-family: "Inter Tight", sans-serif;
   color: #f3f6f7;
-  background: #071a29;
+  background: #181e1f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;

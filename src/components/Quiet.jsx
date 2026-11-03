@@ -18,28 +18,30 @@ const LEAD_FROM = 164;
 const LEAD_TO = 305.108;
 
 /* Quiet origin is Figma y:15464.685. Control points bow the line
-   right of Time / discipline / trust, then back onto the horse. */
+   right of Time / discipline / trust, then back onto the horse.
+   Path Y includes +100 so the lockup sits lower on the horse;
+   end Y still keeps a full 1080 frame clear of the bottom edge. */
 const ART_LINES = [
   {
     text: "The art",
-    from: [370.483, 2173.208],
-    c1: [1320, 2460],
-    c2: [1380, 3300],
-    to: [512.961, 3684.869],
+    from: [370.483, 2273.208],
+    c1: [1320, 2560],
+    c2: [1380, 3200],
+    to: [512.961, 3584.869],
   },
   {
     text: "is in the",
-    from: [521.474, 2317.208],
-    c1: [1460, 2620],
-    c2: [1280, 3480],
-    to: [355.441, 3940.308],
+    from: [521.474, 2417.208],
+    c1: [1460, 2720],
+    c2: [1280, 3380],
+    to: [355.441, 3840.308],
   },
   {
     text: "process",
-    from: [694.435, 2461.208],
-    c1: [1560, 2800],
-    c2: [1120, 3680],
-    to: [142.617, 4205.499],
+    from: [694.435, 2561.208],
+    c1: [1560, 2900],
+    c2: [1120, 3580],
+    to: [142.617, 4105.499],
   },
 ];
 
@@ -90,10 +92,16 @@ export default function Quiet() {
     apply();
     if (reduced) return undefined;
 
+    /* Finish the scrub when the horse is framed — not when the
+       art-range bottom finally crosses mid-viewport (that was too
+       late: “The art” had already left the screen). */
+    const horse = document.querySelector(".passage__horse");
     const trigger = ScrollTrigger.create({
       trigger: range,
       start: "top 85%",
-      end: "bottom 42%",
+      endTrigger: horse || range,
+      /* ~3%: after +100px path drop, finish a bit later so lines stay in frame */
+      end: horse ? "top 3%" : "bottom 42%",
       scrub: 0.8,
       invalidateOnRefresh: true,
       onUpdate: (self) => {

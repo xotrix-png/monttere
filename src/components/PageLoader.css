@@ -1,0 +1,94 @@
+/* Overlay chrome lives on #boot-loader (see index.html).
+   This file styles the hoof ring React injects into that same node. */
+
+.page-loader__hoof {
+  --count: 10;
+  --radius: clamp(78px, 10.2vw, 108px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(24px, 3vw, 34px);
+  height: auto;
+  display: block;
+  /*
+    Center on the % first, then place on the ring.
+    Asset: tapered toes at BOTTOM (front), dewclaws (dots) at TOP (heel).
+    Wave advances clockwise (rising --i). Local -90deg aims toes into that
+    tangent so the animal walks forward, not heel-first.
+    10 slots + slightly larger radius = a touch more air between stamps.
+  */
+  transform: translate(-50%, -50%)
+    rotate(calc(var(--i) * 360deg / var(--count)))
+    translateY(calc(-1 * var(--radius)))
+    rotate(-90deg);
+  transform-origin: center center;
+  opacity: 0;
+  animation: page-loader-walk 1.9s linear infinite;
+  /* i=0 peaks first → next peak at i=1… = clockwise */
+  animation-delay: calc((var(--count) - var(--i)) * (1.9s / var(--count)) * -1);
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes page-loader-walk {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(-90deg)
+      scale(0.75);
+  }
+  2% {
+    opacity: 1;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(-90deg)
+      scale(1.06);
+  }
+  7% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(-90deg)
+      scale(1);
+  }
+  14% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(-90deg)
+      scale(0.92);
+  }
+  20%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--count)))
+      translateY(calc(-1 * var(--radius)))
+      rotate(-90deg)
+      scale(0.75);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__hoof {
+    animation: none;
+    opacity: 0.55;
+  }
+
+  .page-loader__hoof:nth-child(1),
+  .page-loader__hoof:nth-child(2),
+  .page-loader__hoof:nth-child(3) {
+    opacity: 0.9;
+  }
+}
+
+html.is-booting,
+html.is-booting body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}

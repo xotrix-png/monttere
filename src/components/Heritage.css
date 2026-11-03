@@ -7,6 +7,10 @@
 .heritage {
   container-type: inline-size;
   --u: calc(100cqw / 1920);
+  /* Body copy: story above rider; since locks to rider top edge */
+  --heritage-copy-lh: calc((39 / 1.5) * var(--u));
+  --heritage-story-top: calc(920.338 * var(--u));
+  --heritage-rider-top: calc(1022.338 * var(--u));
   position: relative;
   z-index: 2;
   width: 100%;
@@ -45,18 +49,24 @@
   letter-spacing: 0;
 }
 
-/* 362:7 — Inter Tight 32, 3 lines, right-aligned to rider edge */
+/*
+  Body copy: size ÷1.5 from Figma 32/39.
+  Story (right, 3 lines) sits above rider (1022.338).
+  Since (left, 2 lines) starts exactly at story’s bottom edge,
+  still clear of the tree shot (1143.919).
+*/
 .heritage__story {
   position: absolute;
   left: calc(935.145 * var(--u));
-  top: calc(856.461 * var(--u));
+  top: var(--heritage-story-top);
   width: calc(849.234 * var(--u));
   margin: 0;
+  z-index: 2;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: calc(32 * var(--u));
-  line-height: calc(39 * var(--u));
+  font-size: calc((32 / 1.5) * var(--u));
+  line-height: var(--heritage-copy-lh);
   letter-spacing: 0;
   text-align: right;
   color: #f3f6f7;
@@ -66,18 +76,19 @@
   display: block;
 }
 
-/* 362:6 — Inter Tight 32, 2 lines */
 .heritage__since {
   position: absolute;
   left: calc(141 * var(--u));
-  top: calc(1022.338 * var(--u));
+  /* Align to top edge of right rider photo */
+  top: var(--heritage-rider-top);
   width: calc(752.145 * var(--u));
   margin: 0;
+  z-index: 2;
   font-family: "Inter Tight", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: calc(32 * var(--u));
-  line-height: calc(39 * var(--u));
+  font-size: calc((32 / 1.5) * var(--u));
+  line-height: var(--heritage-copy-lh);
   letter-spacing: 0;
   text-align: left;
   color: #f3f6f7;
@@ -138,7 +149,7 @@
 /* 05-rider-field — 849.234×636.926, y:21430.023 → +1022.338 */
 .heritage__shot--rider {
   left: calc(935.145 * var(--u));
-  top: calc(1022.338 * var(--u));
+  top: var(--heritage-rider-top);
   width: calc(849.234 * var(--u));
   height: calc(636.926 * var(--u));
 }
