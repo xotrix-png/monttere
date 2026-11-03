@@ -19,29 +19,29 @@ const LEAD_TO = 305.108;
 
 /* Quiet origin is Figma y:15464.685. Control points bow the line
    right of Time / discipline / trust, then back onto the horse.
-   End Y pulled up ~200 so at progress=1 (horse framed) all three
-   lines stay fully inside a 1080 desktop viewport. */
+   Path Y includes +100 so the lockup sits lower on the horse;
+   end Y still keeps a full 1080 frame clear of the bottom edge. */
 const ART_LINES = [
   {
     text: "The art",
-    from: [370.483, 2173.208],
-    c1: [1320, 2460],
-    c2: [1380, 3100],
-    to: [512.961, 3484.869],
+    from: [370.483, 2273.208],
+    c1: [1320, 2560],
+    c2: [1380, 3200],
+    to: [512.961, 3584.869],
   },
   {
     text: "is in the",
-    from: [521.474, 2317.208],
-    c1: [1460, 2620],
-    c2: [1280, 3280],
-    to: [355.441, 3740.308],
+    from: [521.474, 2417.208],
+    c1: [1460, 2720],
+    c2: [1280, 3380],
+    to: [355.441, 3840.308],
   },
   {
     text: "process",
-    from: [694.435, 2461.208],
-    c1: [1560, 2800],
-    c2: [1120, 3480],
-    to: [142.617, 4005.499],
+    from: [694.435, 2561.208],
+    c1: [1560, 2900],
+    c2: [1120, 3580],
+    to: [142.617, 4105.499],
   },
 ];
 
@@ -100,7 +100,8 @@ export default function Quiet() {
       trigger: range,
       start: "top 85%",
       endTrigger: horse || range,
-      end: horse ? "top 12%" : "bottom 42%",
+      /* 22% ≈ compensates the +100px path shift so lines stay on-screen */
+      end: horse ? "top 22%" : "bottom 42%",
       scrub: 0.8,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
