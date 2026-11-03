@@ -432,20 +432,10 @@
   height: var(--fur-h);
   max-width: none;
   object-fit: fill;
-  /* Dissolve hard upper-right opaque shelf only — leave wisps full strength */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.65) 72%,
-    transparent 88%
-  );
-  mask-image: linear-gradient(
-    to right,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.65) 72%,
-    transparent 88%
-  );
+  /*
+    No CSS mask on the foot: dissolving the right/top near the fold
+    re-exposed the viewport edge as a white strip. Source PNG already
+    has wispy alpha; keep it intact through the Philosophy hang.
+  */
 }
 
