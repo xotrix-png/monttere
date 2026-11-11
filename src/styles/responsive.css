@@ -348,17 +348,18 @@
 /* ——— Gallery + Collection ——— */
 @media (max-width: 1279.98px) {
   .gallery {
-    --fur-h: clamp(180px, 48vw, 280px);
-    --fur-hang: 80px;
-    --fur-overlap: 180px;
+    /* Tall feather, same idea as desktop: wisps over the photo, solid foot into Philosophy. */
+    --fur-h: clamp(300px, 46vh, 460px);
+    --fur-hang: clamp(84px, 14vh, 140px);
+    --fur-overlap: calc(var(--fur-h) - var(--fur-hang));
     height: calc(var(--gallery-run, 9) * 100svh);
     min-height: calc(var(--gallery-run, 9) * 100vh);
-    padding-bottom: 0;
+    padding-bottom: var(--fur-hang);
     overflow-x: clip;
     background: #0a0a0a;
   }
 
-  .gallery::after { height: 96px; background: #f3f6f7; }
+  .gallery::after { height: calc(var(--fur-hang) + 32px); background: #f3f6f7; }
 
   .gallery__viewport {
     position: sticky;
@@ -435,10 +436,12 @@
     left: var(--pad);
     right: var(--pad);
     top: auto;
-    bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+    /* Sit above the dense fur so the title and VIEW HORSE stay on the photo. */
+    bottom: calc(var(--fur-overlap) * 0.62 + env(safe-area-inset-bottom, 0px));
     transform: none;
     width: auto;
     max-width: none;
+    z-index: 3;
   }
 
   .gallery__index { gap: 10px; margin-bottom: 10px; }
@@ -480,10 +483,10 @@
   .gallery__counter {
     display: flex;
     position: absolute;
-    z-index: 7;
+    z-index: 16;
     left: var(--pad);
     right: var(--pad);
-    bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(var(--fur-overlap) * 0.5 + env(safe-area-inset-bottom, 0px));
     align-items: center;
     gap: 10px;
     margin: 0;
@@ -517,24 +520,53 @@
     left: 0;
     right: 0;
     top: auto;
-    bottom: 0;
+    bottom: calc(var(--fur-hang) * -1);
     width: 100%;
-    height: var(--fur-h);
+    height: calc(var(--fur-h) + 16px);
     margin: 0;
     z-index: 14;
-    box-shadow: none;
+    box-shadow: 0 14px 0 0 #f3f6f7;
     will-change: auto;
   }
 
-  .gallery__fur-img,
   .gallery__fur picture {
-    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
     width: 100%;
-    object-fit: cover;
-    object-position: center 42%;
-    clip-path: none;
-    -webkit-mask-image: none;
-    mask-image: none;
+    height: var(--fur-h);
+  }
+
+  .gallery__fur-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    object-position: center center;
+    /* Longer dissolve than the desktop mask so the shelf stays soft on a tall phone. */
+    -webkit-mask-image:
+      linear-gradient(to right, #000 0%, #000 54%, transparent 86%),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 4%,
+        rgba(0, 0, 0, 0.18) 16%,
+        rgba(0, 0, 0, 0.5) 34%,
+        #000 58%,
+        #000 100%
+      );
+    -webkit-mask-composite: source-over;
+    mask-image:
+      linear-gradient(to right, #000 0%, #000 54%, transparent 86%),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 4%,
+        rgba(0, 0, 0, 0.18) 16%,
+        rgba(0, 0, 0, 0.5) 34%,
+        #000 58%,
+        #000 100%
+      );
+    mask-composite: add;
   }
 
   .gallery__fur-soil,
@@ -651,8 +683,8 @@
 /* ——— Philosophy ——— */
 @media (max-width: 1279.98px) {
   .philosophy {
-    margin-top: -72px;
-    padding: 148px var(--pad) 96px;
+    margin-top: calc(clamp(84px, 14vh, 140px) * -1);
+    padding: calc(clamp(84px, 14vh, 140px) + 56px) var(--pad) 96px;
     overflow-x: clip;
   }
 
@@ -834,10 +866,14 @@
   }
 
   .estate__fur {
-    top: -88px;
-    height: 160px;
-    object-fit: cover;
-    object-position: center bottom;
+    /* White cap stays on Philosophy; wisps hang a little lower onto the doors. */
+    top: -112px;
+    height: 252px;
+    width: 100%;
+    left: 0;
+    max-width: none;
+    object-fit: fill;
+    object-position: center center;
   }
 
   .estate__index,
@@ -901,35 +937,23 @@
   }
 
   .estate__panel {
-    height: 100vh;
-    height: 100svh;
-    min-height: 600px;
-    position: sticky;
-    top: 0;
-    margin-top: -10vh;
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 28px var(--pad) calc(32px + env(safe-area-inset-bottom, 0px));
+    padding: 28px var(--pad) calc(36px + env(safe-area-inset-bottom, 0px));
   }
 
   .estate__veil { display: none; }
 
   .estate__panel:first-of-type { margin-top: 0; }
 
-  .estate__panel::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 16vh;
-    pointer-events: none;
-    background: linear-gradient(to bottom, rgba(7, 26, 41, 0.45), rgba(7, 26, 41, 0));
-  }
-
-  .estate__panel:first-of-type::before { display: none; }
+  .estate__panel::before { display: none; }
 
   .estate__panel::after {
     content: "";
@@ -1005,7 +1029,7 @@
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
   .estate__doors { min-height: 0; height: 120vh; height: 120svh; }
-  .estate__panel { min-height: 0; }
+  .estate__panel { min-height: 100svh; }
 }
 
 /* ——— Quiet ——— */
@@ -1013,28 +1037,31 @@
   .quiet {
     height: auto;
     margin-top: -48px;
-    padding: 72px 0 64px;
+    padding: 72px 0 0;
     overflow-x: clip;
     display: flex;
     flex-direction: column;
+    background: #f3f6f7;
   }
 
   .quiet__sky {
     top: -18vh;
     height: 34vh;
     width: 100%;
-    object-fit: cover;
+    object-fit: fill;
     object-position: center bottom;
     z-index: 5;
   }
 
   .quiet__sky--next {
-    top: auto;
-    bottom: -120px;
-    height: 280px;
-    z-index: 4;
-    object-fit: cover;
-    object-position: center top;
+    top: -8vw;
+    bottom: auto;
+    width: 100%;
+    height: 40vw;
+    z-index: 5;
+    object-fit: fill;
+    object-position: center center;
+    pointer-events: none;
   }
 
   .quiet__index,
@@ -1125,39 +1152,44 @@
     width: 100%;
     height: 100vh;
     height: 100svh;
-    min-height: 640px;
-    margin-top: 12px;
-    overflow: hidden;
+    min-height: 680px;
+    margin-top: 4px;
+    overflow: visible;
     background: #181e1f;
   }
 
   .quiet__hills {
-    left: -6%;
+    left: 0;
     top: 0;
-    width: 118%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 62% 28%;
-    -webkit-mask-image: none;
-    mask-image: none;
+    object-position: center 38%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
   }
 
   .quiet__points {
-    left: 18%;
-    top: 22%;
+    left: 0;
+    top: 12%;
     width: 70%;
-    height: auto;
+    height: 42%;
+    object-fit: fill;
+    z-index: 2;
   }
 
   .quiet__mark {
-    font-size: 12px;
+    z-index: 6;
+    font-size: 11px;
     line-height: 1.2;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
   }
 
-  .quiet__mark--time { left: 22%; top: 38%; }
-  .quiet__mark--discipline { left: 48%; top: 58%; }
-  .quiet__mark--trust { left: 46%; top: 76%; }
+  /* Keep the three words in the open hill above the headline. */
+  .quiet__mark--time { left: 8%; top: 20%; }
+  .quiet__mark--discipline { left: 46%; top: 33%; }
+  .quiet__mark--trust { left: 20%; top: 45%; }
 
   .quiet__craft-index,
   .quiet__craft-label {
@@ -1166,21 +1198,21 @@
     left: auto;
     font-size: 12px;
     letter-spacing: 0.12em;
-    z-index: 3;
+    z-index: 6;
   }
 
-  .quiet__craft-index { top: 8%; }
-  .quiet__craft-label { top: calc(8% + 18px); }
+  .quiet__craft-index { top: 20%; }
+  .quiet__craft-label { top: calc(20% + 18px); }
 
   .quiet__art-block {
     order: 7;
     display: block;
     position: relative;
-    z-index: 4;
+    z-index: 3;
     min-height: 0;
-    margin-top: -72vh;
-    margin-top: -72svh;
-    margin-bottom: 8vh;
+    margin-top: -48svh;
+    margin-bottom: 0;
+    pointer-events: none;
   }
 
   .quiet__art-range {
@@ -1195,18 +1227,18 @@
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 12vh var(--pad) 8vh;
+    padding: 0 var(--pad) 2vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0;
+    gap: 0.02em;
     pointer-events: none;
   }
 
   .quiet__art span {
     position: relative;
-    font-size: clamp(48px, 14vw, 92px);
-    line-height: 0.92;
+    font-size: clamp(46px, 13vw, 88px);
+    line-height: 0.9;
     transform-origin: 0% 50%;
     color: #f3f6f7;
   }
@@ -1222,7 +1254,7 @@
     height: 108vh;
     height: 108svh;
     min-height: 0;
-    margin-top: -36px;
+    margin-top: -36svh;
     overflow: hidden;
     --ps: calc(100vw / 820);
     --px: calc((100% - 1920 * var(--ps)) * 0.62);
@@ -1314,7 +1346,6 @@
 
   .heritage__shot picture,
   .gallery__media picture,
-  .gallery__fur picture,
   .estate__doors-stage > picture {
     display: block;
     width: 100%;

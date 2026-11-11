@@ -156,9 +156,9 @@ export default function Quiet() {
         scale: gsap.quickSetter(el, "scale"),
       }));
       const paths = [
-        { from: [-8, 64], c1: [16, 28], c2: [6, 8], to: [0, 0] },
-        { from: [6, 110], c1: [22, 60], c2: [4, 14], to: [0, 0] },
-        { from: [-4, 160], c1: [14, 80], c2: [2, 18], to: [0, 0] },
+        { from: [-6, 22], c1: [10, 12], c2: [4, 4], to: [0, 0] },
+        { from: [4, 36], c1: [14, 20], c2: [2, 6], to: [0, 0] },
+        { from: [-2, 52], c1: [8, 28], c2: [0, 8], to: [0, 0] },
       ];
       const scaleFrom = 160 / 297;
       const apply = (progress) => {
@@ -207,6 +207,17 @@ export default function Quiet() {
       <div className="quiet__field">
       <Layer
         narrow={narrow}
+        className="quiet__sky quiet__sky--next"
+        src={skyTransition2}
+        webp={skyTransition2M}
+        avif={skyTransition2A}
+        alt=""
+        width={1920}
+        height={1147}
+        decoding="async"
+      />
+      <Layer
+        narrow={narrow}
         className="quiet__hills"
         src={passageField}
         webp={passageFieldM}
@@ -230,17 +241,6 @@ export default function Quiet() {
       <p className="quiet__craft-index">06</p>
       <p className="quiet__craft-label">The craft</p>
       </div>
-      <Layer
-        narrow={narrow}
-        className="quiet__sky quiet__sky--next"
-        src={skyTransition2}
-        webp={skyTransition2M}
-        avif={skyTransition2A}
-        alt=""
-        width={1920}
-        height={1147}
-        decoding="async"
-      />
 
       <p className="quiet__index">05</p>
       <p className="quiet__label">The essence</p>
