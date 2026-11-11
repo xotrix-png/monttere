@@ -1,7 +1,42 @@
 import heritageTree from "../assets/images/heritage-tree.jpg";
+import heritageTreeM from "../assets/images/m/heritage-tree.webp";
+import heritageTreeA from "../assets/images/m/heritage-tree.avif";
 import heritageRider from "../assets/images/heritage-rider.jpg";
+import heritageRiderM from "../assets/images/m/heritage-rider.webp";
+import heritageRiderA from "../assets/images/m/heritage-rider.avif";
 import heritageStable from "../assets/images/heritage-stable.jpg";
+import heritageStableM from "../assets/images/m/heritage-stable.webp";
+import heritageStableA from "../assets/images/m/heritage-stable.avif";
+import { useNarrow } from "../hooks/useNarrow.js";
 import "./Heritage.css";
+
+function Shot({ narrow, src, webp, avif, className }) {
+  const img = (
+    <img
+      className="heritage__photo"
+      src={narrow ? webp : src}
+      alt=""
+      width={1920}
+      height={1440}
+      decoding="async"
+      loading={narrow ? "lazy" : undefined}
+    />
+  );
+  return (
+    <div className={className}>
+      {narrow ? (
+        <picture>
+          <source srcSet={avif} type="image/avif" />
+          <source srcSet={webp} type="image/webp" />
+          {img}
+        </picture>
+      ) : (
+        img
+      )}
+      <span className="heritage__grade" aria-hidden="true" />
+    </div>
+  );
+}
 
 /*
   After Passage (ends Figma y:20407.685). Dark field through caption /
@@ -10,6 +45,7 @@ import "./Heritage.css";
   (Figma blend overlay) isolated to that shot.
 */
 export default function Heritage() {
+  const narrow = useNarrow();
   return (
     <section className="heritage" id="heritage" aria-label="Our heritage">
       <h2 className="heritage__title">
@@ -32,41 +68,27 @@ export default function Heritage() {
         <span>people, horses and nature come together</span>
       </p>
 
-      <div className="heritage__shot heritage__shot--tree">
-        <img
-          className="heritage__photo"
-          src={heritageTree}
-          alt=""
-          width={1920}
-          height={1440}
-          decoding="async"
-        />
-        <span className="heritage__grade" aria-hidden="true" />
-      </div>
-
-      <div className="heritage__shot heritage__shot--rider">
-        <img
-          className="heritage__photo"
-          src={heritageRider}
-          alt=""
-          width={1920}
-          height={1440}
-          decoding="async"
-        />
-        <span className="heritage__grade" aria-hidden="true" />
-      </div>
-
-      <div className="heritage__shot heritage__shot--stable">
-        <img
-          className="heritage__photo"
-          src={heritageStable}
-          alt=""
-          width={1920}
-          height={1440}
-          decoding="async"
-        />
-        <span className="heritage__grade" aria-hidden="true" />
-      </div>
+      <Shot
+        narrow={narrow}
+        className="heritage__shot heritage__shot--tree"
+        src={heritageTree}
+        webp={heritageTreeM}
+        avif={heritageTreeA}
+      />
+      <Shot
+        narrow={narrow}
+        className="heritage__shot heritage__shot--rider"
+        src={heritageRider}
+        webp={heritageRiderM}
+        avif={heritageRiderA}
+      />
+      <Shot
+        narrow={narrow}
+        className="heritage__shot heritage__shot--stable"
+        src={heritageStable}
+        webp={heritageStableM}
+        avif={heritageStableA}
+      />
 
       <p className="heritage__caption">Montérre private equestrian club</p>
 

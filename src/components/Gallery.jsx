@@ -9,7 +9,22 @@ import valentino from "../assets/images/valentino.png";
 import adrian from "../assets/images/adrian.png";
 import theodore from "../assets/images/theodore.png";
 import isabelle from "../assets/images/isabelle.png";
+import arabellaM from "../assets/images/m/arabella.webp";
+import eleanorM from "../assets/images/m/eleanor.webp";
+import valentinoM from "../assets/images/m/valentino.webp";
+import adrianM from "../assets/images/m/adrian.webp";
+import theodoreM from "../assets/images/m/theodore.webp";
+import isabelleM from "../assets/images/m/isabelle.webp";
+import arabellaA from "../assets/images/m/arabella.avif";
+import eleanorA from "../assets/images/m/eleanor.avif";
+import valentinoA from "../assets/images/m/valentino.avif";
+import adrianA from "../assets/images/m/adrian.avif";
+import theodoreA from "../assets/images/m/theodore.avif";
+import isabelleA from "../assets/images/m/isabelle.avif";
+import { useNarrow } from "../hooks/useNarrow.js";
 import furTransition from "../assets/images/fur-transition.png";
+import furTransitionM from "../assets/images/m/fur-transition.webp";
+import furTransitionA from "../assets/images/m/fur-transition.avif";
 import arrowLong from "../assets/images/gallery-arrow-long.svg";
 import arrowNe from "../assets/images/gallery-arrow-ne.svg";
 import "./Gallery.css";
@@ -53,6 +68,8 @@ const HORSES = [
     color: "brown",
     lines: ["Elegant by nature", "Precise by instinct"],
     image: arabella,
+    webp: arabellaM,
+    avif: arabellaA,
     crop: "arabella",
     button: "long",
     divider: "short",
@@ -69,6 +86,8 @@ const HORSES = [
     color: "BLACK",
     lines: ["Grace in motion,", "Strength in character"],
     image: eleanor,
+    webp: eleanorM,
+    avif: eleanorA,
     crop: "eleanor",
     button: "long",
     divider: "short",
@@ -85,6 +104,8 @@ const HORSES = [
     color: "GREY",
     lines: ["Power, balance, presence"],
     image: valentino,
+    webp: valentinoM,
+    avif: valentinoA,
     crop: "valentino",
     button: "long",
     divider: "short",
@@ -101,6 +122,8 @@ const HORSES = [
     color: "dark brown",
     lines: ["Power, discipline,", "a true partner in sport"],
     image: adrian,
+    webp: adrianM,
+    avif: adrianA,
     crop: "adrian",
     button: "long",
     divider: "short",
@@ -117,6 +140,8 @@ const HORSES = [
     color: "BLACK",
     lines: ["Grace in every movement,", "strength in every step"],
     image: theodore,
+    webp: theodoreM,
+    avif: theodoreA,
     crop: "theodore",
     button: "long",
     divider: "short",
@@ -133,6 +158,8 @@ const HORSES = [
     color: "white",
     lines: ["Bold in spirit,", "elegant by nature"],
     image: isabelle,
+    webp: isabelleM,
+    avif: isabelleA,
     crop: "isabelle",
     button: "short",
     divider: "long",
@@ -192,15 +219,69 @@ export default function Gallery() {
   const trackRef = useRef(null);
   const navRef = useRef(null);
   const furRef = useRef(null);
+  const carouselRef = useRef(null);
   const tweenRef = useRef(null);
   const activeRef = useRef(0);
+  const narrow = useNarrow();
 
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
     const nav = navRef.current;
     const fur = furRef.current;
+    const carousel = carouselRef.current;
     if (!section || !track || !nav || !fur) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 1279.98px)", () => {
+      if (!carousel) return undefined;
+      const setNavActive = (horseIndex) => {
+        const i = Math.max(0, Math.min(HORSES.length - 1, horseIndex));
+        activeRef.current = i;
+        nav.querySelectorAll(".gallery__nav-item").forEach((el, idx) => {
+          el.classList.toggle("is-active", idx === i);
+          if (idx === i) el.setAttribute("aria-current", "true");
+          else el.removeAttribute("aria-current");
+        });
+      };
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const w = carousel.clientWidth || 1;
+          const index = Math.round(carousel.scrollLeft / w);
+          setNavActive(index);
+          carousel.classList.toggle("is-scrolled", carousel.scrollLeft > 12);
+        });
+      };
+      carousel.addEventListener("scroll", onScroll, { passive: true });
+      setNavActive(0);
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let io;
+      if (reduced) fur.classList.add("is-in");
+      else {
+        io = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) fur.classList.add("is-in");
+          },
+          { threshold: 0.3 },
+        );
+        io.observe(fur);
+      }
+
+      return () => {
+        carousel.removeEventListener("scroll", onScroll);
+        io?.disconnect();
+        fur.classList.remove("is-in");
+        carousel.classList.remove("is-scrolled");
+      };
+    });
+
+    mm.add("(min-width: 1280px)", () => {
 
     const getSlideWidth = () =>
       track.children[0]?.getBoundingClientRect().width || window.innerWidth;
@@ -357,14 +438,27 @@ export default function Gallery() {
     tweenRef.current = tl;
     ScrollTrigger.refresh();
 
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-      tweenRef.current = null;
-    };
+      return () => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+        tweenRef.current = null;
+        gsap.set(track, { clearProps: "transform" });
+        gsap.set(fur, { clearProps: "transform" });
+        gsap.set(nav, { clearProps: "transform,opacity,visibility" });
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   const goTo = (slideIndex) => {
+    if (window.matchMedia("(max-width: 1279.98px)").matches) {
+      const carousel = carouselRef.current;
+      const card = carousel?.querySelectorAll(".gallery__slide--horse")[slideIndex - 1];
+      if (!carousel || !card) return;
+      carousel.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+      return;
+    }
     const st = tweenRef.current?.scrollTrigger;
     if (!st) return;
     const progress = slideToProgress(slideIndex);
@@ -386,6 +480,7 @@ export default function Gallery() {
               <Collection />
             </div>
 
+            <div className="gallery__carousel" ref={carouselRef}>
             {HORSES.map((horse) => (
               <article
                 key={horse.id}
@@ -396,13 +491,28 @@ export default function Gallery() {
                   className={`gallery__media${horse.mirror ? " gallery__media--mirror" : ""}`}
                   aria-hidden="true"
                 >
-                  <img
-                    className="gallery__photo"
-                    src={horse.image}
-                    alt=""
-                    draggable={false}
-                    sizes="(min-width: 1920px) 1920px, 100vw"
-                  />
+                  {narrow ? (
+                    <picture>
+                      <source srcSet={horse.avif} type="image/avif" />
+                      <source srcSet={horse.webp} type="image/webp" />
+                      <img
+                        className="gallery__photo"
+                        src={horse.webp}
+                        alt=""
+                        draggable={false}
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </picture>
+                  ) : (
+                    <img
+                      className="gallery__photo"
+                      src={horse.image}
+                      alt=""
+                      draggable={false}
+                      sizes="(min-width: 1920px) 1920px, 100vw"
+                    />
+                  )}
                   {horse.veil && <div className="gallery__veil" />}
                 </div>
 
@@ -455,6 +565,10 @@ export default function Gallery() {
                 </div>
               </article>
             ))}
+            <div className="gallery__hint" aria-hidden="true">
+              <span />
+            </div>
+            </div>
           </div>
 
           {/* One shared nav — pinned with the viewport, scroll-linked motion */}
@@ -485,14 +599,29 @@ export default function Gallery() {
         <div className="gallery__fur" ref={furRef} aria-hidden="true">
           {/* Figma foot fill: PNG is transparent y≈480–536; soil under, cap over fringe */}
           <div className="gallery__fur-soil" />
-          <img
-            className="gallery__fur-img"
-            src={furTransition}
-            alt=""
-            width={1920}
-            height={536}
-            decoding="async"
-          />
+          {narrow ? (
+            <picture>
+              <source srcSet={furTransitionA} type="image/avif" />
+              <source srcSet={furTransitionM} type="image/webp" />
+              <img
+                className="gallery__fur-img"
+                src={furTransitionM}
+                alt=""
+                width={1920}
+                height={536}
+                decoding="async"
+              />
+            </picture>
+          ) : (
+            <img
+              className="gallery__fur-img"
+              src={furTransition}
+              alt=""
+              width={1920}
+              height={536}
+              decoding="async"
+            />
+          )}
           <div className="gallery__fur-cap" />
         </div>
       </section>

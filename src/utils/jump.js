@@ -1,6 +1,23 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+function headerOffset(id) {
+  if (!window.matchMedia("(max-width: 1279.98px)").matches) return 0;
+  if (!id || id === "top" || id === "membership") return 0;
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue("--header-offset");
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : 0;
+}
+
 /** Instant jump to a section — no smooth scroll. */
 export function jumpTo(id) {
-  if (!id || id === "top") {
+  const narrow = window.matchMedia("(max-width: 1279.98px)").matches;
+  if (narrow) ScrollTrigger.refresh();
+
+  if (!id || id === "top" || (narrow && id === "membership")) {
     window.scrollTo(0, 0);
     return;
   }
@@ -14,11 +31,11 @@ export function jumpTo(id) {
       ? el.parentElement
       : null;
   if (spacer) {
-    window.scrollTo(0, spacer.offsetTop);
+    window.scrollTo(0, Math.max(0, spacer.offsetTop - headerOffset(id)));
     return;
   }
 
-  const top = el.getBoundingClientRect().top + window.scrollY;
+  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset(id);
   window.scrollTo(0, Math.max(0, top));
 }
 
