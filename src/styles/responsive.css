@@ -31,10 +31,26 @@
     --pad: 20px;
   }
 
-  html,
-  body {
-    overflow-x: clip;
+  /*
+    iOS Safari blanks the document when body is overflow-x: hidden/clip
+    and a position:fixed header is present: the web view keeps the navy
+    background and never paints the scrollable tree. Clip overflow on
+    #root instead, and leave body as the normal document scroller.
+  */
+  html {
     background: #071a29;
+  }
+
+  body {
+    overflow-x: visible;
+    overflow-y: visible;
+    width: 100%;
+    position: relative;
+    background: #071a29;
+  }
+
+  #root {
+    overflow-x: clip;
   }
 
   #collection,
@@ -307,25 +323,8 @@
   }
 }
 
-@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference),
-  (max-width: 1279.98px) and (orientation: portrait) and (prefers-reduced-motion: no-preference) {
-  .hero__intro,
-  .hero__title-monterre,
-  .hero__title-equestrian,
-  .hero__script,
-  .hero__cta {
-    animation: hero-in 600ms ease both;
-  }
-  .hero__title-monterre { animation-delay: 70ms; }
-  .hero__title-equestrian { animation-delay: 120ms; }
-  .hero__script { animation-delay: 170ms; }
-  .hero__cta { animation-delay: 210ms; }
-}
-
-@keyframes hero-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
-}
+/* Hero entrance is not animated. A fill-mode of "both" from opacity 0
+   stays invisible on iOS when the animation is dropped (Low Power Mode). */
 
 /* ——— Gallery + Collection ——— */
 @media (max-width: 1279.98px) {
@@ -1457,5 +1456,23 @@
   .site-logo--morphing,
   .site-logo--docked {
     transition: none !important;
+  }
+
+  /* difference-blend on a fixed crest crashes or fails to paint on iOS */
+  .site-logo--away {
+    mix-blend-mode: normal;
+  }
+
+  html[data-header-theme="light"] .site-logo--away .site-logo__mark {
+    background-color: #222b2f;
+  }
+
+  html[data-header-theme="light"] .mobile-nav__burger {
+    color: #071a29;
+  }
+
+  .collection__smoke {
+    mix-blend-mode: normal;
+    opacity: 0.2;
   }
 }

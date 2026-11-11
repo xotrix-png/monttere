@@ -123,6 +123,50 @@ const PANELS = [
   },
 ];
 
+/** Poster and bytes stay unloaded until the panel nears the viewport. */
+function InViewVideo({ src, poster, className }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return undefined;
+    let armed = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          video.pause();
+          return;
+        }
+        if (!armed) {
+          armed = true;
+          video.poster = poster;
+          const source = document.createElement("source");
+          source.src = src;
+          source.type = "video/mp4";
+          video.appendChild(source);
+          video.load();
+        }
+        video.play().catch(() => {});
+      },
+      { rootMargin: "200px 0px", threshold: 0.01 },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [src, poster]);
+
+  return (
+    <video
+      ref={ref}
+      className={className}
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-hidden="true"
+    />
+  );
+}
+
 export default function Estate() {
   const doorsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -136,10 +180,11 @@ export default function Estate() {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 1280px)", () => {
+      if (window.innerWidth < 1280) return undefined;
       let cleanup = () => {};
       let dead = false;
       import("../estate/doors3d.js").then((mod) => {
-        if (dead) return;
+        if (dead || window.innerWidth < 1280) return;
         cleanup = mod.mountEstateDoors(stage, canvas) || (() => {});
       });
       return () => {
@@ -186,25 +231,6 @@ export default function Estate() {
     });
 
     return () => mm.revert();
-  }, [narrow]);
-
-  useEffect(() => {
-    if (!narrow) return undefined;
-    const root = doorsRef.current?.parentElement;
-    if (!root) return undefined;
-    const videos = [...root.querySelectorAll("video[data-mobile-loop]")];
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) video.play().catch(() => {});
-          else video.pause();
-        });
-      },
-      { threshold: 0.35 },
-    );
-    videos.forEach((video) => io.observe(video));
-    return () => io.disconnect();
   }, [narrow]);
 
   return (
@@ -298,18 +324,11 @@ export default function Estate() {
         >
           {panel.video ? (
             narrow ? (
-              <video
+              <InViewVideo
                 className="estate__photo"
+                src={panel.videoMobile}
                 poster={panel.poster}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                data-mobile-loop=""
-                aria-hidden="true"
-              >
-                <source src={panel.videoMobile} type="video/mp4" />
-              </video>
+              />
             ) : (
               <video
                 className="estate__photo"

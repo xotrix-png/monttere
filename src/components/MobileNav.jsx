@@ -19,6 +19,28 @@ export default function MobileNav() {
   const scrollY = useRef(0);
 
   useEffect(() => {
+    const button = buttonRef.current;
+    if (!button || !window.matchMedia("(max-width: 1279.98px)").matches) return undefined;
+    const lights = document.querySelectorAll(".philosophy, .contacts");
+    const seen = new Set();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) seen.add(entry.target);
+          else seen.delete(entry.target);
+        });
+        document.documentElement.dataset.headerTheme = seen.size ? "light" : "dark";
+      },
+      { rootMargin: "0px 0px -88% 0px", threshold: 0 },
+    );
+    lights.forEach((el) => io.observe(el));
+    return () => {
+      io.disconnect();
+      delete document.documentElement.dataset.headerTheme;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!open) return undefined;
     const panel = panelRef.current;
     const button = buttonRef.current;
@@ -92,7 +114,7 @@ export default function MobileNav() {
         aria-modal="true"
         aria-hidden={!open}
         aria-label="Menu"
-        inert={open ? undefined : true}
+        hidden={!open}
       >
         <nav aria-label="Primary">
           <ol className="mobile-nav__list">
