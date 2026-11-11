@@ -1,10 +1,28 @@
 import bg from "../assets/images/collection-bg.png";
+import bgM from "../assets/images/m/collection-bg.webp";
+import bgA from "../assets/images/m/collection-bg.avif";
 import smoke from "../assets/images/collection-smoke.png";
+import smokeM from "../assets/images/m/collection-smoke.webp";
+import smokeA from "../assets/images/m/collection-smoke.avif";
 import horse from "../assets/images/collection-horse.png";
+import horseM from "../assets/images/m/collection-horse.webp";
+import horseA from "../assets/images/m/collection-horse.avif";
 import horMark from "../assets/images/collection-hor.svg";
 import seMark from "../assets/images/collection-se.svg";
 import arrow from "../assets/images/collection-arrow.svg";
+import { useNarrow } from "../hooks/useNarrow.js";
 import "./Collection.css";
+
+function Layer({ narrow, src, webp, avif, ...rest }) {
+  if (!narrow) return <img src={src} {...rest} />;
+  return (
+    <picture>
+      <source srcSet={avif} type="image/avif" />
+      <source srcSet={webp} type="image/webp" />
+      <img src={webp} {...rest} />
+    </picture>
+  );
+}
 
 /**
  * Second block — THE COLLECTION / HORSE
@@ -15,20 +33,27 @@ import "./Collection.css";
  * so "HOR" sits in front of the horse and "SE" behind it.
  */
 export default function Collection() {
+  const narrow = useNarrow();
   return (
     <section className="collection" aria-label="THE COLLECTION">
-      <img
+      <Layer
+        narrow={narrow}
         className="collection__bg"
         src={bg}
+        webp={bgM}
+        avif={bgA}
         alt=""
         width={2586}
         height={1159}
         decoding="async"
       />
 
-      <img
+      <Layer
+        narrow={narrow}
         className="collection__smoke"
         src={smoke}
+        webp={smokeM}
+        avif={smokeA}
         alt=""
         aria-hidden="true"
         width={1920}
@@ -45,9 +70,12 @@ export default function Collection() {
         height={502}
       />
 
-      <img
+      <Layer
+        narrow={narrow}
         className="collection__horse"
         src={horse}
+        webp={horseM}
+        avif={horseA}
         alt="A dark horse in profile wearing a bridle"
         width={2000}
         height={1070}

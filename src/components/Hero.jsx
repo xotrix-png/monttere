@@ -1,7 +1,12 @@
 import photo from "../assets/images/hero-photo.png";
+import photoWebp1080 from "../assets/images/m/hero-photo-1080.webp";
+import photoWebp1600 from "../assets/images/m/hero-photo-1600.webp";
+import photoAvif1080 from "../assets/images/m/hero-photo-1080.avif";
+import photoAvif1600 from "../assets/images/m/hero-photo-1600.avif";
 import heroMask from "../assets/images/hero-mask.svg";
 import equestrianMark from "../equestrian.svg";
 import { jumpHandler } from "../utils/jump.js";
+import { useNarrow } from "../hooks/useNarrow.js";
 import "./Hero.css";
 
 /*
@@ -12,17 +17,49 @@ import "./Hero.css";
   the wordmark group is anchored to the same scene so MONTÉRRE always sits
   behind the woman. Nav and CTA are laid out against the viewport.
 */
+const webpSet = `${photoWebp1080} 1080w, ${photoWebp1600} 1600w`;
+const avifSet = `${photoAvif1080} 1080w, ${photoAvif1600} 1600w`;
+
+function HeroPhoto({ className, alt, hidden, narrow, style }) {
+  const shared = {
+    className,
+    width: 1920,
+    height: 1081,
+    alt: alt || "",
+    decoding: "async",
+    style,
+  };
+  if (hidden) shared["aria-hidden"] = "true";
+  if (!narrow) {
+    return (
+      <img
+        {...shared}
+        src={photo}
+        fetchPriority={hidden ? undefined : "high"}
+      />
+    );
+  }
+  return (
+    <picture>
+      <source media="(max-width: 1279.98px)" type="image/avif" srcSet={avifSet} sizes="100vw" />
+      <source media="(max-width: 1279.98px)" type="image/webp" srcSet={webpSet} sizes="100vw" />
+      <img
+        {...shared}
+        src={photoWebp1600}
+        fetchPriority={hidden ? undefined : "high"}
+      />
+    </picture>
+  );
+}
+
 export default function Hero() {
+  const narrow = useNarrow();
   return (
     <section className="hero" id="membership" aria-label="MONTÉRRE hero">
-      <img
+      <HeroPhoto
         className="hero__photo"
-        src={photo}
         alt="A woman standing with a grey horse in an open field"
-        width={1920}
-        height={1081}
-        fetchPriority="high"
-        decoding="async"
+        narrow={narrow}
       />
 
       <div className="hero__blur hero__blur--nav" aria-hidden="true" />
@@ -114,18 +151,18 @@ export default function Hero() {
 
       {/* Masked copy of the photo (same scene geometry): woman + horse in
           front of MONTÉRRE, behind EQUESTRIAN */}
-      <img
+      <HeroPhoto
         className="hero__photo-fg"
-        src={photo}
-        alt=""
-        aria-hidden="true"
-        width={1920}
-        height={1081}
+        hidden
+        narrow={narrow}
         style={{
           WebkitMaskImage: `url(${heroMask})`,
           maskImage: `url(${heroMask})`,
         }}
       />
+
+      <div className="hero__fade" aria-hidden="true" />
+      <div className="hero__base" aria-hidden="true" />
 
       <a
         className="hero__cta"
