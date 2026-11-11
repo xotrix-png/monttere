@@ -229,55 +229,128 @@ export default function Gallery() {
     const track = trackRef.current;
     const nav = navRef.current;
     const fur = furRef.current;
-    const carousel = carouselRef.current;
     if (!section || !track || !nav || !fur) return;
 
     const mm = gsap.matchMedia();
 
     mm.add("(max-width: 1279.98px)", () => {
-      if (!carousel) return undefined;
-      const setNavActive = (horseIndex) => {
-        const i = Math.max(0, Math.min(HORSES.length - 1, horseIndex));
-        activeRef.current = i;
-        nav.querySelectorAll(".gallery__nav-item").forEach((el, idx) => {
-          el.classList.toggle("is-active", idx === i);
-          if (idx === i) el.setAttribute("aria-current", "true");
-          else el.removeAttribute("aria-current");
-        });
-      };
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          ticking = false;
-          const w = carousel.clientWidth || 1;
-          const index = Math.round(carousel.scrollLeft / w);
-          setNavActive(index);
-          carousel.classList.toggle("is-scrolled", carousel.scrollLeft > 12);
-        });
-      };
-      carousel.addEventListener("scroll", onScroll, { passive: true });
-      setNavActive(0);
-
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let io;
-      if (reduced) fur.classList.add("is-in");
-      else {
-        io = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) fur.classList.add("is-in");
-          },
-          { threshold: 0.3 },
-        );
-        io.observe(fur);
+      const counter = section.querySelector(".gallery__counter");
+      const counterNum = section.querySelector(".gallery__counter-num");
+      section.style.setProperty(
+        "--gallery-run",
+        (SCROLL_TOTAL_W * 0.72 + 1).toFixed(3),
+      );
+
+      if (reduced) {
+        section.classList.add("is-reduced");
+        gsap.set(fur, { yPercent: 0 });
+        if (counter) counter.style.opacity = "1";
+        return () => {
+          section.classList.remove("is-reduced");
+          section.style.removeProperty("--gallery-run");
+          gsap.set([track, fur], { clearProps: "transform" });
+        };
       }
 
+      const measure = () =>
+        track.querySelector(".gallery__slide")?.offsetWidth || window.innerWidth;
+      let slideW = measure();
+      const setX = gsap.quickSetter(track, "x", "px");
+      const setFur = gsap.quickSetter(fur, "yPercent");
+      const setCountX = counter ? gsap.quickSetter(counter, "x", "px") : null;
+      const setCountA = counter ? gsap.quickSetter(counter, "opacity") : null;
+      let furStart = SCROLL_TOTAL_W;
+      let walked = 0;
+      for (const seg of SCROLL_SEGMENTS) {
+        if (seg.w === FUR_REVEAL_W) {
+          furStart = walked;
+          break;
+        }
+        walked += seg.w;
+      }
+      let shown = -2;
+
+      const paint = (progress) => {
+        const pos = progressToPos(progress);
+        setX(-pos * slideW);
+        const furT = Math.min(
+          1,
+          Math.max(0, (progress * SCROLL_TOTAL_W - furStart) / FUR_REVEAL_W),
+        );
+        setFur(100 * (1 - furT));
+        if (!counter || !counterNum) return;
+        const horse = pos < 0.72 ? -1 : Math.min(HORSES.length - 1, Math.max(0, Math.round(pos) - 1));
+        if (horse !== shown) {
+          shown = horse;
+          counterNum.textContent = horse < 0 ? "01" : HORSES[horse].num;
+          counter.style.setProperty("--p", String(horse < 0 ? 0 : (horse + 1) / HORSES.length));
+        }
+        const local = pos - Math.floor(pos);
+        if (pos < 0.72) {
+          setCountA?.(0);
+          setCountX?.(-28);
+        } else if (local > 0.04 && local < 0.42) {
+          const t = (local - 0.04) / 0.38;
+          setCountA?.(t);
+          setCountX?.(-28 * (1 - t));
+        } else {
+          setCountA?.(1);
+          setCountX?.(0);
+        }
+      };
+
+      gsap.set(fur, { yPercent: 100 });
+      gsap.set(track, { x: 0 });
+      const st = ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.3,
+        invalidateOnRefresh: true,
+        onToggle: (self) => {
+          track.style.willChange = self.isActive ? "transform" : "auto";
+          fur.style.willChange = self.isActive ? "transform" : "auto";
+        },
+        onRefresh: (self) => {
+          slideW = measure();
+          paint(self.progress);
+        },
+        onUpdate: (self) => paint(self.progress),
+      });
+      tweenRef.current = { scrollTrigger: st };
+      paint(st.progress || 0);
+
+      const viewport = section.querySelector(".gallery__viewport");
+      let touchX = 0;
+      let touchY = 0;
+      const onStart = (event) => {
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+      };
+      const onEnd = (event) => {
+        const dx = event.changedTouches[0].clientX - touchX;
+        const dy = event.changedTouches[0].clientY - touchY;
+        if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+        const pos = progressToPos(st.progress);
+        const current = Math.max(0, Math.min(LAST, Math.round(pos)));
+        const next = dx < 0 ? Math.min(LAST, current + 1) : Math.max(0, current - 1);
+        const progress = slideToProgress(next);
+        const y = st.start + (st.end - st.start) * progress;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      };
+      viewport?.addEventListener("touchstart", onStart, { passive: true });
+      viewport?.addEventListener("touchend", onEnd, { passive: true });
+
       return () => {
-        carousel.removeEventListener("scroll", onScroll);
-        io?.disconnect();
-        fur.classList.remove("is-in");
-        carousel.classList.remove("is-scrolled");
+        viewport?.removeEventListener("touchstart", onStart);
+        viewport?.removeEventListener("touchend", onEnd);
+        st.kill();
+        tweenRef.current = null;
+        section.style.removeProperty("--gallery-run");
+        track.style.willChange = "";
+        fur.style.willChange = "";
+        gsap.set([track, fur, counter].filter(Boolean), { clearProps: "transform,opacity" });
       };
     });
 
@@ -452,13 +525,6 @@ export default function Gallery() {
   }, []);
 
   const goTo = (slideIndex) => {
-    if (window.matchMedia("(max-width: 1279.98px)").matches) {
-      const carousel = carouselRef.current;
-      const card = carousel?.querySelectorAll(".gallery__slide--horse")[slideIndex - 1];
-      if (!carousel || !card) return;
-      carousel.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
-      return;
-    }
     const st = tweenRef.current?.scrollTrigger;
     if (!st) return;
     const progress = slideToProgress(slideIndex);
@@ -475,6 +541,7 @@ export default function Gallery() {
         aria-label="THE COLLECTION and horse gallery"
       >
         <div className="gallery__viewport">
+          <div className="gallery__clip">
           <div className="gallery__track" ref={trackRef}>
             <div className="gallery__slide gallery__slide--collection">
               <Collection />
@@ -570,6 +637,7 @@ export default function Gallery() {
             </div>
             </div>
           </div>
+          </div>
 
           {/* One shared nav — pinned with the viewport, scroll-linked motion */}
           <nav
@@ -590,11 +658,16 @@ export default function Gallery() {
               </button>
             ))}
           </nav>
-        </div>
-
+          <p className="gallery__counter" aria-hidden="true">
+            <span className="gallery__counter-num">01</span>
+            <span className="gallery__counter-of">/ 06</span>
+            <span className="gallery__counter-line" />
+          </p>
         {/*
           Figma 98:29 «шерстьь переход»: 1920×536, overlaps Isabelle by 375px,
           hangs 161px into Philosophy. Crawls up after EXIT_HOLD, then settles.
+          Inside the viewport so a sticky mobile stage can cover Isabelle,
+          and still able to hang below the clip into Philosophy.
         */}
         <div className="gallery__fur" ref={furRef} aria-hidden="true">
           {/* Figma foot fill: PNG is transparent y≈480–536; soil under, cap over fringe */}
@@ -623,6 +696,7 @@ export default function Gallery() {
             />
           )}
           <div className="gallery__fur-cap" />
+        </div>
         </div>
       </section>
     </>

@@ -196,37 +196,47 @@ export default function Estate() {
     mm.add("(max-width: 1279.98px)", () => {
       const left = stage.querySelector(".estate__leaf--left");
       const right = stage.querySelector(".estate__leaf--right");
+      const lockup = stage.querySelector(".estate__lockup");
       if (!left || !right) return undefined;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const apply = (amount) => {
-        left.style.transform = `rotateY(${-amount}deg)`;
-        right.style.transform = `rotateY(${amount}deg)`;
+      const setLock = lockup ? gsap.quickSetter(lockup, "opacity") : null;
+      const apply = (progress) => {
+        const open = Math.min(1, progress / 0.6);
+        const angle = 88 * open;
+        left.style.transform = `rotateY(${-angle}deg)`;
+        right.style.transform = `rotateY(${angle}deg)`;
+        const fade = Math.min(1, Math.max(0, (progress - 0.52) / 0.48));
+        setLock?.(fade);
       };
       if (reduced) {
-        apply(DOOR_OPEN);
+        apply(1);
         return () => {
           left.style.transform = "";
           right.style.transform = "";
+          if (lockup) lockup.style.opacity = "";
         };
       }
       const trigger = ScrollTrigger.create({
         trigger: stage,
-        start: "top 75%",
-        end: "bottom top",
-        scrub: DOOR_SCRUB,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.45,
         onToggle: (self) => {
           const value = self.isActive ? "transform" : "auto";
           left.style.willChange = value;
           right.style.willChange = value;
         },
-        onUpdate: (self) => apply(DOOR_OPEN * self.progress),
+        onUpdate: (self) => apply(self.progress),
+        onRefresh: (self) => apply(self.progress),
       });
+      apply(trigger.progress || 0);
       return () => {
         trigger.kill();
         left.style.transform = "";
         right.style.transform = "";
         left.style.willChange = "";
         right.style.willChange = "";
+        if (lockup) lockup.style.opacity = "";
       };
     });
 
@@ -277,6 +287,14 @@ export default function Estate() {
               </picture>
             </div>
           ) : null}
+          <p className="estate__index">04</p>
+          <p className="estate__label">THE ESTATE</p>
+          <h2 className="estate__lockup">
+            <span className="estate__space">SPACE</span>
+            <span className="estate__with">WITH</span>
+            <span className="estate__purpose">PURPOSE</span>
+          </h2>
+          <p className="estate__script">Heritage &amp; Refinement</p>
         </div>
 
         {narrow ? (
@@ -303,15 +321,6 @@ export default function Estate() {
           />
         )}
 
-        <p className="estate__index">04</p>
-        <p className="estate__label">THE ESTATE</p>
-
-        <h2 className="estate__lockup">
-          <span className="estate__space">SPACE</span>
-          <span className="estate__with">WITH</span>
-          <span className="estate__purpose">PURPOSE</span>
-        </h2>
-        <p className="estate__script">Heritage &amp; Refinement</p>
       </div>
 
       {PANELS.map((panel) => (

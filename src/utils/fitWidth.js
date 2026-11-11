@@ -1,12 +1,18 @@
 /** Measure a nowrap line at 100px and return the font-size that hits `width`. */
 function widthAt100(el) {
+  const cs = getComputedStyle(el);
   const probe = el.cloneNode(true);
   probe.style.cssText = [
-    "position:fixed",
+    "position:absolute",
     "left:0",
     "top:0",
     "visibility:hidden",
     "pointer-events:none",
+    `font-family:${cs.fontFamily}`,
+    `font-weight:${cs.fontWeight}`,
+    `font-stretch:${cs.fontStretch}`,
+    `letter-spacing:${cs.letterSpacing}`,
+    `text-transform:${cs.textTransform}`,
     "font-size:100px",
     "line-height:1",
     "width:max-content",
@@ -14,10 +20,9 @@ function widthAt100(el) {
     "height:auto",
     "white-space:nowrap",
     "transform:none",
-    "letter-spacing:normal",
   ].join(";");
-  document.body.appendChild(probe);
-  const width = probe.getBoundingClientRect().width;
+  (el.parentElement || document.body).appendChild(probe);
+  const width = probe.scrollWidth;
   probe.remove();
   return width;
 }
@@ -29,7 +34,7 @@ export function fitElement(el, width) {
     return;
   }
   const measured = widthAt100(el);
-  if (measured > 0) el.style.fontSize = `${(100 * width) / measured}px`;
+  if (measured > 0) el.style.fontSize = `${((100 * width) / measured) * 0.98}px`;
 }
 
 /** One shared size, taken from the widest line, so a stack shares a scale. */
@@ -47,7 +52,7 @@ export function fitGroup(els, width) {
     max = Math.max(max, widthAt100(el));
   }
   if (!(max > 0)) return;
-  const size = `${(100 * width) / max}px`;
+  const size = `${((100 * width) / max) * 0.98}px`;
   for (const el of list) el.style.fontSize = size;
 }
 
