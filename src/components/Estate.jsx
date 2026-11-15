@@ -227,7 +227,7 @@ export default function Estate() {
           setFur?.(1);
           return;
         }
-        setFur?.(1 - smooth(progress / 0.34));
+        setFur?.(progress < 0.32 ? 1 : 1 - smooth((progress - 0.32) / 0.22));
         setLock?.(smooth((progress - 0.18) / 0.62));
       };
       if (reduced) {

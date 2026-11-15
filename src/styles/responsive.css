@@ -912,30 +912,17 @@
   }
 
   .estate__fur {
-    /* A short wisp only. The solid white of the file stays masked out. */
-    top: -56px;
-    height: 132px;
+    /* Full file, no crop. Solid #f3f6f7 continues Philosophy; wisps fade on the dark. */
+    top: -78px;
+    height: 156px;
     width: 100%;
     left: 0;
     max-width: none;
-    object-fit: cover;
-    object-position: center 86%;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 28%,
-      rgba(0, 0, 0, 0.4) 58%,
-      #000 88%,
-      #000 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 28%,
-      rgba(0, 0, 0, 0.4) 58%,
-      #000 88%,
-      #000 100%
-    );
+    object-fit: fill;
+    object-position: center center;
+    box-shadow: 0 -16px 0 0 #f3f6f7;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .estate__index,
