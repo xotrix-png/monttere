@@ -1233,8 +1233,8 @@
     height: 100%;
     object-fit: cover;
     object-position: center 38%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 94%, transparent 100%);
   }
 
   .quiet__plot {
@@ -1243,7 +1243,7 @@
     z-index: 2;
     left: 3%;
     /* Below the 06 / THE CRAFT pair, not level with it. */
-    top: calc(18% + 78px);
+    top: calc(18% + 28px);
     width: min(56vw, 26svh);
     aspect-ratio: 1072 / 1069;
     height: auto;
@@ -1320,7 +1320,7 @@
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 0 var(--pad) 56px;
+    padding: 0 6px 110px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1330,8 +1330,8 @@
 
   .quiet__art span {
     position: relative;
-    font-size: clamp(46px, 13vw, 88px);
-    line-height: 0.9;
+    font-size: clamp(56px, 16vw, 120px);
+    line-height: 0.86;
     transform-origin: 0% 50%;
     color: #f3f6f7;
   }
@@ -1346,10 +1346,10 @@
   .passage {
     height: auto;
     min-height: 0;
-    /* Overlap only empty navy, so the field edge does not cut the photo. */
-    margin-top: -24px;
+    /* Transparent over the landscape so the head can fade in on top of it. */
+    margin-top: -210px;
     overflow: visible;
-    background: #181e1f;
+    background: transparent;
     z-index: 5;
   }
 
@@ -1357,9 +1357,9 @@
     display: block;
     position: relative;
     width: 100%;
-    height: 132vw;
+    height: 148vw;
     overflow: hidden;
-    background: #181e1f;
+    background: transparent;
   }
 
   .passage picture {
@@ -1376,7 +1376,7 @@
     position: absolute;
     right: 0;
     left: auto;
-    top: 28px;
+    top: 16px;
     bottom: auto;
     /* Right side of the file is the head: ears, eye, muzzle. */
     width: 208%;
@@ -1388,13 +1388,21 @@
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0,
-      #000 40px,
+      transparent 36px,
+      rgba(0, 0, 0, 0.2) 90px,
+      rgba(0, 0, 0, 0.45) 130px,
+      rgba(0, 0, 0, 0.75) 165px,
+      #000 200px,
       #000 100%
     );
     mask-image: linear-gradient(
       to bottom,
       transparent 0,
-      #000 40px,
+      transparent 36px,
+      rgba(0, 0, 0, 0.2) 90px,
+      rgba(0, 0, 0, 0.45) 130px,
+      rgba(0, 0, 0, 0.75) 165px,
+      #000 200px,
       #000 100%
     );
   }

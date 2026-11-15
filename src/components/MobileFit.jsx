@@ -66,8 +66,8 @@ export default function MobileFit() {
           art.clientWidth -
           parseFloat(box.paddingLeft) -
           parseFloat(box.paddingRight);
-        /* Stay inside the padded column. The full client width clipped the last letter. */
-        fitGroup(artLines, Math.max(0, inner - 12));
+        /* Fill the column. fitGroup keeps 2% of air so the last letter stays on screen. */
+        fitGroup(artLines, Math.max(0, inner / 0.98));
       }
 
       const heritage = document.querySelector(".heritage__title");
