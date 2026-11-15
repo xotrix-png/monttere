@@ -822,17 +822,21 @@
   .philosophy__scroll {
     position: relative;
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-column: 1 / -1;
-    margin: 56px 0 0 auto;
-    width: auto;
-    align-items: flex-end;
+    margin: 108px var(--pad) 36px auto;
+    width: max-content;
   }
 
   .philosophy__scroll-text { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
   .philosophy__scroll-arrow {
+    display: block;
     width: auto;
-    height: 120px;
-    margin-top: 12px;
+    height: 72px;
+    margin-top: 14px;
+    align-self: center;
     aspect-ratio: 13.6166 / 322.427;
     max-width: none;
   }
@@ -901,14 +905,28 @@
   }
 
   .estate__fur {
-    /* White cap stays on Philosophy; wisps hang a little lower onto the doors. */
-    top: -112px;
-    height: 252px;
+    /* Wisps on the doors. The top fades out so the bitmap shelf does not draw a line. */
+    top: -128px;
+    height: 240px;
     width: 100%;
     left: 0;
     max-width: none;
-    object-fit: fill;
-    object-position: center center;
+    object-fit: cover;
+    object-position: center 70%;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 18%,
+      #000 42%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 18%,
+      #000 42%,
+      #000 100%
+    );
   }
 
   .estate__index,
