@@ -863,7 +863,14 @@
 
   .estate__doors-bg { object-position: center 42%; }
 
-  .estate__doors-canvas { display: none; }
+  .estate__doors-canvas {
+    display: block;
+    width: 100%;
+    height: calc(100% + 80px);
+    z-index: 1;
+  }
+
+  .estate__doors-stage.is-doors-3d .estate__leaves { display: none; }
 
   .estate__leaves {
     display: block;

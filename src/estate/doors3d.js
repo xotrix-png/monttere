@@ -99,8 +99,13 @@ function mirrorLeaf(source) {
   return clone;
 }
 
-/** Desktop WebGL saloon doors. Same renderer, pose and scrub as before the split. */
-export function mountEstateDoors(stage, canvas) {
+/**
+ * WebGL saloon doors. Desktop calls this with the doors stage only.
+ * A third argument can point the scrub at a taller wrapper (the mobile pin)
+ * without changing the desktop pose.
+ */
+export function mountEstateDoors(stage, canvas, options = {}) {
+  const triggerEl = options.trigger || stage;
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -141,7 +146,8 @@ export function mountEstateDoors(stage, canvas) {
     const stageH = stage.clientHeight;
     const canvasH = canvas.clientHeight;
     if (!width || !stageH || !canvasH) return;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    const ratioCap = width < 1280 ? 1.25 : 1.75;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, ratioCap));
     renderer.setSize(width, canvasH, false);
     const distance = width * (2400 / 1920);
     const overlap = Math.max(0, canvasH - stageH);
@@ -155,8 +161,13 @@ export function mountEstateDoors(stage, canvas) {
     camera.updateProjectionMatrix();
     if (!metrics || !leftPivot || !rightPivot) return;
     const unit = width / 1920;
-    const scale = (1364 * unit) / metrics.height;
-    const y = 12 * unit - metrics.minY * scale;
+    const narrow = width < 1280;
+    const scale = narrow
+      ? (stageH * 0.62) / metrics.height
+      : (1364 * unit) / metrics.height;
+    const y = narrow
+      ? stageH * 0.1 - metrics.minY * scale
+      : 12 * unit - metrics.minY * scale;
     const z = 8 * unit;
     const edge = width * 0.5 * (z / distance);
     leftPivot.scale.set(scale, scale, scale);
@@ -188,7 +199,7 @@ export function mountEstateDoors(stage, canvas) {
 
   const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: stage,
+      trigger: triggerEl,
       start: "top 75%",
       end: "bottom top",
       scrub: DOOR_SCRUB,

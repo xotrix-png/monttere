@@ -194,25 +194,31 @@ export default function Estate() {
     });
 
     mm.add("(max-width: 1279.98px)", () => {
-      const left = stage.querySelector(".estate__leaf--left");
-      const right = stage.querySelector(".estate__leaf--right");
+      const sticky = stage.querySelector(".estate__doors-stage");
       const lockup = stage.querySelector(".estate__lockup");
-      if (!left || !right) return undefined;
+      let cleanup3d = () => {};
+      let dead = false;
+      import("../estate/doors3d.js").then((mod) => {
+        if (dead || !sticky || !canvas) return;
+        try {
+          cleanup3d = mod.mountEstateDoors(sticky, canvas, { trigger: stage }) || (() => {});
+          sticky.classList.add("is-doors-3d");
+        } catch {
+          cleanup3d = () => {};
+        }
+      });
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const setLock = lockup ? gsap.quickSetter(lockup, "opacity") : null;
       const apply = (progress) => {
-        const open = Math.min(1, progress / 0.6);
-        const angle = 88 * open;
-        left.style.transform = `rotateY(${-angle}deg)`;
-        right.style.transform = `rotateY(${angle}deg)`;
-        const fade = Math.min(1, Math.max(0, (progress - 0.52) / 0.48));
+        const fade = reduced ? 1 : Math.min(1, Math.max(0, (progress - 0.52) / 0.48));
         setLock?.(fade);
       };
       if (reduced) {
         apply(1);
         return () => {
-          left.style.transform = "";
-          right.style.transform = "";
+          dead = true;
+          sticky?.classList.remove("is-doors-3d");
+          cleanup3d();
           if (lockup) lockup.style.opacity = "";
         };
       }
@@ -221,21 +227,15 @@ export default function Estate() {
         start: "top top",
         end: "bottom bottom",
         scrub: 0.45,
-        onToggle: (self) => {
-          const value = self.isActive ? "transform" : "auto";
-          left.style.willChange = value;
-          right.style.willChange = value;
-        },
         onUpdate: (self) => apply(self.progress),
         onRefresh: (self) => apply(self.progress),
       });
       apply(trigger.progress || 0);
       return () => {
+        dead = true;
+        sticky?.classList.remove("is-doors-3d");
+        cleanup3d();
         trigger.kill();
-        left.style.transform = "";
-        right.style.transform = "";
-        left.style.willChange = "";
-        right.style.willChange = "";
         if (lockup) lockup.style.opacity = "";
       };
     });
