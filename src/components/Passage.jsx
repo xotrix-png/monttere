@@ -10,13 +10,13 @@ import passageGrassA from "../assets/images/m/passage-grass.avif";
 import { useNarrow } from "../hooks/useNarrow.js";
 import "./Passage.css";
 
-function Layer({ narrow, src, webp, avif, ...rest }) {
-  if (!narrow) return <img src={src} {...rest} />;
+function Layer({ narrow, src, webp, avif, className, ...rest }) {
+  if (!narrow) return <img className={className} src={src} {...rest} />;
   return (
-    <picture>
+    <picture className={className ? `${className}-picture` : undefined}>
       <source srcSet={avif} type="image/avif" />
       <source srcSet={webp} type="image/webp" />
-      <img src={webp} loading="lazy" {...rest} />
+      <img className={className} src={webp} loading="lazy" {...rest} />
     </picture>
   );
 }
@@ -30,6 +30,7 @@ export default function Passage() {
   const narrow = useNarrow();
   return (
     <section className="passage" id="craft" aria-label="06 THE CRAFT">
+      <div className="passage__frame">
       <Layer
         narrow={narrow}
         className="passage__horse"
@@ -41,6 +42,7 @@ export default function Passage() {
         height={1389}
         decoding="async"
       />
+      </div>
       <Layer
         narrow={narrow}
         className="passage__horse-mask"

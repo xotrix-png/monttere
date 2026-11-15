@@ -240,8 +240,10 @@ export default function Quiet() {
         <p className="quiet__mark quiet__mark--discipline">discipline</p>
         <p className="quiet__mark quiet__mark--trust">trust</p>
       </div>
-      <p className="quiet__craft-index">06</p>
-      <p className="quiet__craft-label">The craft</p>
+      <div className="quiet__craft">
+        <p className="quiet__craft-index">06</p>
+        <p className="quiet__craft-label">The craft</p>
+      </div>
 
       <div className="quiet__art-block">
         <div className="quiet__art-range" ref={rangeRef} aria-hidden="true" />

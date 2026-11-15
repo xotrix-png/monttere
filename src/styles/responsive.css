@@ -21,7 +21,9 @@
 .gallery__carousel,
 .quiet__field,
 .quiet__art-block,
-.quiet__plot {
+.quiet__plot,
+.quiet__craft,
+.passage__frame {
   display: contents;
 }
 
@@ -1240,8 +1242,9 @@
     position: absolute;
     z-index: 2;
     left: 3%;
-    top: 30vw;
-    width: min(60vw, 30svh);
+    /* Below the 06 / THE CRAFT pair, not level with it. */
+    top: calc(18% + 78px);
+    width: min(56vw, 26svh);
     aspect-ratio: 1072 / 1069;
     height: auto;
     pointer-events: none;
@@ -1269,18 +1272,29 @@
   .quiet__mark--discipline { left: 64%; top: 46%; }
   .quiet__mark--trust { left: 45%; top: 74%; }
 
-  .quiet__craft-index,
-  .quiet__craft-label {
+  .quiet__craft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
+    top: 18%;
     right: var(--pad);
-    left: auto;
-    font-size: 12px;
-    letter-spacing: 0.12em;
     z-index: 6;
+    width: max-content;
   }
 
-  .quiet__craft-index { top: 20%; }
-  .quiet__craft-label { top: calc(20% + 18px); }
+  .quiet__craft-index,
+  .quiet__craft-label {
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  .quiet__craft-label { margin-top: 2px; }
 
   .quiet__art-block {
     display: block;
@@ -1306,7 +1320,7 @@
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 0 var(--pad) 0;
+    padding: 0 var(--pad) 56px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1330,51 +1344,84 @@
 /* ——— Passage ——— */
 @media (max-width: 1279.98px) {
   .passage {
-    height: 108vh;
-    height: 108svh;
+    height: auto;
     min-height: 0;
-    margin-top: -36svh;
+    /* Overlap only empty navy, so the field edge does not cut the photo. */
+    margin-top: -24px;
+    overflow: visible;
+    background: #181e1f;
+    z-index: 5;
+  }
+
+  .passage__frame {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 132vw;
     overflow: hidden;
-    --ps: calc(100vw / 820);
-    --px: calc((100% - 1920 * var(--ps)) * 0.62);
+    background: #181e1f;
   }
 
-  .passage__horse,
+  .passage picture {
+    display: block;
+    height: 100%;
+  }
+
   .passage__horse-mask,
-  .passage__grass {
-    left: var(--px);
-    width: calc(1920 * var(--ps));
-    top: auto;
-  }
-
-  .passage__grass {
-    bottom: -1px;
-    height: calc(313 * var(--ps));
-    z-index: 3;
+  .passage__horse-mask-picture {
+    display: none;
   }
 
   .passage__horse {
-    bottom: calc(146.446 * var(--ps));
-    height: calc(1415.375 * var(--ps));
-    /* Drop the frame so the ears and the top of the head sit under the headline. */
-    translate: 0 148px;
+    position: absolute;
+    right: 0;
+    left: auto;
+    top: 28px;
+    bottom: auto;
+    /* Right side of the file is the head: ears, eye, muzzle. */
+    width: 208%;
+    height: auto;
+    aspect-ratio: 1920 / 1389;
+    max-width: none;
+    translate: none;
+    object-fit: fill;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 40px,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 40px,
+      #000 100%
+    );
   }
 
-  .passage__horse-mask {
-    bottom: calc(1553.821 * var(--ps));
-    height: calc(454.54 * var(--ps));
-    translate: 0 148px;
+  .passage__grass {
+    left: 0;
+    right: auto;
+    top: auto;
+    bottom: 0;
+    width: 260%;
+    max-width: none;
+    height: 18vw;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 3;
+    translate: -42% 0;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --ps: calc(100vw / 1280); --px: calc((100% - 1920 * var(--ps)) * 0.38); }
-  .heritage { margin-top: calc(120px - 0.82 * 313 * 100vw / 1280); }
+  .passage__frame { height: 78vw; }
+  .passage__horse { width: 150%; }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
-  .passage { min-height: 0; height: 140vh; height: 140svh; --ps: calc(100vw / 1500); }
-  .heritage { margin-top: calc(96px - 0.82 * 313 * 100vw / 1500); }
+  .passage { height: auto; }
+  .passage__frame { height: 70vw; }
 }
 
 /* ——— Heritage ——— */
@@ -1384,10 +1431,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 12px;
-    /* Pull the headline up through the flat dark of the grass fringe.
-       0.82 of the grass file is the solid foot under the hair tips. */
-    margin-top: calc(112px - 0.82 * 313 * 100vw / 820);
-    padding: 0 var(--pad) 96px;
+    /* The grass fringe ends in the same navy. A short band, then the headline. */
+    margin-top: 0;
+    padding: 8px var(--pad) 96px;
     overflow-x: clip;
   }
 
