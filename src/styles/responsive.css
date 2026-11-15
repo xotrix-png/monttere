@@ -1089,7 +1089,7 @@
 @media (max-width: 1279.98px) {
   .quiet {
     height: auto;
-    margin-top: -48px;
+    margin-top: 0;
     padding: 72px 0 0;
     overflow-x: clip;
     display: flex;
@@ -1098,7 +1098,8 @@
   }
 
   .quiet__sky {
-    top: -18vh;
+    /* Source clouds begin near y=320 of 1095. Sit that edge under the card button. */
+    top: calc(-8px - 34vh * 320 / 1095);
     height: 34vh;
     width: 100%;
     object-fit: fill;
