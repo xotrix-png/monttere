@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -123,45 +123,66 @@ const PANELS = [
   },
 ];
 
-/** Poster and bytes stay unloaded until the panel nears the viewport. */
+/** Full file, fetched when the section mounts so the card is buffered before it is reached. */
+function useBufferedSrc(src) {
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+    let objectUrl = "";
+    fetch(src, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(String(response.status));
+        return response.blob();
+      })
+      .then((blob) => {
+        if (cancelled) return;
+        objectUrl = URL.createObjectURL(blob);
+        setUrl(objectUrl);
+      })
+      .catch((error) => {
+        if (cancelled || error?.name === "AbortError") return;
+        setUrl(src);
+      });
+    return () => {
+      cancelled = true;
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [src]);
+
+  return url;
+}
+
 function InViewVideo({ src, poster, className }) {
   const ref = useRef(null);
+  const readySrc = useBufferedSrc(src);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video) return undefined;
-    let armed = false;
+    if (!video || !readySrc) return undefined;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) {
-          video.pause();
-          return;
-        }
-        if (!armed) {
-          armed = true;
-          video.poster = poster;
-          const source = document.createElement("source");
-          source.src = src;
-          source.type = "video/mp4";
-          video.appendChild(source);
-          video.load();
-        }
-        video.play().catch(() => {});
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
       },
       { rootMargin: "200px 0px", threshold: 0.01 },
     );
     io.observe(video);
     return () => io.disconnect();
-  }, [src, poster]);
+  }, [readySrc]);
 
   return (
     <video
       ref={ref}
       className={className}
+      src={readySrc || undefined}
+      poster={poster}
       muted
       loop
       playsInline
-      preload="none"
+      preload="auto"
       aria-hidden="true"
     />
   );
@@ -357,16 +378,7 @@ export default function Estate() {
                 poster={panel.poster}
               />
             ) : (
-              <video
-                className="estate__photo"
-                src={panel.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                aria-hidden="true"
-              />
+              <InViewVideo className="estate__photo" src={panel.video} />
             )
           ) : (
             <img
