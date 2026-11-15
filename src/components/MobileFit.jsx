@@ -60,7 +60,15 @@ export default function MobileFit() {
       const art = document.querySelector(".quiet__art");
       const artLines = document.querySelectorAll(".quiet__art span");
       if (!fit) artLines.forEach((el) => { el.style.fontSize = ""; });
-      else fitGroup(artLines, art?.clientWidth || 0);
+      else if (art) {
+        const box = getComputedStyle(art);
+        const inner =
+          art.clientWidth -
+          parseFloat(box.paddingLeft) -
+          parseFloat(box.paddingRight);
+        /* Stay inside the padded column. The full client width clipped the last letter. */
+        fitGroup(artLines, Math.max(0, inner - 12));
+      }
 
       const heritage = document.querySelector(".heritage__title");
       const heritageLines = document.querySelectorAll(".heritage__title-line");

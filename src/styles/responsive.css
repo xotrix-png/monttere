@@ -1356,22 +1356,25 @@
   .passage__horse {
     bottom: calc(146.446 * var(--ps));
     height: calc(1415.375 * var(--ps));
+    /* Drop the frame so the ears and the top of the head sit under the headline. */
+    translate: 0 148px;
   }
 
   .passage__horse-mask {
     bottom: calc(1553.821 * var(--ps));
     height: calc(454.54 * var(--ps));
+    translate: 0 148px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
   .passage { --ps: calc(100vw / 1280); --px: calc((100% - 1920 * var(--ps)) * 0.38); }
-  .heritage { margin-top: calc(56px - 0.82 * 313 * 100vw / 1280); }
+  .heritage { margin-top: calc(120px - 0.82 * 313 * 100vw / 1280); }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
   .passage { min-height: 0; height: 140vh; height: 140svh; --ps: calc(100vw / 1500); }
-  .heritage { margin-top: calc(40px - 0.82 * 313 * 100vw / 1500); }
+  .heritage { margin-top: calc(96px - 0.82 * 313 * 100vw / 1500); }
 }
 
 /* ——— Heritage ——— */
@@ -1383,7 +1386,7 @@
     column-gap: 12px;
     /* Pull the headline up through the flat dark of the grass fringe.
        0.82 of the grass file is the solid foot under the hair tips. */
-    margin-top: calc(48px - 0.82 * 313 * 100vw / 820);
+    margin-top: calc(112px - 0.82 * 313 * 100vw / 820);
     padding: 0 var(--pad) 96px;
     overflow-x: clip;
   }
