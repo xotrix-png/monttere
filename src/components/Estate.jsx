@@ -204,9 +204,8 @@ export default function Estate() {
           cleanup3d = mod.mountEstateDoors(sticky, canvas, {
             trigger: stage,
             start: "top 70%",
-            end: "62% top",
-            scrub: 1.35,
-            ease: "power2.inOut",
+            end: "bottom top",
+            glide: 0.24,
           }) || (() => {});
           sticky.classList.add("is-doors-3d");
         } catch {

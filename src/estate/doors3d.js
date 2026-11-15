@@ -11,11 +11,11 @@ gsap.registerPlugin(ScrollTrigger);
 const DOOR_OPEN = 38;
 const DOOR_SCRUB = 0.85;
 
-function loadDoorTexture(url) {
+function loadDoorTexture(url, anisotropy = 8, maxWidth = 0) {
   const photo = new THREE.Texture();
   photo.colorSpace = THREE.SRGBColorSpace;
   photo.flipY = false;
-  photo.anisotropy = 8;
+  photo.anisotropy = anisotropy;
   const image = new Image();
   image.onload = () => {
     const canvas = document.createElement("canvas");
@@ -61,10 +61,18 @@ function loadDoorTexture(url) {
       }
     }
     ctx.putImageData(full, 0, 0);
+    let source = canvas;
+    if (maxWidth && canvas.width > maxWidth) {
+      const scaled = document.createElement("canvas");
+      scaled.width = maxWidth;
+      scaled.height = Math.round(canvas.height * (maxWidth / canvas.width));
+      scaled.getContext("2d").drawImage(canvas, 0, 0, scaled.width, scaled.height);
+      source = scaled;
+    }
     photo.generateMipmaps = false;
     photo.minFilter = THREE.LinearFilter;
     photo.magFilter = THREE.LinearFilter;
-    photo.image = canvas;
+    photo.image = source;
     photo.needsUpdate = true;
   };
   image.src = url;
@@ -110,11 +118,19 @@ export function mountEstateDoors(stage, canvas, options = {}) {
   const end = options.end || "bottom top";
   const scrub = options.scrub ?? DOOR_SCRUB;
   const ease = options.ease || "none";
+  const glide = options.glide;
+  const probe = document.createElement("canvas");
+  const probeGl = probe.getContext("webgl2") || probe.getContext("webgl");
+  const gpuInfo = probeGl?.getExtension("WEBGL_debug_renderer_info");
+  const gpuName = gpuInfo ? probeGl.getParameter(gpuInfo.UNMASKED_RENDERER_WEBGL) : "";
+  const software = /swiftshader|llvmpipe|softpipe|software/i.test(String(gpuName));
+  probeGl?.getExtension("WEBGL_lose_context")?.loseContext();
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true,
+    antialias: !software,
     premultipliedAlpha: false,
+    preserveDrawingBuffer: software,
   });
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -129,7 +145,7 @@ export function mountEstateDoors(stage, canvas, options = {}) {
   fill.position.set(0, 0.05, 0.8);
   scene.add(key, fill);
 
-  const photo = loadDoorTexture(doorPhotoUrl);
+  const photo = loadDoorTexture(doorPhotoUrl, software ? 1 : 8, software ? 420 : 0);
 
   const root = new THREE.Group();
   scene.add(root);
@@ -137,12 +153,14 @@ export function mountEstateDoors(stage, canvas, options = {}) {
   let leftPivot = null;
   let rightPivot = null;
   let metrics = null;
+  let dirty = true;
   const pose = { open: 0 };
 
   const applyPose = () => {
     const angle = THREE.MathUtils.degToRad(DOOR_OPEN * pose.open);
     if (leftPivot) leftPivot.rotation.y = -angle;
     if (rightPivot) rightPivot.rotation.y = angle;
+    dirty = true;
   };
 
   const layout = () => {
@@ -150,7 +168,8 @@ export function mountEstateDoors(stage, canvas, options = {}) {
     const stageH = stage.clientHeight;
     const canvasH = canvas.clientHeight;
     if (!width || !stageH || !canvasH) return;
-    const ratioCap = width < 1280 ? 1.25 : 1.75;
+    let ratioCap = width < 1280 ? 1.25 : 1.75;
+    if (software) ratioCap = Math.min(ratioCap, 480 / Math.max(width, canvasH));
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, ratioCap));
     renderer.setSize(width, canvasH, false);
     const distance = width * (2400 / 1920);
@@ -178,6 +197,7 @@ export function mountEstateDoors(stage, canvas, options = {}) {
     leftPivot.position.set(edge + 6 * unit, y, z);
     rightPivot.scale.set(scale, scale, scale);
     rightPivot.position.set(width - edge + 78 * unit, y, z);
+    dirty = true;
   };
 
   let alive = true;
@@ -201,21 +221,31 @@ export function mountEstateDoors(stage, canvas, options = {}) {
     layout();
   });
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
+  let driver = null;
+  if (glide) {
+    driver = ScrollTrigger.create({
       trigger: triggerEl,
       start,
       end,
-      scrub,
       invalidateOnRefresh: true,
-    },
-  });
-  tl.fromTo(
-    pose,
-    { open: 0 },
-    { open: 1, ease, duration: 1, onUpdate: applyPose },
-    0,
-  );
+    });
+  } else {
+    driver = gsap.timeline({
+      scrollTrigger: {
+        trigger: triggerEl,
+        start,
+        end,
+        scrub,
+        invalidateOnRefresh: true,
+      },
+    });
+    driver.fromTo(
+      pose,
+      { open: 0 },
+      { open: 1, ease, duration: 1, onUpdate: applyPose },
+      0,
+    );
+  }
 
   const resize = () => {
     layout();
@@ -225,9 +255,24 @@ export function mountEstateDoors(stage, canvas, options = {}) {
   layout();
 
   let frame = 0;
+  const clock = new THREE.Clock();
   const tick = () => {
     frame = requestAnimationFrame(tick);
+    if (glide && driver) {
+      const dt = Math.min(0.05, clock.getDelta());
+      const target = driver.progress;
+      const next = pose.open + (target - pose.open) * (1 - Math.exp(-dt / glide));
+      if (Math.abs(next - target) > 0.0008) {
+        pose.open = next;
+        applyPose();
+      } else if (pose.open !== target) {
+        pose.open = target;
+        applyPose();
+      }
+    }
+    if (software && !dirty) return;
     renderer.render(scene, camera);
+    dirty = false;
   };
   tick();
   ScrollTrigger.refresh();
@@ -236,8 +281,11 @@ export function mountEstateDoors(stage, canvas, options = {}) {
     alive = false;
     cancelAnimationFrame(frame);
     observer.disconnect();
-    tl.scrollTrigger?.kill();
-    tl.kill();
+    if (glide) driver?.kill();
+    else {
+      driver?.scrollTrigger?.kill();
+      driver?.kill();
+    }
     photo.dispose();
     renderer.dispose();
     scene.traverse((node) => {
