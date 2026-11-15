@@ -106,6 +106,10 @@ function mirrorLeaf(source) {
  */
 export function mountEstateDoors(stage, canvas, options = {}) {
   const triggerEl = options.trigger || stage;
+  const start = options.start || "top 75%";
+  const end = options.end || "bottom top";
+  const scrub = options.scrub ?? DOOR_SCRUB;
+  const ease = options.ease || "none";
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -200,16 +204,16 @@ export function mountEstateDoors(stage, canvas, options = {}) {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: triggerEl,
-      start: "top 75%",
-      end: "bottom top",
-      scrub: DOOR_SCRUB,
+      start,
+      end,
+      scrub,
       invalidateOnRefresh: true,
     },
   });
   tl.fromTo(
     pose,
     { open: 0 },
-    { open: 1, ease: "none", duration: 1, onUpdate: applyPose },
+    { open: 1, ease, duration: 1, onUpdate: applyPose },
     0,
   );
 

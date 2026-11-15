@@ -912,26 +912,28 @@
   }
 
   .estate__fur {
-    /* Wisps on the doors. The top fades out so the bitmap shelf does not draw a line. */
-    top: -128px;
-    height: 240px;
+    /* A short wisp only. The solid white of the file stays masked out. */
+    top: -56px;
+    height: 132px;
     width: 100%;
     left: 0;
     max-width: none;
     object-fit: cover;
-    object-position: center 70%;
+    object-position: center 86%;
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.35) 18%,
-      #000 42%,
+      transparent 28%,
+      rgba(0, 0, 0, 0.4) 58%,
+      #000 88%,
       #000 100%
     );
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.35) 18%,
-      #000 42%,
+      transparent 28%,
+      rgba(0, 0, 0, 0.4) 58%,
+      #000 88%,
       #000 100%
     );
   }

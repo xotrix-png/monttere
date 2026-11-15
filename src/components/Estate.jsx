@@ -201,17 +201,34 @@ export default function Estate() {
       import("../estate/doors3d.js").then((mod) => {
         if (dead || !sticky || !canvas) return;
         try {
-          cleanup3d = mod.mountEstateDoors(sticky, canvas, { trigger: stage }) || (() => {});
+          cleanup3d = mod.mountEstateDoors(sticky, canvas, {
+            trigger: stage,
+            start: "top 70%",
+            end: "62% top",
+            scrub: 1.35,
+            ease: "power2.inOut",
+          }) || (() => {});
           sticky.classList.add("is-doors-3d");
         } catch {
           cleanup3d = () => {};
         }
       });
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const fur = stage.querySelector(".estate__fur");
       const setLock = lockup ? gsap.quickSetter(lockup, "opacity") : null;
+      const setFur = fur ? gsap.quickSetter(fur, "opacity") : null;
+      const smooth = (value) => {
+        const t = Math.min(1, Math.max(0, value));
+        return t * t * (3 - 2 * t);
+      };
       const apply = (progress) => {
-        const fade = reduced ? 1 : Math.min(1, Math.max(0, (progress - 0.52) / 0.48));
-        setLock?.(fade);
+        if (reduced) {
+          setLock?.(1);
+          setFur?.(1);
+          return;
+        }
+        setFur?.(1 - smooth(progress / 0.34));
+        setLock?.(smooth((progress - 0.18) / 0.62));
       };
       if (reduced) {
         apply(1);
@@ -220,13 +237,14 @@ export default function Estate() {
           sticky?.classList.remove("is-doors-3d");
           cleanup3d();
           if (lockup) lockup.style.opacity = "";
+          if (fur) fur.style.opacity = "";
         };
       }
       const trigger = ScrollTrigger.create({
         trigger: stage,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.45,
+        start: "top 70%",
+        end: "62% top",
+        scrub: 1.35,
         onUpdate: (self) => apply(self.progress),
         onRefresh: (self) => apply(self.progress),
       });
@@ -237,6 +255,7 @@ export default function Estate() {
         cleanup3d();
         trigger.kill();
         if (lockup) lockup.style.opacity = "";
+        if (fur) fur.style.opacity = "";
       };
     });
 
