@@ -790,7 +790,7 @@
   .philosophy__aside {
     grid-column: 1 / -1;
     justify-self: end;
-    margin-top: 28px;
+    margin-top: 56px;
     width: auto;
     max-width: 18ch;
     font-size: 12px;
@@ -801,8 +801,8 @@
 
   .philosophy__bond {
     grid-column: 1 / -1;
-    margin-top: 48px;
-    padding-top: 20px;
+    margin-top: 32px;
+    padding-top: 32px;
     border-top: 1px solid rgba(34, 43, 47, 0.35);
     max-width: 38ch;
   }
