@@ -22,21 +22,30 @@ export default function MobileNav() {
     const button = buttonRef.current;
     if (!button || !window.matchMedia("(max-width: 1279.98px)").matches) return undefined;
     const lights = document.querySelectorAll(".philosophy, .contacts");
-    const seen = new Set();
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) seen.add(entry.target);
-          else seen.delete(entry.target);
-        });
-        document.documentElement.dataset.headerTheme = seen.size ? "light" : "dark";
-      },
-      { rootMargin: "0px 0px -88% 0px", threshold: 0 },
-    );
-    lights.forEach((el) => io.observe(el));
+    const header = 72;
+    const crest = 36;
+    const apply = () => {
+      let mode = "dark";
+      let ink = "light";
+      lights.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const covers = rect.top <= 0 && rect.bottom >= header;
+        const overlaps = rect.bottom > 0 && rect.top < header;
+        if (covers) mode = "light";
+        else if (overlaps && mode !== "light") mode = "plain";
+        if (rect.top <= crest && rect.bottom >= crest) ink = "dark";
+      });
+      document.documentElement.dataset.headerTheme = mode;
+      document.documentElement.dataset.headerInk = ink;
+    };
+    apply();
+    window.addEventListener("scroll", apply, { passive: true });
+    window.addEventListener("resize", apply);
     return () => {
-      io.disconnect();
+      window.removeEventListener("scroll", apply);
+      window.removeEventListener("resize", apply);
       delete document.documentElement.dataset.headerTheme;
+      delete document.documentElement.dataset.headerInk;
     };
   }, []);
 

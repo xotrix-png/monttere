@@ -234,9 +234,7 @@ export default function Estate() {
         }
       });
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const fur = stage.querySelector(".estate__fur");
       const setLock = lockup ? gsap.quickSetter(lockup, "opacity") : null;
-      const setFur = fur ? gsap.quickSetter(fur, "opacity") : null;
       const smooth = (value) => {
         const t = Math.min(1, Math.max(0, value));
         return t * t * (3 - 2 * t);
@@ -244,10 +242,8 @@ export default function Estate() {
       const apply = (progress) => {
         if (reduced) {
           setLock?.(1);
-          setFur?.(1);
           return;
         }
-        setFur?.(progress < 0.32 ? 1 : 1 - smooth((progress - 0.32) / 0.22));
         setLock?.(smooth((progress - 0.18) / 0.62));
       };
       if (reduced) {
@@ -257,7 +253,6 @@ export default function Estate() {
           sticky?.classList.remove("is-doors-3d");
           cleanup3d();
           if (lockup) lockup.style.opacity = "";
-          if (fur) fur.style.opacity = "";
         };
       }
       const trigger = ScrollTrigger.create({
@@ -275,7 +270,6 @@ export default function Estate() {
         cleanup3d();
         trigger.kill();
         if (lockup) lockup.style.opacity = "";
-        if (fur) fur.style.opacity = "";
       };
     });
 
