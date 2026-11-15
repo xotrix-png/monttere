@@ -998,8 +998,12 @@
     margin-top: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 28px var(--pad) calc(26vh + env(safe-area-inset-bottom, 0px));
+    justify-content: flex-start;
+    padding: 30vh var(--pad) calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .estate__panel--clubhouse {
+    padding-bottom: calc(18vh + 40px + env(safe-area-inset-bottom, 0px));
   }
 
   .estate__veil { display: none; }
@@ -1044,7 +1048,7 @@
 
   .estate__panel-title {
     margin-top: 14px;
-    font-size: clamp(60px, 16vw, 88px);
+    font-size: clamp(72px, 18.5vw, 100px);
     line-height: 0.9;
     max-width: 100%;
   }
@@ -1059,7 +1063,7 @@
   .estate__rule { margin-top: 16px; width: 72px; height: 1px; }
 
   .estate__cta {
-    margin-top: 18px;
+    margin-top: auto;
     align-self: stretch;
     justify-content: center;
     height: 52px;
