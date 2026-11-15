@@ -563,13 +563,15 @@
     background: #f3f6f7;
   }
 
-  /* Collection portrait — one horse, two wordmarks that do not meet. */
+  /* Collection portrait. Same inset on both edges. HOR sits under the cutout. */
   .gallery__slide--collection .collection {
     --u: 1px;
     --scene-x: 0px;
+    --edge: 28px;
   }
 
-  .collection__bg,
+  .collection__bg { display: none; }
+
   .collection__smoke {
     left: 0;
     top: 0;
@@ -577,37 +579,49 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 74% 42%;
+    object-position: center;
   }
 
-  .collection__horse { display: none; }
+  .collection__horse {
+    display: block;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: 40% 34%;
+    z-index: 3;
+  }
 
   .collection__hor,
   .collection__se {
-    left: var(--pad);
+    left: var(--edge);
     margin: 0;
     height: auto;
     max-width: none;
-    z-index: 4;
   }
 
   .collection__hor {
-    top: 30%;
-    width: min(68vw, 320px);
+    top: 24%;
+    width: min(84vw, 400px);
+    z-index: 2;
   }
 
   .collection__se {
     top: auto;
-    bottom: 76px;
-    width: min(40vw, 176px);
+    bottom: 84px;
+    width: min(52vw, 240px);
+    z-index: 4;
   }
 
   .collection__index,
   .collection__label {
     left: auto;
-    right: var(--pad);
+    right: var(--edge);
     z-index: 5;
-    max-width: 46vw;
+    max-width: calc(100% - 2 * var(--edge));
     font-size: 12px;
     letter-spacing: 0.12em;
     text-align: right;
@@ -617,12 +631,12 @@
   .collection__label { top: calc(var(--header-offset) + 22px); }
 
   .collection__heritage {
-    left: var(--pad);
+    left: var(--edge);
     right: auto;
     top: auto;
     bottom: 30px;
     z-index: 5;
-    max-width: calc(100% - 96px);
+    max-width: calc(100% - 2 * var(--edge) - 72px);
     font-size: 15px;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -630,7 +644,7 @@
 
   .collection__scroll {
     left: auto;
-    right: var(--pad);
+    right: var(--edge);
     top: auto;
     bottom: 28px;
     z-index: 5;
@@ -688,10 +702,10 @@
     --scene-x: 0px;
   }
 
-  .collection__hor { top: 24%; width: min(48vw, 420px); }
-  .collection__se { width: min(26vw, 240px); bottom: 128px; }
-  .collection__bg,
-  .collection__smoke { object-position: 68% 46%; }
+  .gallery__slide--collection .collection { --edge: 40px; }
+  .collection__hor { top: 22%; width: min(62vw, 520px); }
+  .collection__se { width: min(34vw, 300px); bottom: 120px; }
+  .collection__horse { object-position: 46% 40%; width: 100%; }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
