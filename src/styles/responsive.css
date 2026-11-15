@@ -348,9 +348,9 @@
 /* ——— Gallery + Collection ——— */
 @media (max-width: 1279.98px) {
   .gallery {
-    /* Tall feather, same idea as desktop: wisps over the photo, solid foot into Philosophy. */
-    --fur-h: clamp(300px, 46vh, 460px);
-    --fur-hang: clamp(84px, 14vh, 140px);
+    /* Native 1920×536 proportion. Stretching this taller turns each hair into a smear. */
+    --fur-h: clamp(96px, calc(100vw * 536 / 1920), 150px);
+    --fur-hang: 42px;
     --fur-overlap: calc(var(--fur-h) - var(--fur-hang));
     height: calc(var(--gallery-run, 9) * 100svh);
     min-height: calc(var(--gallery-run, 9) * 100vh);
@@ -436,8 +436,7 @@
     left: var(--pad);
     right: var(--pad);
     top: auto;
-    /* Sit above the dense fur so the title and VIEW HORSE stay on the photo. */
-    bottom: calc(var(--fur-overlap) * 0.62 + env(safe-area-inset-bottom, 0px));
+    bottom: calc(156px + env(safe-area-inset-bottom, 0px));
     transform: none;
     width: auto;
     max-width: none;
@@ -486,7 +485,7 @@
     z-index: 16;
     left: var(--pad);
     right: var(--pad);
-    bottom: calc(var(--fur-overlap) * 0.5 + env(safe-area-inset-bottom, 0px));
+    bottom: calc(78px + env(safe-area-inset-bottom, 0px));
     align-items: center;
     gap: 10px;
     margin: 0;
@@ -542,31 +541,21 @@
     height: 100%;
     object-fit: fill;
     object-position: center center;
-    /* Longer dissolve than the desktop mask so the shelf stays soft on a tall phone. */
-    -webkit-mask-image:
-      linear-gradient(to right, #000 0%, #000 54%, transparent 86%),
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 4%,
-        rgba(0, 0, 0, 0.18) 16%,
-        rgba(0, 0, 0, 0.5) 34%,
-        #000 58%,
-        #000 100%
-      );
-    -webkit-mask-composite: source-over;
-    mask-image:
-      linear-gradient(to right, #000 0%, #000 54%, transparent 86%),
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 4%,
-        rgba(0, 0, 0, 0.18) 16%,
-        rgba(0, 0, 0, 0.5) 34%,
-        #000 58%,
-        #000 100%
-      );
-    mask-composite: add;
+    /* Soften the top edge only. Do not scale the bitmap off its own proportion. */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 10%,
+      #000 22%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 10%,
+      #000 22%,
+      #000 100%
+    );
   }
 
   .gallery__fur-soil,
@@ -574,35 +563,54 @@
     background: #f3f6f7;
   }
 
-  /* Collection portrait */
+  /* Collection portrait — one horse, two wordmarks that do not meet. */
   .gallery__slide--collection .collection {
-    --u: calc(100cqh / 1020);
-    --scene-x: calc(36cqw - 720 * var(--u));
+    --u: 1px;
+    --scene-x: 0px;
   }
 
   .collection__bg,
-  .collection__smoke,
-  .collection__horse {
-    margin-left: var(--scene-x);
+  .collection__smoke {
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 74% 42%;
   }
 
-  .collection__se,
-  .collection__hor {
+  .collection__horse { display: none; }
+
+  .collection__hor,
+  .collection__se {
     left: var(--pad);
-    width: calc(100cqw - 2 * var(--pad));
+    margin: 0;
     height: auto;
-    margin-left: 0;
+    max-width: none;
+    z-index: 4;
   }
 
-  .collection__hor { top: 16%; z-index: 2; }
-  .collection__se { top: 62%; z-index: 5; }
+  .collection__hor {
+    top: 30%;
+    width: min(68vw, 320px);
+  }
+
+  .collection__se {
+    top: auto;
+    bottom: 76px;
+    width: min(40vw, 176px);
+  }
 
   .collection__index,
   .collection__label {
     left: auto;
     right: var(--pad);
+    z-index: 5;
+    max-width: 46vw;
     font-size: 12px;
     letter-spacing: 0.12em;
+    text-align: right;
   }
 
   .collection__index { top: calc(var(--header-offset) + 4px); }
@@ -610,10 +618,14 @@
 
   .collection__heritage {
     left: var(--pad);
+    right: auto;
     top: auto;
-    bottom: 96px;
-    font-size: 16px;
-    letter-spacing: 0.02em;
+    bottom: 30px;
+    z-index: 5;
+    max-width: calc(100% - 96px);
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
   .collection__scroll {
@@ -621,6 +633,7 @@
     right: var(--pad);
     top: auto;
     bottom: 28px;
+    z-index: 5;
     gap: 8px;
   }
 
@@ -671,9 +684,14 @@
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
   .gallery__slide--collection .collection {
-    --u: calc(100cqh / 900);
-    --scene-x: calc(50cqw - 1500 * var(--u));
+    --u: 1px;
+    --scene-x: 0px;
   }
+
+  .collection__hor { top: 24%; width: min(48vw, 420px); }
+  .collection__se { width: min(26vw, 240px); bottom: 128px; }
+  .collection__bg,
+  .collection__smoke { object-position: 68% 46%; }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
@@ -683,8 +701,8 @@
 /* ——— Philosophy ——— */
 @media (max-width: 1279.98px) {
   .philosophy {
-    margin-top: calc(clamp(84px, 14vh, 140px) * -1);
-    padding: calc(clamp(84px, 14vh, 140px) + 56px) var(--pad) 96px;
+    margin-top: -42px;
+    padding: 100px var(--pad) 96px;
     overflow-x: clip;
   }
 
