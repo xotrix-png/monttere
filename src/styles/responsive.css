@@ -563,35 +563,38 @@
     background: #f3f6f7;
   }
 
-  /* Collection portrait. Same inset on both edges. HOR sits under the cutout. */
+  /* Collection portrait. Head crop matches the photo; the cutout masks HOR. */
   .gallery__slide--collection .collection {
     --u: 1px;
     --scene-x: 0px;
     --edge: 28px;
+    --s: max(100cqw / 2586, 100cqh / 1159);
+    --bg-x: calc((100cqw - 2586 * var(--s)) * 0.74);
+    --bg-y: calc((100cqh - 1159 * var(--s)) * 0.42);
   }
 
-  .collection__bg { display: none; }
-
+  .collection__bg,
   .collection__smoke {
-    left: 0;
-    top: 0;
+    display: block;
+    left: var(--bg-x);
+    top: var(--bg-y);
     margin: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: calc(2586 * var(--s));
+    height: calc(1159 * var(--s));
+    max-width: none;
+    object-fit: fill;
     object-position: center;
   }
 
   .collection__horse {
     display: block;
-    left: 0;
-    top: 0;
+    left: calc(var(--bg-x) + 121.91 * var(--s));
+    top: calc(var(--bg-y) + 89.09 * var(--s));
     margin: 0;
-    width: 100%;
-    height: 100%;
+    width: calc(2000 * var(--s));
+    height: calc(1070 * var(--s));
     max-width: none;
-    object-fit: cover;
-    object-position: 40% 34%;
+    object-fit: fill;
     z-index: 3;
   }
 
@@ -705,7 +708,7 @@
   .gallery__slide--collection .collection { --edge: 40px; }
   .collection__hor { top: 22%; width: min(62vw, 520px); }
   .collection__se { width: min(34vw, 300px); bottom: 120px; }
-  .collection__horse { object-position: 46% 40%; width: 100%; }
+  .gallery__slide--collection .collection { --edge: 40px; }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
