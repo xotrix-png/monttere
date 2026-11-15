@@ -227,19 +227,37 @@ export default function Quiet() {
         height={940}
         decoding="async"
       />
-      <img
-        className="quiet__points"
-        src={passagePoints}
-        alt=""
-        width={1072}
-        height={1069}
-        decoding="async"
-      />
-      <p className="quiet__mark quiet__mark--time">Time</p>
-      <p className="quiet__mark quiet__mark--discipline">discipline</p>
-      <p className="quiet__mark quiet__mark--trust">trust</p>
+      <div className="quiet__plot">
+        <img
+          className="quiet__points"
+          src={passagePoints}
+          alt=""
+          width={1072}
+          height={1069}
+          decoding="async"
+        />
+        <p className="quiet__mark quiet__mark--time">Time</p>
+        <p className="quiet__mark quiet__mark--discipline">discipline</p>
+        <p className="quiet__mark quiet__mark--trust">trust</p>
+      </div>
       <p className="quiet__craft-index">06</p>
       <p className="quiet__craft-label">The craft</p>
+
+      <div className="quiet__art-block">
+        <div className="quiet__art-range" ref={rangeRef} aria-hidden="true" />
+        <h2 className="quiet__art">
+          {ART_LINES.map((line, i) => (
+            <span
+              key={line.text}
+              ref={(el) => {
+                lineRefs.current[i] = el;
+              }}
+            >
+              {line.text}
+            </span>
+          ))}
+        </h2>
+      </div>
       </div>
 
       <p className="quiet__index">05</p>
@@ -256,22 +274,6 @@ export default function Quiet() {
         Between discipline and instinct
       </p>
       <p className="quiet__script">Style and Grace</p>
-
-      <div className="quiet__art-block">
-      <div className="quiet__art-range" ref={rangeRef} aria-hidden="true" />
-      <h2 className="quiet__art">
-        {ART_LINES.map((line, i) => (
-          <span
-            key={line.text}
-            ref={(el) => {
-              lineRefs.current[i] = el;
-            }}
-          >
-            {line.text}
-          </span>
-        ))}
-      </h2>
-      </div>
 
       <div className="quiet__scroll" aria-hidden="true">
         <span className="quiet__scroll-text">Scroll</span>
