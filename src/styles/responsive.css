@@ -1003,7 +1003,7 @@
   }
 
   .estate__panel--clubhouse {
-    padding-bottom: calc(18vh + 40px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
   }
 
   .estate__veil { display: none; }
@@ -1103,9 +1103,9 @@
   }
 
   .quiet__sky {
-    /* Wisps (source y≈270) cross the photo. The flat white stays below the button. */
-    top: calc(-18vh - 44vh * 270 / 1095);
-    height: 44vh;
+    /* Torn edge starts under the Clubhouse button. Solid white continues into Essence. */
+    top: calc(-72px - 42vh * 270 / 1095);
+    height: 42vh;
     width: 100%;
     object-fit: fill;
     object-position: center top;
