@@ -9,6 +9,7 @@ import Contacts from "./components/Contacts.jsx";
 import SiteLogo from "./components/SiteLogo.jsx";
 import MobileNav from "./components/MobileNav.jsx";
 import MobileFit from "./components/MobileFit.jsx";
+import PageLoader from "./components/PageLoader.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import "./styles/responsive.css";
 
@@ -18,6 +19,8 @@ function Section({ name, children }) {
 
 export default function App() {
   return (
+    <>
+    <PageLoader />
     <main id="top">
       <Section name="logo"><SiteLogo /></Section>
       <Section name="nav"><MobileNav /></Section>
@@ -32,5 +35,6 @@ export default function App() {
       <Section name="heritage"><Heritage /></Section>
       <Section name="contacts"><Contacts /></Section>
     </main>
+    </>
   );
 }
