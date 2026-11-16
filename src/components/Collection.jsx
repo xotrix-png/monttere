@@ -13,6 +13,20 @@ import arrow from "../assets/images/collection-arrow.svg";
 import { useNarrow } from "../hooks/useNarrow.js";
 import "./Collection.css";
 
+/* Same early fetch the desktop hero uses: start the second block with the
+   page, not when it scrolls into view. Mobile files only. */
+if (typeof window !== "undefined" && window.matchMedia("(max-width: 1279.98px)").matches) {
+  for (const href of [bgA, smokeA, horseA]) {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = href;
+    link.type = "image/avif";
+    link.fetchPriority = "high";
+    document.head.appendChild(link);
+  }
+}
+
 function Layer({ narrow, src, webp, avif, ...rest }) {
   if (!narrow) return <img src={src} {...rest} />;
   return (
@@ -46,6 +60,7 @@ export default function Collection() {
         width={2586}
         height={1159}
         decoding="async"
+        fetchPriority="high"
       />
 
       <Layer
@@ -59,6 +74,7 @@ export default function Collection() {
         width={1920}
         height={1159}
         decoding="async"
+        fetchPriority="high"
       />
 
       <img
@@ -80,6 +96,7 @@ export default function Collection() {
         width={2000}
         height={1070}
         decoding="async"
+        fetchPriority="high"
       />
 
       <img

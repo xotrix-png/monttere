@@ -21,7 +21,7 @@ function Layer({ narrow, src, webp, avif, ...rest }) {
     <picture>
       <source srcSet={avif} type="image/avif" />
       <source srcSet={webp} type="image/webp" />
-      <img src={webp} loading="lazy" {...rest} />
+      <img src={webp} loading="eager" {...rest} />
     </picture>
   );
 }

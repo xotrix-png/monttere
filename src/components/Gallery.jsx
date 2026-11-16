@@ -568,7 +568,7 @@ export default function Gallery() {
                         alt=""
                         draggable={false}
                         decoding="async"
-                        loading="lazy"
+                        loading="eager"
                       />
                     </picture>
                   ) : (

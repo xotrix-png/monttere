@@ -13,7 +13,7 @@ function Layer({ narrow, src, webp, avif, className, ...rest }) {
     <picture className={className ? `${className}-picture` : undefined}>
       {avif ? <source srcSet={avif} type="image/avif" /> : null}
       <source srcSet={webp} type="image/webp" />
-      <img className={className} src={webp} loading="lazy" {...rest} />
+      <img className={className} src={webp} loading="eager" {...rest} />
     </picture>
   );
 }

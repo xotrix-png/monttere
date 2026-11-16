@@ -19,7 +19,7 @@ function Shot({ narrow, src, webp, avif, className }) {
       width={1920}
       height={1440}
       decoding="async"
-      loading={narrow ? "lazy" : undefined}
+      loading="eager"
     />
   );
   return (
