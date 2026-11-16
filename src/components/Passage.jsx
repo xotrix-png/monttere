@@ -1,9 +1,6 @@
 import passageHorseMask from "../assets/images/passage-horse-mask.png";
-import passageHorseMaskM from "../assets/images/m/passage-horse-mask.webp";
-import passageHorseMaskA from "../assets/images/m/passage-horse-mask.avif";
 import passageHorseBody from "../assets/images/passage-horse-body.png";
-import passageHorseBodyM from "../assets/images/m/passage-horse-body.webp";
-import passageHorseBodyA from "../assets/images/m/passage-horse-body.avif";
+import passageHorseJoinedM from "../assets/images/m/passage-horse-joined.webp";
 import passageGrass from "../assets/images/passage-grass.png";
 import passageGrassM from "../assets/images/m/passage-grass.webp";
 import passageGrassA from "../assets/images/m/passage-grass.avif";
@@ -14,7 +11,7 @@ function Layer({ narrow, src, webp, avif, className, ...rest }) {
   if (!narrow) return <img className={className} src={src} {...rest} />;
   return (
     <picture className={className ? `${className}-picture` : undefined}>
-      <source srcSet={avif} type="image/avif" />
+      {avif ? <source srcSet={avif} type="image/avif" /> : null}
       <source srcSet={webp} type="image/webp" />
       <img className={className} src={webp} loading="lazy" {...rest} />
     </picture>
@@ -35,25 +32,23 @@ export default function Passage() {
         narrow={narrow}
         className="passage__horse"
         src={passageHorseBody}
-        webp={passageHorseBodyM}
-        avif={passageHorseBodyA}
+        webp={passageHorseJoinedM}
         alt=""
         width={1920}
         height={1389}
         decoding="async"
       />
       </div>
-      <Layer
-        narrow={narrow}
-        className="passage__horse-mask"
-        src={passageHorseMask}
-        webp={passageHorseMaskM}
-        avif={passageHorseMaskA}
-        alt=""
-        width={1920}
-        height={449}
-        decoding="async"
-      />
+      {!narrow && (
+        <img
+          className="passage__horse-mask"
+          src={passageHorseMask}
+          alt=""
+          width={1920}
+          height={449}
+          decoding="async"
+        />
+      )}
       <Layer
         narrow={narrow}
         className="passage__grass"

@@ -1346,8 +1346,6 @@
 @media (max-width: 1279.98px) {
   .passage {
     --horse-w: 208%;
-    /* Crossfade where the ear plate hands off to the body. */
-    --seam: 7vw;
     height: auto;
     min-height: 0;
     margin-top: 0;
@@ -1361,8 +1359,9 @@
     position: relative;
     width: 100%;
     height: 148vw;
-    overflow: hidden;
-    background: #181e1f;
+    margin-top: 0;
+    overflow: visible;
+    background: transparent;
   }
 
   .passage picture {
@@ -1370,76 +1369,23 @@
     height: 100%;
   }
 
-  /* Same plate as desktop. It overlaps the body, stays solid over the
-     body's hard top, then fades out so the handoff is not a cut. */
-  .passage picture.passage__horse-mask-picture {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: var(--horse-w);
-    height: auto;
-    aspect-ratio: 1920 / 449;
-    z-index: 2;
-    translate: 0 calc(-100% + var(--seam));
-    pointer-events: none;
-  }
-
+  /* One photo: the ears and their fade are already in the file. */
   .passage__horse {
     position: absolute;
     right: 0;
     left: auto;
     top: 0;
     bottom: auto;
-    /* Right side of the file is the head: ears, eye, muzzle. */
     width: var(--horse-w);
     max-width: none;
     height: auto;
-    aspect-ratio: 1920 / 1389;
-    translate: none;
+    aspect-ratio: 1920 / 1837;
+    /* Lift the faded ears above the frame. 448 / 1837 of the file. */
+    translate: 0 -24.3876%;
     object-fit: fill;
     z-index: 1;
-    /* Hide the body's hard top edge under the plate, then let it become solid. */
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      #000 calc(var(--seam) * 0.45),
-      #000 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      #000 calc(var(--seam) * 0.45),
-      #000 100%
-    );
-  }
-
-  /* Same fade plate as desktop. Its own alpha dissolves the ears. */
-  .passage__horse-mask {
-    display: block;
-    position: relative;
-    right: auto;
-    left: auto;
-    top: auto;
-    bottom: auto;
-    width: 100%;
-    max-width: none;
-    height: auto;
-    aspect-ratio: 1920 / 449;
-    translate: none;
-    object-fit: fill;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      #000 0,
-      #000 calc(100% - var(--seam) * 0.55),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      #000 0,
-      #000 calc(100% - var(--seam) * 0.55),
-      transparent 100%
-    );
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .passage__grass {
@@ -1458,7 +1404,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --horse-w: 150%; --seam: 5vw; }
+  .passage { --horse-w: 150%; }
   .passage__frame { height: 78vw; }
 }
 
