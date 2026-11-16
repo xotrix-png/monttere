@@ -1346,6 +1346,8 @@
 @media (max-width: 1279.98px) {
   .passage {
     --horse-w: 208%;
+    /* Crossfade where the ear plate hands off to the body. */
+    --seam: 7vw;
     height: auto;
     min-height: 0;
     margin-top: 0;
@@ -1368,8 +1370,8 @@
     height: 100%;
   }
 
-  /* Same plate as desktop: its alpha fades the ears. Overlap is the
-     desktop 8px hairline cover, scaled with the plate (8 / 454.54). */
+  /* Same plate as desktop. It overlaps the body, stays solid over the
+     body's hard top, then fades out so the handoff is not a cut. */
   .passage picture.passage__horse-mask-picture {
     display: block;
     position: absolute;
@@ -1379,7 +1381,7 @@
     height: auto;
     aspect-ratio: 1920 / 449;
     z-index: 2;
-    translate: 0 -98.24%;
+    translate: 0 calc(-100% + var(--seam));
     pointer-events: none;
   }
 
@@ -1397,8 +1399,19 @@
     translate: none;
     object-fit: fill;
     z-index: 1;
-    -webkit-mask-image: none;
-    mask-image: none;
+    /* Hide the body's hard top edge under the plate, then let it become solid. */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 calc(var(--seam) * 0.45),
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 calc(var(--seam) * 0.45),
+      #000 100%
+    );
   }
 
   /* Same fade plate as desktop. Its own alpha dissolves the ears. */
@@ -1415,8 +1428,18 @@
     aspect-ratio: 1920 / 449;
     translate: none;
     object-fit: fill;
-    -webkit-mask-image: none;
-    mask-image: none;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - var(--seam) * 0.55),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - var(--seam) * 0.55),
+      transparent 100%
+    );
   }
 
   .passage__grass {
@@ -1435,7 +1458,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --horse-w: 150%; }
+  .passage { --horse-w: 150%; --seam: 5vw; }
   .passage__frame { height: 78vw; }
 }
 
