@@ -1234,8 +1234,8 @@
     height: 100%;
     object-fit: cover;
     object-position: center 38%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 94%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 64px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 64px), transparent 100%);
   }
 
   .quiet__plot {
@@ -1321,7 +1321,7 @@
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 0 var(--pad) 28px;
+    padding: 0 var(--pad) 48px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1347,7 +1347,7 @@
   .passage {
     height: auto;
     min-height: 0;
-    margin-top: 0;
+    margin-top: -36px;
     overflow: visible;
     background: #181e1f;
     z-index: 5;
@@ -1378,15 +1378,27 @@
     left: auto;
     top: 0;
     bottom: auto;
-    /* Right side of the file is the head: ears, eye, muzzle. Fully opaque. */
+    /* Right side of the file is the head. A short fade only, so the ears stay sharp. */
     width: 208%;
     height: auto;
     aspect-ratio: 1920 / 1389;
     max-width: none;
     translate: none;
     object-fit: fill;
-    -webkit-mask-image: none;
-    mask-image: none;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgba(0, 0, 0, 0.55) 18px,
+      #000 46px,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgba(0, 0, 0, 0.55) 18px,
+      #000 46px,
+      #000 100%
+    );
   }
 
   .passage__grass {
