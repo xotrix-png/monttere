@@ -1218,9 +1218,10 @@
     display: block;
     position: relative;
     width: 100%;
-    height: 100vh;
-    height: 100svh;
-    min-height: 680px;
+    height: auto;
+    min-height: 0;
+    /* Room under the torn edge and the 06 label, then the line, then the headline. */
+    padding-top: calc(26vw + 64px);
     margin-top: 0;
     overflow: visible;
     background: #181e1f;
@@ -1239,14 +1240,14 @@
 
   .quiet__plot {
     display: block;
-    position: absolute;
+    position: relative;
     z-index: 2;
     left: 3%;
-    /* Below the 06 / THE CRAFT pair, not level with it. */
-    top: calc(18% + 28px);
-    width: min(56vw, 26svh);
+    top: auto;
+    width: min(52vw, 210px);
     aspect-ratio: 1072 / 1069;
     height: auto;
+    margin: 0 0 40px;
     pointer-events: none;
   }
 
@@ -1277,7 +1278,7 @@
     flex-direction: column;
     align-items: center;
     position: absolute;
-    top: 18%;
+    top: 26vw;
     right: var(--pad);
     z-index: 6;
     width: max-content;
@@ -1298,10 +1299,10 @@
 
   .quiet__art-block {
     display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
     z-index: 4;
     min-height: 0;
     margin: 0;
@@ -1320,7 +1321,7 @@
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 0 6px 110px;
+    padding: 0 var(--pad) 28px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1346,10 +1347,9 @@
   .passage {
     height: auto;
     min-height: 0;
-    /* Transparent over the landscape so the head can fade in on top of it. */
-    margin-top: -210px;
+    margin-top: 0;
     overflow: visible;
-    background: transparent;
+    background: #181e1f;
     z-index: 5;
   }
 
@@ -1359,7 +1359,7 @@
     width: 100%;
     height: 148vw;
     overflow: hidden;
-    background: transparent;
+    background: #181e1f;
   }
 
   .passage picture {
@@ -1376,35 +1376,17 @@
     position: absolute;
     right: 0;
     left: auto;
-    top: 16px;
+    top: 0;
     bottom: auto;
-    /* Right side of the file is the head: ears, eye, muzzle. */
+    /* Right side of the file is the head: ears, eye, muzzle. Fully opaque. */
     width: 208%;
     height: auto;
     aspect-ratio: 1920 / 1389;
     max-width: none;
     translate: none;
     object-fit: fill;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 36px,
-      rgba(0, 0, 0, 0.2) 90px,
-      rgba(0, 0, 0, 0.45) 130px,
-      rgba(0, 0, 0, 0.75) 165px,
-      #000 200px,
-      #000 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 36px,
-      rgba(0, 0, 0, 0.2) 90px,
-      rgba(0, 0, 0, 0.45) 130px,
-      rgba(0, 0, 0, 0.75) 165px,
-      #000 200px,
-      #000 100%
-    );
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .passage__grass {

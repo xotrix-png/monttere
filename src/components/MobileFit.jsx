@@ -66,7 +66,7 @@ export default function MobileFit() {
           art.clientWidth -
           parseFloat(box.paddingLeft) -
           parseFloat(box.paddingRight);
-        /* Fill the column. fitGroup keeps 2% of air so the last letter stays on screen. */
+        /* One size: the longest line meets both grid edges. */
         fitGroup(artLines, Math.max(0, inner / 0.98));
       }
 
