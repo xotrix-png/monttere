@@ -1345,9 +1345,10 @@
 /* ——— Passage ——— */
 @media (max-width: 1279.98px) {
   .passage {
+    --horse-w: 208%;
     height: auto;
     min-height: 0;
-    margin-top: -36px;
+    margin-top: 0;
     overflow: visible;
     background: #181e1f;
     z-index: 5;
@@ -1367,9 +1368,19 @@
     height: 100%;
   }
 
-  .passage__horse-mask,
-  .passage__horse-mask-picture {
-    display: none;
+  /* Same plate as desktop: its alpha fades the ears. Overlap is the
+     desktop 8px hairline cover, scaled with the plate (8 / 454.54). */
+  .passage picture.passage__horse-mask-picture {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: var(--horse-w);
+    height: auto;
+    aspect-ratio: 1920 / 449;
+    z-index: 2;
+    translate: 0 -98.24%;
+    pointer-events: none;
   }
 
   .passage__horse {
@@ -1378,27 +1389,34 @@
     left: auto;
     top: 0;
     bottom: auto;
-    /* Right side of the file is the head. A short fade only, so the ears stay sharp. */
-    width: 208%;
+    /* Right side of the file is the head: ears, eye, muzzle. */
+    width: var(--horse-w);
+    max-width: none;
     height: auto;
     aspect-ratio: 1920 / 1389;
-    max-width: none;
     translate: none;
     object-fit: fill;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      rgba(0, 0, 0, 0.55) 18px,
-      #000 46px,
-      #000 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      rgba(0, 0, 0, 0.55) 18px,
-      #000 46px,
-      #000 100%
-    );
+    z-index: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* Same fade plate as desktop. Its own alpha dissolves the ears. */
+  .passage__horse-mask {
+    display: block;
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1920 / 449;
+    translate: none;
+    object-fit: fill;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .passage__grass {
@@ -1417,8 +1435,8 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
+  .passage { --horse-w: 150%; }
   .passage__frame { height: 78vw; }
-  .passage__horse { width: 150%; }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {

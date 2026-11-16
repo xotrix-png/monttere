@@ -66,8 +66,10 @@ export default function MobileFit() {
           art.clientWidth -
           parseFloat(box.paddingLeft) -
           parseFloat(box.paddingRight);
-        /* One size: the longest line meets both grid edges. */
-        fitGroup(artLines, Math.max(0, inner / 0.98));
+        /* One size. Voga’s right bearing sits inside the em box, so the
+           target is a little wider than the pad column and the painted
+           letters land on it. */
+        fitGroup(artLines, Math.max(0, inner * 1.035));
       }
 
       const heritage = document.querySelector(".heritage__title");
