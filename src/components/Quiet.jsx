@@ -149,43 +149,9 @@ export default function Quiet() {
     });
 
     mm.add("(max-width: 1279.98px)", () => {
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const setters = lines.map((el) => ({
-        x: gsap.quickSetter(el, "x", "px"),
-        y: gsap.quickSetter(el, "y", "px"),
-        scale: gsap.quickSetter(el, "scale"),
-      }));
-      const paths = [
-        { from: [-6, 22], c1: [10, 12], c2: [4, 4], to: [0, 0] },
-        { from: [4, 36], c1: [14, 20], c2: [2, 6], to: [0, 0] },
-        { from: [-2, 52], c1: [8, 28], c2: [0, 8], to: [0, 0] },
-      ];
-      const scaleFrom = 160 / 297;
-      const apply = (progress) => {
-        lines.forEach((_, i) => {
-          const line = paths[i];
-          const t = reduced ? 1 : progress;
-          const x = curve(line.from[0], line.c1[0], line.c2[0], line.to[0], t);
-          const y = curve(line.from[1], line.c1[1], line.c2[1], line.to[1], t);
-          const s = scaleFrom + (1 - scaleFrom) * t;
-          setters[i].x(x);
-          setters[i].y(y);
-          setters[i].scale(s);
-        });
-      };
-      apply(reduced ? 1 : 0);
-      if (reduced) return () => gsap.set(lines, { clearProps: "transform" });
-      const trigger = ScrollTrigger.create({
-        trigger: range,
-        start: "top 85%",
-        end: "bottom 55%",
-        scrub: 0.6,
-        onUpdate: (self) => apply(self.progress),
-      });
-      return () => {
-        trigger.kill();
-        gsap.set(lines, { clearProps: "transform" });
-      };
+      /* The headline sits still. A scrubbed transform here fought the finger. */
+      gsap.set(lines, { x: 0, y: 0, scale: 1 });
+      return () => gsap.set(lines, { clearProps: "transform" });
     });
 
     return () => mm.revert();

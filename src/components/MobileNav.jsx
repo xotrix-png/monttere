@@ -17,6 +17,7 @@ export default function MobileNav() {
   const panelRef = useRef(null);
   const panelId = useId();
   const scrollY = useRef(0);
+  const pending = useRef(null);
 
   useEffect(() => {
     const button = buttonRef.current;
@@ -56,7 +57,11 @@ export default function MobileNav() {
     scrollY.current = window.scrollY;
     const body = document.body;
     body.classList.add("nav-lock");
-    body.style.top = `-${scrollY.current}px`;
+    const blockScroll = (event) => {
+      if (panel.contains(event.target)) return;
+      event.preventDefault();
+    };
+    document.addEventListener("touchmove", blockScroll, { passive: false });
 
     const items = () =>
       [button, ...panel.querySelectorAll("a")].filter(Boolean);
@@ -87,17 +92,19 @@ export default function MobileNav() {
 
     return () => {
       document.removeEventListener("keydown", onKey);
+      document.removeEventListener("touchmove", blockScroll);
       body.classList.remove("nav-lock");
-      body.style.top = "";
-      window.scrollTo(0, scrollY.current);
+      const id = pending.current;
+      pending.current = null;
+      if (id) jumpTo(id);
       button?.focus();
     };
   }, [open]);
 
   const go = (id) => (event) => {
     event.preventDefault();
+    pending.current = id;
     setOpen(false);
-    window.setTimeout(() => jumpTo(id), 0);
   };
 
   return (

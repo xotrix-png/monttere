@@ -1220,6 +1220,7 @@
     width: 100%;
     height: auto;
     min-height: 0;
+    touch-action: pan-y;
     /* Room under the torn edge and the 06 label, then the line, then the headline. */
     padding-top: calc(26vw + 64px);
     margin-top: 0;
@@ -1346,22 +1347,27 @@
 @media (max-width: 1279.98px) {
   .passage {
     --horse-w: 208%;
+    /* Ears live inside the frame, pulled up over the headline. */
+    --ear: calc(2.08 * 448 / 1920 * 100vw);
     height: auto;
     min-height: 0;
     margin-top: 0;
+    display: flow-root;
     overflow: visible;
     background: #181e1f;
     z-index: 5;
+    touch-action: pan-y;
   }
 
   .passage__frame {
     display: block;
     position: relative;
     width: 100%;
-    height: 148vw;
-    margin-top: 0;
-    overflow: visible;
+    height: calc(2.08 * 1837 / 1920 * 100vw);
+    margin-top: calc(var(--ear) * -1);
+    overflow: hidden;
     background: transparent;
+    touch-action: pan-y;
   }
 
   .passage picture {
@@ -1380,8 +1386,8 @@
     max-width: none;
     height: auto;
     aspect-ratio: 1920 / 1837;
-    /* Lift the faded ears above the frame. 448 / 1837 of the file. */
-    translate: 0 -24.3876%;
+    translate: none;
+    touch-action: pan-y;
     object-fit: fill;
     z-index: 1;
     -webkit-mask-image: none;
@@ -1404,13 +1410,18 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --horse-w: 150%; }
-  .passage__frame { height: 78vw; }
+  .passage {
+    --horse-w: 150%;
+    --ear: calc(1.5 * 448 / 1920 * 100vw);
+  }
+  .passage__frame {
+    height: calc(1.5 * 1837 / 1920 * 100vw);
+    margin-top: calc(var(--ear) * -1);
+  }
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
   .passage { height: auto; }
-  .passage__frame { height: 70vw; }
 }
 
 /* ——— Heritage ——— */
