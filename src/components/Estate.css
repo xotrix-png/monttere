@@ -30,7 +30,7 @@
 /* 3D stage — bg + two hinged leaves. No pin: the page scrolls through. */
 .estate__doors-stage {
   position: absolute;
-  z-index: 0;
+  z-index: auto;
   inset: 0;
   perspective: calc(2400 * var(--u));
   perspective-origin: 50% 48%;

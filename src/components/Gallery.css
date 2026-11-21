@@ -41,8 +41,19 @@
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  overflow: hidden;
+  overflow: visible;
   z-index: 1;
+}
+
+/* Clips the sliding track. Fur stays a sibling so it can hang into Philosophy. */
+.gallery__clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.gallery__counter {
+  display: none;
 }
 
 .gallery__track {

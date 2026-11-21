@@ -74,12 +74,3 @@
   mask-mode: alpha;
 }
 
-@media (max-width: 720px) {
-  .site-logo {
-    --logo-h: 44px;
-  }
-
-  .site-logo--away {
-    --logo-h: 34px;
-  }
-}

@@ -15,6 +15,186 @@ function smootherstep(t) {
   return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
+function headerTop() {
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue("--header-top");
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : 12;
+}
+
+/** Mobile crest: transform-only morph, then a native pin inside Contacts. */
+function mountMobileLogo({ el, mark, dock, contacts, hero, home }) {
+  let raf = 0;
+  let heroRatio = 1;
+  let phase = "idle";
+  let pinned = false;
+  let morphing = false;
+
+  const io = hero
+    ? new IntersectionObserver(
+        ([entry]) => {
+          heroRatio = entry.intersectionRatio;
+          if (phase === "idle" && !pinned) {
+            el.classList.toggle("site-logo--away", heroRatio < 0.45);
+          }
+        },
+        { threshold: [0, 0.25, 0.45, 0.75, 1] },
+      )
+    : null;
+  if (hero && io) io.observe(hero);
+
+  const setPhase = (next) => {
+    if (phase === next) return;
+    phase = next;
+    el.classList.toggle("site-logo--away", next === "idle" && heroRatio < 0.45);
+    el.classList.toggle("site-logo--morphing", next === "morphing");
+    el.classList.toggle("site-logo--docked", next === "docked");
+  };
+
+  const baseMetrics = () => {
+    const away = heroRatio < 0.45;
+    return {
+      away,
+      top: headerTop() + (away ? 5 : 0),
+      height: away ? 34 : 44,
+      opacity: away ? 0.55 : 0.82,
+    };
+  };
+
+  const clearInline = () => {
+    el.style.position = "";
+    el.style.top = "";
+    el.style.left = "";
+    el.style.height = "";
+    el.style.opacity = "";
+    el.style.mixBlendMode = "";
+    el.style.transition = "";
+    el.style.willChange = "";
+    el.style.translate = "";
+    el.style.transform = "";
+    el.style.transformOrigin = "";
+    el.style.zIndex = "";
+    mark.style.backgroundColor = "";
+  };
+
+  const pinToContacts = () => {
+    if (pinned) {
+      el.style.top = `${dock.offsetTop}px`;
+      el.style.height = `${dock.offsetHeight}px`;
+      return;
+    }
+    contacts.appendChild(el);
+    pinned = true;
+    morphing = false;
+    el.style.transition = "none";
+    el.style.willChange = "auto";
+    el.style.position = "absolute";
+    el.style.left = "50%";
+    el.style.translate = "-50% 0";
+    el.style.transform = "none";
+    el.style.top = `${dock.offsetTop}px`;
+    el.style.height = `${dock.offsetHeight}px`;
+    el.style.opacity = "1";
+    el.style.mixBlendMode = "normal";
+    el.style.zIndex = "5";
+    mark.style.backgroundColor = "#222b2f";
+    setPhase("docked");
+  };
+
+  const sync = () => {
+    const { away, top, height, opacity } = baseMetrics();
+    const vh = window.innerHeight || 1;
+    const dockRectTop = dock.getBoundingClientRect().top;
+    const startAt = vh * 1.2;
+    const endAt = vh * 0.55;
+    const raw = (startAt - dockRectTop) / (startAt - endAt);
+    const progress = smootherstep(Math.min(1, Math.max(0, raw)));
+    const dockH = dock.offsetHeight || height;
+
+    if (progress >= 0.999) {
+      pinToContacts();
+      return;
+    }
+
+    if (pinned && progress < 0.97) {
+      const rect = el.getBoundingClientRect();
+      home.insertBefore(el, home.firstChild);
+      pinned = false;
+      morphing = true;
+      const scale = height > 0 ? rect.height / height : 1;
+      el.style.position = "fixed";
+      el.style.left = "50%";
+      el.style.translate = "-50% 0";
+      el.style.top = `${top}px`;
+      el.style.height = `${height}px`;
+      el.style.transformOrigin = "center top";
+      el.style.transform = `translateY(${rect.top - top}px) scale(${scale})`;
+      el.style.opacity = "1";
+      el.style.willChange = "transform, opacity";
+      mark.style.backgroundColor = "#222b2f";
+      setPhase("morphing");
+    } else if (pinned) {
+      return;
+    }
+
+    if (progress <= 0) {
+      if (phase !== "idle") {
+        morphing = false;
+        if (el.parentElement !== home) home.insertBefore(el, home.firstChild);
+        pinned = false;
+        clearInline();
+        setPhase("idle");
+      } else {
+        el.classList.toggle("site-logo--away", away);
+      }
+      return;
+    }
+
+    morphing = true;
+    const ty = (dockRectTop - top) * progress;
+    const scale = 1 + (dockH / height - 1) * progress;
+    el.style.transition = "none";
+    el.style.willChange = "transform, opacity";
+    el.style.position = "fixed";
+    el.style.left = "50%";
+    el.style.translate = "-50% 0";
+    el.style.top = `${top}px`;
+    el.style.height = `${height}px`;
+    el.style.transformOrigin = "center top";
+    el.style.transform = `translateY(${ty}px) scale(${scale})`;
+    el.style.mixBlendMode = "normal";
+    el.style.opacity = String(opacity + (1 - opacity) * progress);
+    const colorT = smootherstep(Math.min(1, Math.max(0, progress / 0.5)));
+    mark.style.backgroundColor = `rgb(${Math.round(lerp(243, 34, colorT))}, ${Math.round(lerp(246, 43, colorT))}, ${Math.round(lerp(247, 47, colorT))})`;
+    setPhase("morphing");
+  };
+
+  const onScroll = () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(sync);
+  };
+
+  sync();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  window.visualViewport?.addEventListener("resize", onScroll);
+  window.visualViewport?.addEventListener("scroll", onScroll);
+
+  return () => {
+    cancelAnimationFrame(raf);
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    window.visualViewport?.removeEventListener("resize", onScroll);
+    window.visualViewport?.removeEventListener("scroll", onScroll);
+    io?.disconnect();
+    if (el.parentElement !== home) home.insertBefore(el, home.firstChild);
+    pinned = false;
+    morphing = false;
+    clearInline();
+    setPhase("idle");
+  };
+}
+
 export default function SiteLogo() {
   const ref = useRef(null);
   const markRef = useRef(null);
@@ -26,8 +206,16 @@ export default function SiteLogo() {
     const contacts = document.getElementById("contacts");
     const hero = document.querySelector(".hero");
     const home = el?.parentElement;
-    if (!el || !mark || !dock || !contacts || !home) return;
+    if (!el || !mark || !dock || !contacts || !home) return undefined;
 
+    const mq = window.matchMedia("(min-width: 1280px)");
+    let stop = () => {};
+    const boot = () => {
+      stop();
+      stop = mq.matches ? runDesktop() : mountMobileLogo({ el, mark, dock, contacts, hero, home });
+    };
+
+    function runDesktop() {
     let raf = 0;
     let heroRatio = 1;
     let phase = "idle";
@@ -219,6 +407,14 @@ export default function SiteLogo() {
       window.removeEventListener("resize", onScroll);
       io?.disconnect();
       clearMorph();
+    };
+    }
+
+    boot();
+    mq.addEventListener("change", boot);
+    return () => {
+      mq.removeEventListener("change", boot);
+      stop();
     };
   }, []);
 
