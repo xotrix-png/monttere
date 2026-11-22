@@ -1127,28 +1127,17 @@
   }
 
   .quiet__sky {
-    /* Torn edge starts under the Clubhouse button. Solid white continues into Essence. */
-    top: calc(-72px - 42vh * 270 / 1095);
-    height: 42vh;
+    /* Same full picture as desktop, same proportion, so the torn edge
+       runs across the whole width and the right wisps stay. */
+    top: calc(-64px - 0.25 * 100vw * 1095 / 1920);
     width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1095;
+    max-width: none;
     object-fit: fill;
     object-position: center top;
-    transform: translateZ(0);
+    transform: none;
     z-index: 5;
-  }
-
-  /* The cloud file is lower on the right, so the deck showed through.
-     White sits behind that side only. The cloud, the button and the heading stay put. */
-  .quiet::after {
-    content: "";
-    position: absolute;
-    z-index: 4;
-    right: 0;
-    top: -56px;
-    width: 50%;
-    height: 56px;
-    background: #f3f6f7;
-    pointer-events: none;
   }
 
   .quiet__sky--next {
