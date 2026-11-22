@@ -47,6 +47,9 @@
   body {
     overflow-x: visible;
     overflow-y: visible;
+    /* Stop the browser from yanking the page when the horse and grass
+       come into view at the end of Essence. */
+    overflow-anchor: none;
     width: 100%;
     position: relative;
     background: #071a29;
@@ -1396,16 +1399,17 @@
 
   .passage__grass {
     left: 0;
-    right: auto;
+    right: 0;
     top: auto;
     bottom: 0;
-    width: 260%;
-    max-width: none;
+    /* Stay inside the screen. A wider image made the page jump while scrolling. */
+    width: 100%;
+    max-width: 100%;
     height: 18vw;
     object-fit: cover;
     object-position: center top;
     z-index: 3;
-    translate: -42% 0;
+    translate: none;
   }
 }
 
