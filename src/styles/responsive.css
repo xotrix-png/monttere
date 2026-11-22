@@ -124,8 +124,8 @@
   .hero__nav { display: none; }
 
   .hero {
-    height: 100vh;
-    height: 100svh;
+    height: var(--app-h, 100vh);
+    height: var(--app-svh, 100svh);
     min-height: 640px;
     --sh: min(calc(100cqh * 750 / 844), calc((100cqh - 108px) / 0.9713));
     --s: calc(var(--sh) / 1081);
@@ -286,8 +286,8 @@
 @media (min-width: 1024px) and (max-width: 1279.98px) and (orientation: landscape) {
   .hero {
     min-height: 520px;
-    height: 100vh;
-    height: 100dvh;
+    height: var(--app-h, 100vh);
+    height: var(--app-dvh, 100dvh);
     --sw: max(100cqw, 100cqh * 1920 / 1081);
     --sh: calc(var(--sw) * 1081 / 1920);
     --s: calc(var(--sw) / 1920);
@@ -362,8 +362,8 @@
     --fur-h: clamp(96px, calc(100vw * 536 / 1920), 150px);
     --fur-hang: 42px;
     --fur-overlap: calc(var(--fur-h) - var(--fur-hang));
-    height: calc(var(--gallery-run, 9) * 100svh);
-    min-height: calc(var(--gallery-run, 9) * 100vh);
+    height: calc(var(--gallery-run, 9) * var(--app-svh, 100svh));
+    min-height: calc(var(--gallery-run, 9) * var(--app-h, 100vh));
     padding-bottom: var(--fur-hang);
     overflow-x: clip;
     background: #0a0a0a;
@@ -374,8 +374,8 @@
   .gallery__viewport {
     position: sticky;
     top: 0;
-    height: 100vh;
-    height: 100svh;
+    height: var(--app-h, 100vh);
+    height: var(--app-svh, 100svh);
     overflow: visible;
     display: block;
   }
@@ -699,8 +699,8 @@
   .gallery.is-reduced .gallery__slide--horse,
   .gallery.is-reduced .gallery__slide--collection {
     width: 100%;
-    height: 100vh;
-    height: 100svh;
+    height: var(--app-h, 100vh);
+    height: var(--app-svh, 100svh);
   }
 
   .gallery.is-reduced .gallery__fur {
@@ -729,7 +729,9 @@
 @media (max-width: 1279.98px) {
   .philosophy {
     margin-top: -42px;
-    padding: 100px var(--pad) 54px;
+    /* The fur already hangs into this block. 100px left a blank band
+       under it; 36px sits the heading in the same rhythm as the other starts. */
+    padding: 36px var(--pad) 54px;
     overflow-x: clip;
   }
 
@@ -856,9 +858,22 @@
 @media (max-width: 1279.98px) {
   .estate { overflow-x: clip; --u: 1px; }
 
+  /* 4px of the same white under the fur join, so a hairline cannot show the page colour. */
+  .estate::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: -4px;
+    height: 8px;
+    background: #f3f6f7;
+    pointer-events: none;
+  }
+
   .estate__doors {
-    height: 220vh;
-    height: 220svh;
+    height: calc(2.2 * var(--app-h, 100vh));
+    height: calc(2.2 * var(--app-svh, 100svh));
     min-height: 0;
     overflow: visible;
   }
@@ -866,8 +881,8 @@
   .estate__doors-stage {
     position: sticky;
     top: 0;
-    height: 100vh;
-    height: 100svh;
+    height: var(--app-h, 100vh);
+    height: var(--app-svh, 100svh);
     overflow: hidden;
   }
 
@@ -922,15 +937,18 @@
   }
 
   .estate__fur {
-    /* Full file, no crop. Solid #f3f6f7 continues Philosophy; wisps fade on the dark. */
-    top: -78px;
+    /* Same picture, 4px higher so its solid edge sits on the white.
+       The thin band paints only the hard cut; the wisps stay as they are. */
+    top: -82px;
     height: 156px;
     width: 100%;
     left: 0;
     max-width: none;
     object-fit: fill;
     object-position: center center;
-    box-shadow: 0 -16px 0 0 #f3f6f7;
+    transform: translateZ(0);
+    background: linear-gradient(#f3f6f7, #f3f6f7) center 34% / 100% 8px no-repeat;
+    box-shadow: 0 -4px 0 0 #f3f6f7;
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -999,13 +1017,13 @@
     position: relative;
     top: auto;
     height: auto;
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: var(--app-h, 100vh);
+    min-height: var(--app-svh, 100svh);
     margin-top: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 30vh var(--pad) calc(28px + env(safe-area-inset-bottom, 0px));
+    padding: calc(0.3 * var(--app-h, 100vh)) var(--pad) calc(28px + env(safe-area-inset-bottom, 0px));
   }
 
   .estate__panel--clubhouse {
@@ -1092,8 +1110,8 @@
 }
 
 @media (max-width: 1279.98px) and (orientation: landscape) {
-  .estate__doors { min-height: 0; height: 120vh; height: 120svh; }
-  .estate__panel { min-height: 100svh; }
+  .estate__doors { min-height: 0; height: calc(1.2 * var(--app-h, 100vh)); height: calc(1.2 * var(--app-svh, 100svh)); }
+  .estate__panel { min-height: var(--app-svh, 100svh); }
 }
 
 /* ——— Quiet ——— */
@@ -1109,12 +1127,16 @@
   }
 
   .quiet__sky {
-    /* Torn edge starts under the Clubhouse button. Solid white continues into Essence. */
-    top: calc(-72px - 42vh * 270 / 1095);
-    height: 42vh;
+    /* Same full picture as desktop, same proportion, so the torn edge
+       runs across the whole width and the right wisps stay. */
+    top: calc(-64px - 0.25 * 100vw * 1095 / 1920);
     width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1095;
+    max-width: none;
     object-fit: fill;
     object-position: center top;
+    transform: none;
     z-index: 5;
   }
 
@@ -1123,10 +1145,12 @@
        Park the solid band (it begins ~27% down the file) a little above
        the dark field, so the light section runs into the tear and the
        hills show only through the transparent bottom. */
-    top: calc(-0.34 * 100vw * 1147 / 1920);
+    /* 4px higher, so the lower left of the tear meets the white. Shape unchanged. */
+    top: calc(-0.34 * 100vw * 1147 / 1920 - 4px);
     bottom: auto;
     width: 100%;
     height: auto;
+    transform: translateZ(0);
     aspect-ratio: 1920 / 1147;
     max-width: none;
     z-index: 5;
@@ -1229,6 +1253,19 @@
     margin-top: 0;
     overflow: visible;
     background: #181e1f;
+  }
+
+  /* White under the low left of the tear, behind the picture. */
+  .quiet__field::before {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    left: 0;
+    top: -4px;
+    width: 36%;
+    height: 8px;
+    background: #f3f6f7;
+    pointer-events: none;
   }
 
   .quiet__hills {
@@ -1349,13 +1386,13 @@
 /* ——— Passage ——— */
 @media (max-width: 1279.98px) {
   .passage {
-    --horse-w: 208%;
     height: auto;
     min-height: 0;
     margin-top: 0;
     display: block;
-    /* Clip to the screen. A negative pull on the horse made this block
-       collapse and pop back, so the page jumped between Craft and Heritage. */
+    /* Keep the photo inside the screen. A box wider than the phone
+       made a vertical swipe drag the page sideways, then snap it
+       back and forth between Craft and Generations. */
     overflow: clip;
     overflow-anchor: none;
     background: #181e1f;
@@ -1380,23 +1417,25 @@
 
   .passage picture {
     display: block;
+    position: relative;
+    width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
-  /* One photo: the ears and their fade are already in the file. */
+  /* Same crop as before (the right of the wide photo), but the box
+     itself is only as wide as the screen, so it cannot pull the scroll. */
   .passage__horse {
     position: absolute;
-    right: 0;
-    left: auto;
-    top: 0;
-    bottom: auto;
-    width: var(--horse-w);
+    inset: 0;
+    width: 100%;
+    height: 100%;
     max-width: none;
-    height: auto;
-    aspect-ratio: 1920 / 1837;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: right center;
     translate: none;
     touch-action: pan-y;
-    object-fit: fill;
     z-index: 1;
     -webkit-mask-image: none;
     mask-image: none;
@@ -1419,7 +1458,6 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --horse-w: 150%; }
   .passage__frame {
     height: calc(1.5 * 1837 / 1920 * 100vw);
     margin-top: 0;
