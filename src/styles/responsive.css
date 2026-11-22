@@ -1349,13 +1349,13 @@
 /* ——— Passage ——— */
 @media (max-width: 1279.98px) {
   .passage {
-    --horse-w: 208%;
     height: auto;
     min-height: 0;
     margin-top: 0;
     display: block;
-    /* Clip to the screen. A negative pull on the horse made this block
-       collapse and pop back, so the page jumped between Craft and Heritage. */
+    /* Keep the photo inside the screen. A box wider than the phone
+       made a vertical swipe drag the page sideways, then snap it
+       back and forth between Craft and Generations. */
     overflow: clip;
     overflow-anchor: none;
     background: #181e1f;
@@ -1380,23 +1380,25 @@
 
   .passage picture {
     display: block;
+    position: relative;
+    width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
-  /* One photo: the ears and their fade are already in the file. */
+  /* Same crop as before (the right of the wide photo), but the box
+     itself is only as wide as the screen, so it cannot pull the scroll. */
   .passage__horse {
     position: absolute;
-    right: 0;
-    left: auto;
-    top: 0;
-    bottom: auto;
-    width: var(--horse-w);
+    inset: 0;
+    width: 100%;
+    height: 100%;
     max-width: none;
-    height: auto;
-    aspect-ratio: 1920 / 1837;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: right center;
     translate: none;
     touch-action: pan-y;
-    object-fit: fill;
     z-index: 1;
     -webkit-mask-image: none;
     mask-image: none;
@@ -1419,7 +1421,6 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage { --horse-w: 150%; }
   .passage__frame {
     height: calc(1.5 * 1837 / 1920 * 100vw);
     margin-top: 0;
