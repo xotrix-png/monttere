@@ -1350,16 +1350,21 @@
 @media (max-width: 1279.98px) {
   .passage {
     --horse-w: 208%;
-    /* Ears live inside the frame, pulled up over the headline. */
-    --ear: calc(2.08 * 448 / 1920 * 100vw);
     height: auto;
     min-height: 0;
     margin-top: 0;
-    display: flow-root;
-    overflow: visible;
+    display: block;
+    /* Clip to the screen. A negative pull on the horse made this block
+       collapse and pop back, so the page jumped between Craft and Heritage. */
+    overflow: clip;
+    overflow-anchor: none;
     background: #181e1f;
     z-index: 5;
     touch-action: pan-y;
+  }
+
+  .quiet {
+    overflow-anchor: none;
   }
 
   .passage__frame {
@@ -1367,7 +1372,7 @@
     position: relative;
     width: 100%;
     height: calc(2.08 * 1837 / 1920 * 100vw);
-    margin-top: calc(var(--ear) * -1);
+    margin-top: 0;
     overflow: hidden;
     background: transparent;
     touch-action: pan-y;
@@ -1414,13 +1419,10 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279.98px) {
-  .passage {
-    --horse-w: 150%;
-    --ear: calc(1.5 * 448 / 1920 * 100vw);
-  }
+  .passage { --horse-w: 150%; }
   .passage__frame {
     height: calc(1.5 * 1837 / 1920 * 100vw);
-    margin-top: calc(var(--ear) * -1);
+    margin-top: 0;
   }
 }
 
