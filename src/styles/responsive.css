@@ -729,8 +729,7 @@
 @media (max-width: 1279.98px) {
   .philosophy {
     margin-top: -42px;
-    /* Sit the title just under the fur. 100px left a blank band. */
-    padding: 8px var(--pad) 28px;
+    padding: 100px var(--pad) 54px;
     overflow-x: clip;
   }
 
@@ -923,18 +922,15 @@
   }
 
   .estate__fur {
-    /* Full file, no crop. The solid band starts partway down the file,
-       so pull it into Philosophy and paint that band the same white.
-       Otherwise a hairline shows along the join. */
-    top: -104px;
-    height: 184px;
-    width: 102%;
-    left: -1%;
+    /* Full file, no crop. Solid #f3f6f7 continues Philosophy; wisps fade on the dark. */
+    top: -78px;
+    height: 156px;
+    width: 100%;
+    left: 0;
     max-width: none;
     object-fit: fill;
     object-position: center center;
-    background: linear-gradient(to bottom, transparent 30%, #f3f6f7 34%, #f3f6f7 48%, transparent 54%);
-    box-shadow: 0 -12px 0 0 #f3f6f7;
+    box-shadow: 0 -16px 0 0 #f3f6f7;
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -1112,28 +1108,11 @@
     background: #f3f6f7;
   }
 
-  /* The cloud file is lower on the right, so the deck showed through.
-     White behind that side fills the hole without covering the button. */
-  .quiet::before {
-    content: "";
-    position: absolute;
-    z-index: 4;
-    right: 0;
-    top: -70px;
-    width: 52%;
-    height: 110px;
-    background: #f3f6f7;
-    pointer-events: none;
-  }
-
   .quiet__sky {
-    /* The cloud’s right edge sits lower in the file than the left.
-       Lift it so that side covers the deck, and bleed past the screen
-       so the tear has no side gap. */
-    top: calc(-96px - 42vh * 270 / 1095);
-    height: 44vh;
-    width: 108%;
-    left: -4%;
+    /* Torn edge starts under the Clubhouse button. Solid white continues into Essence. */
+    top: calc(-72px - 42vh * 270 / 1095);
+    height: 42vh;
+    width: 100%;
     object-fit: fill;
     object-position: center top;
     z-index: 5;
@@ -1144,12 +1123,9 @@
        Park the solid band (it begins ~27% down the file) a little above
        the dark field, so the light section runs into the tear and the
        hills show only through the transparent bottom. */
-    /* The left of this tear starts lower than the right. Lift it
-       into the white so that side meets the page, and bleed sideways. */
-    top: calc(-0.48 * 100vw * 1147 / 1920);
+    top: calc(-0.34 * 100vw * 1147 / 1920);
     bottom: auto;
-    width: 108%;
-    left: -4%;
+    width: 100%;
     height: auto;
     aspect-ratio: 1920 / 1147;
     max-width: none;
