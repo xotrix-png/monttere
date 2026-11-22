@@ -729,7 +729,9 @@
 @media (max-width: 1279.98px) {
   .philosophy {
     margin-top: -42px;
-    padding: 100px var(--pad) 54px;
+    /* The fur already hangs into this block. 100px left a blank band
+       under it; 36px sits the heading in the same rhythm as the other starts. */
+    padding: 36px var(--pad) 54px;
     overflow-x: clip;
   }
 
@@ -856,6 +858,19 @@
 @media (max-width: 1279.98px) {
   .estate { overflow-x: clip; --u: 1px; }
 
+  /* 4px of the same white under the fur join, so a hairline cannot show the page colour. */
+  .estate::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: -4px;
+    height: 8px;
+    background: #f3f6f7;
+    pointer-events: none;
+  }
+
   .estate__doors {
     height: calc(2.2 * var(--app-h, 100vh));
     height: calc(2.2 * var(--app-svh, 100svh));
@@ -922,15 +937,18 @@
   }
 
   .estate__fur {
-    /* Full file, no crop. Solid #f3f6f7 continues Philosophy; wisps fade on the dark. */
-    top: -78px;
+    /* Same picture, 4px higher so its solid edge sits on the white.
+       The thin band paints only the hard cut; the wisps stay as they are. */
+    top: -82px;
     height: 156px;
     width: 100%;
     left: 0;
     max-width: none;
     object-fit: fill;
     object-position: center center;
-    box-shadow: 0 -16px 0 0 #f3f6f7;
+    transform: translateZ(0);
+    background: linear-gradient(#f3f6f7, #f3f6f7) center 34% / 100% 8px no-repeat;
+    box-shadow: 0 -4px 0 0 #f3f6f7;
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -1115,7 +1133,22 @@
     width: 100%;
     object-fit: fill;
     object-position: center top;
+    transform: translateZ(0);
     z-index: 5;
+  }
+
+  /* The cloud file is lower on the right, so the deck showed through.
+     White sits behind that side only. The cloud, the button and the heading stay put. */
+  .quiet::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    right: 0;
+    top: -56px;
+    width: 50%;
+    height: 56px;
+    background: #f3f6f7;
+    pointer-events: none;
   }
 
   .quiet__sky--next {
@@ -1123,10 +1156,12 @@
        Park the solid band (it begins ~27% down the file) a little above
        the dark field, so the light section runs into the tear and the
        hills show only through the transparent bottom. */
-    top: calc(-0.34 * 100vw * 1147 / 1920);
+    /* 4px higher, so the lower left of the tear meets the white. Shape unchanged. */
+    top: calc(-0.34 * 100vw * 1147 / 1920 - 4px);
     bottom: auto;
     width: 100%;
     height: auto;
+    transform: translateZ(0);
     aspect-ratio: 1920 / 1147;
     max-width: none;
     z-index: 5;
@@ -1229,6 +1264,19 @@
     margin-top: 0;
     overflow: visible;
     background: #181e1f;
+  }
+
+  /* White under the low left of the tear, behind the picture. */
+  .quiet__field::before {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    left: 0;
+    top: -4px;
+    width: 36%;
+    height: 8px;
+    background: #f3f6f7;
+    pointer-events: none;
   }
 
   .quiet__hills {
